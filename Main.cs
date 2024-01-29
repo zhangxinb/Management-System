@@ -26,5 +26,10 @@ namespace Management_System
         {
 
         }
+
+        private void menuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }
