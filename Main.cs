@@ -22,12 +22,12 @@ namespace Management_System
 
         }
 
-        private void menuStrip4_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void createProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void menuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void generateReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

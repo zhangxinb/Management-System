@@ -1,4 +1,4 @@
--- 
+-- create database
 CREATE DATABASE IF NOT EXISTS requirements_management_system;
 
 -- 使用数据库

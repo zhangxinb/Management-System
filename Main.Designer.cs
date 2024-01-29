@@ -66,7 +66,6 @@
             this.menuStrip2.Size = new System.Drawing.Size(915, 25);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip1";
-            this.menuStrip2.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip2_ItemClicked);
             // 
             // userToolStripMenuItem
             // 
@@ -88,26 +87,27 @@
             // createProjectToolStripMenuItem
             // 
             this.createProjectToolStripMenuItem.Name = "createProjectToolStripMenuItem";
-            this.createProjectToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.createProjectToolStripMenuItem.Text = "Create project";
+            this.createProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createProjectToolStripMenuItem.Text = "Create";
+            this.createProjectToolStripMenuItem.Click += new System.EventHandler(this.createProjectToolStripMenuItem_Click);
             // 
             // selectProjectToolStripMenuItem
             // 
             this.selectProjectToolStripMenuItem.Name = "selectProjectToolStripMenuItem";
-            this.selectProjectToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.selectProjectToolStripMenuItem.Text = "Select project";
+            this.selectProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.selectProjectToolStripMenuItem.Text = "Select";
             // 
             // editProjectToolStripMenuItem
             // 
             this.editProjectToolStripMenuItem.Name = "editProjectToolStripMenuItem";
-            this.editProjectToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.editProjectToolStripMenuItem.Text = "Edit project";
+            this.editProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editProjectToolStripMenuItem.Text = "Edit";
             // 
             // deleteProjectToolStripMenuItem
             // 
             this.deleteProjectToolStripMenuItem.Name = "deleteProjectToolStripMenuItem";
-            this.deleteProjectToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.deleteProjectToolStripMenuItem.Text = "Delete project";
+            this.deleteProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteProjectToolStripMenuItem.Text = "Delete";
             // 
             // requirementToolStripMenuItem1
             // 
@@ -126,37 +126,37 @@
             // 
             this.createRequirementToolStripMenuItem.Name = "createRequirementToolStripMenuItem";
             this.createRequirementToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.createRequirementToolStripMenuItem.Text = "Create requirement";
+            this.createRequirementToolStripMenuItem.Text = "Create";
             // 
             // selectRequirementToolStripMenuItem
             // 
             this.selectRequirementToolStripMenuItem.Name = "selectRequirementToolStripMenuItem";
-            this.selectRequirementToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.selectRequirementToolStripMenuItem.Text = "Select requirement";
+            this.selectRequirementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.selectRequirementToolStripMenuItem.Text = "Select";
             // 
             // editRequirementToolStripMenuItem
             // 
             this.editRequirementToolStripMenuItem.Name = "editRequirementToolStripMenuItem";
-            this.editRequirementToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.editRequirementToolStripMenuItem.Text = "Edit requirement";
+            this.editRequirementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editRequirementToolStripMenuItem.Text = "Edit";
             // 
             // activateRequirementToolStripMenuItem
             // 
             this.activateRequirementToolStripMenuItem.Name = "activateRequirementToolStripMenuItem";
-            this.activateRequirementToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.activateRequirementToolStripMenuItem.Text = "Activate requirement";
+            this.activateRequirementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activateRequirementToolStripMenuItem.Text = "Activate";
             // 
             // deactivateRequirementToolStripMenuItem
             // 
             this.deactivateRequirementToolStripMenuItem.Name = "deactivateRequirementToolStripMenuItem";
-            this.deactivateRequirementToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.deactivateRequirementToolStripMenuItem.Text = "Deactivate requirement";
+            this.deactivateRequirementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deactivateRequirementToolStripMenuItem.Text = "Deactivate";
             // 
             // deleteRequirementToolStripMenuItem
             // 
             this.deleteRequirementToolStripMenuItem.Name = "deleteRequirementToolStripMenuItem";
-            this.deleteRequirementToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.deleteRequirementToolStripMenuItem.Text = "Delete requirement";
+            this.deleteRequirementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteRequirementToolStripMenuItem.Text = "Delete";
             // 
             // commentToolStripMenuItem1
             // 
@@ -172,26 +172,26 @@
             // createCommentToolStripMenuItem
             // 
             this.createCommentToolStripMenuItem.Name = "createCommentToolStripMenuItem";
-            this.createCommentToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.createCommentToolStripMenuItem.Text = "Create comment";
+            this.createCommentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createCommentToolStripMenuItem.Text = "Create";
             // 
             // selectCommentToolStripMenuItem
             // 
             this.selectCommentToolStripMenuItem.Name = "selectCommentToolStripMenuItem";
-            this.selectCommentToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.selectCommentToolStripMenuItem.Text = "Select comment";
+            this.selectCommentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.selectCommentToolStripMenuItem.Text = "Select";
             // 
             // editCommentToolStripMenuItem
             // 
             this.editCommentToolStripMenuItem.Name = "editCommentToolStripMenuItem";
-            this.editCommentToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.editCommentToolStripMenuItem.Text = "Edit comment";
+            this.editCommentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCommentToolStripMenuItem.Text = "Edit";
             // 
             // deleteCommentToolStripMenuItem
             // 
             this.deleteCommentToolStripMenuItem.Name = "deleteCommentToolStripMenuItem";
-            this.deleteCommentToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.deleteCommentToolStripMenuItem.Text = "Delete comment";
+            this.deleteCommentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteCommentToolStripMenuItem.Text = "Delete";
             // 
             // reportToolStripMenuItem1
             // 
@@ -205,14 +205,15 @@
             // generateReportToolStripMenuItem
             // 
             this.generateReportToolStripMenuItem.Name = "generateReportToolStripMenuItem";
-            this.generateReportToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.generateReportToolStripMenuItem.Text = "Generate report";
+            this.generateReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.generateReportToolStripMenuItem.Text = "Generate";
+            this.generateReportToolStripMenuItem.Click += new System.EventHandler(this.generateReportToolStripMenuItem_Click);
             // 
             // viewReportToolStripMenuItem
             // 
             this.viewReportToolStripMenuItem.Name = "viewReportToolStripMenuItem";
-            this.viewReportToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.viewReportToolStripMenuItem.Text = "View report";
+            this.viewReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewReportToolStripMenuItem.Text = "View";
             // 
             // Main
             // 
