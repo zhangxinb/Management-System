@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace Management_System
 {
-    public partial class MainForm : Form
+    public partial class Main : Form
     {
-        public MainForm()
+        public Main()
         {
             InitializeComponent();
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip4_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
