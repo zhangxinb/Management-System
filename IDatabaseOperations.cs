@@ -10,6 +10,10 @@ namespace Management_System
     {
         void InsertUser(string username, string password, string phoneNum);
         string GetUserPassword(string username);
+        List<string> LoadProjects();
+        void InsertProject(string projectName, string projectDescriptionr);
+        void EditProject(string projectName, string projectDescriptionr);
+        void DeleteProject(string projectName);
     }
 
 }

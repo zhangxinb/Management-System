@@ -44,5 +44,62 @@ namespace Management_System
                 }
             }
         }
+        //read all project_naame from database
+        public List<string> LoadProjects()
+        {
+            List<string> projectNames = new List<string>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                String query = "select project_name from projects";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    projectNames.Add(dr.GetString(0));
+                }
+            }
+
+            return projectNames;
+        }
+        public void InsertProject(string projectName, string projectDescription)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "insert into projects(project_name, project_description) values (@project_name, @project_description)";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@project_name", projectName);
+                cmd.Parameters.AddWithValue("@project_description", projectDescription);
+                connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void EditProject(string projectName, string projectDescription)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                //update the project_description and project_name
+                string query = "update projects set project_description = @project_description where project_name = @project_name";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@project_name", projectName);
+                cmd.Parameters.AddWithValue("@project_description", projectDescription);
+                connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void DeleteProject(string projectName)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                //delete the project
+                string query = "delete from projects where project_name = @project_name";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@project_name", projectName);
+                connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

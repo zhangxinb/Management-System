@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Management_System
 {
     public partial class Main : Form
@@ -16,20 +17,16 @@ namespace Management_System
         {
             InitializeComponent();
         }
-
         private void Main_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void createProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void projectToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void generateReportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            this.Hide();
+            Project project = new Project();
+            project.Show();
         }
     }
 }
