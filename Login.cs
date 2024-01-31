@@ -75,6 +75,14 @@ namespace Management_System
             this.Hide();
             SignUp signUp = new SignUp();
             signUp.Show();
-        }       
+        }
+
+        private void tbPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                btLogin_Click(sender, e);
+            }
+        }
     }
 }

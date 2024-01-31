@@ -41,12 +41,12 @@
             this.lbDescription = new System.Windows.Forms.Label();
             this.lbName = new System.Windows.Forms.Label();
             this.panel_Edit = new System.Windows.Forms.Panel();
-            this.lbSelectProject = new System.Windows.Forms.Label();
-            this.lbUpdataDescription = new System.Windows.Forms.Label();
-            this.cb_Edit = new System.Windows.Forms.ComboBox();
-            this.tbEditDescription = new System.Windows.Forms.TextBox();
-            this.btEditCancle = new System.Windows.Forms.Button();
             this.btEditSubmit = new System.Windows.Forms.Button();
+            this.btEditCancle = new System.Windows.Forms.Button();
+            this.tbEditDescription = new System.Windows.Forms.TextBox();
+            this.cb_Edit = new System.Windows.Forms.ComboBox();
+            this.lbUpdataDescription = new System.Windows.Forms.Label();
+            this.lbSelectProject = new System.Windows.Forms.Label();
             this.panel_Add.SuspendLayout();
             this.panel_Edit.SuspendLayout();
             this.SuspendLayout();
@@ -175,48 +175,6 @@
             this.panel_Edit.Size = new System.Drawing.Size(508, 284);
             this.panel_Edit.TabIndex = 6;
             // 
-            // lbSelectProject
-            // 
-            this.lbSelectProject.AutoSize = true;
-            this.lbSelectProject.Location = new System.Drawing.Point(123, 49);
-            this.lbSelectProject.Name = "lbSelectProject";
-            this.lbSelectProject.Size = new System.Drawing.Size(89, 12);
-            this.lbSelectProject.TabIndex = 0;
-            this.lbSelectProject.Text = "Select Project";
-            // 
-            // lbUpdataDescription
-            // 
-            this.lbUpdataDescription.AutoSize = true;
-            this.lbUpdataDescription.Location = new System.Drawing.Point(125, 123);
-            this.lbUpdataDescription.Name = "lbUpdataDescription";
-            this.lbUpdataDescription.Size = new System.Drawing.Size(113, 12);
-            this.lbUpdataDescription.TabIndex = 1;
-            this.lbUpdataDescription.Text = "Update Description";
-            // 
-            // cb_Edit
-            // 
-            this.cb_Edit.FormattingEnabled = true;
-            this.cb_Edit.Location = new System.Drawing.Point(305, 49);
-            this.cb_Edit.Name = "cb_Edit";
-            this.cb_Edit.Size = new System.Drawing.Size(121, 20);
-            this.cb_Edit.TabIndex = 2;
-            // 
-            // tbEditDescription
-            // 
-            this.tbEditDescription.Location = new System.Drawing.Point(305, 123);
-            this.tbEditDescription.Name = "tbEditDescription";
-            this.tbEditDescription.Size = new System.Drawing.Size(100, 21);
-            this.tbEditDescription.TabIndex = 3;
-            // 
-            // btEditCancle
-            // 
-            this.btEditCancle.Location = new System.Drawing.Point(125, 231);
-            this.btEditCancle.Name = "btEditCancle";
-            this.btEditCancle.Size = new System.Drawing.Size(75, 23);
-            this.btEditCancle.TabIndex = 4;
-            this.btEditCancle.Text = "Cancle";
-            this.btEditCancle.UseVisualStyleBackColor = true;
-            // 
             // btEditSubmit
             // 
             this.btEditSubmit.Location = new System.Drawing.Point(305, 230);
@@ -227,18 +185,60 @@
             this.btEditSubmit.UseVisualStyleBackColor = true;
             this.btEditSubmit.Click += new System.EventHandler(this.btEditSubmit_Click);
             // 
+            // btEditCancle
+            // 
+            this.btEditCancle.Location = new System.Drawing.Point(125, 231);
+            this.btEditCancle.Name = "btEditCancle";
+            this.btEditCancle.Size = new System.Drawing.Size(75, 23);
+            this.btEditCancle.TabIndex = 4;
+            this.btEditCancle.Text = "Cancle";
+            this.btEditCancle.UseVisualStyleBackColor = true;
+            // 
+            // tbEditDescription
+            // 
+            this.tbEditDescription.Location = new System.Drawing.Point(305, 123);
+            this.tbEditDescription.Name = "tbEditDescription";
+            this.tbEditDescription.Size = new System.Drawing.Size(100, 21);
+            this.tbEditDescription.TabIndex = 3;
+            // 
+            // cb_Edit
+            // 
+            this.cb_Edit.FormattingEnabled = true;
+            this.cb_Edit.Location = new System.Drawing.Point(305, 49);
+            this.cb_Edit.Name = "cb_Edit";
+            this.cb_Edit.Size = new System.Drawing.Size(121, 20);
+            this.cb_Edit.TabIndex = 2;
+            // 
+            // lbUpdataDescription
+            // 
+            this.lbUpdataDescription.AutoSize = true;
+            this.lbUpdataDescription.Location = new System.Drawing.Point(125, 123);
+            this.lbUpdataDescription.Name = "lbUpdataDescription";
+            this.lbUpdataDescription.Size = new System.Drawing.Size(113, 12);
+            this.lbUpdataDescription.TabIndex = 1;
+            this.lbUpdataDescription.Text = "Update Description";
+            // 
+            // lbSelectProject
+            // 
+            this.lbSelectProject.AutoSize = true;
+            this.lbSelectProject.Location = new System.Drawing.Point(123, 49);
+            this.lbSelectProject.Name = "lbSelectProject";
+            this.lbSelectProject.Size = new System.Drawing.Size(89, 12);
+            this.lbSelectProject.TabIndex = 0;
+            this.lbSelectProject.Text = "Select Project";
+            // 
             // Project
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panel_Add);
             this.Controls.Add(this.panel_Edit);
             this.Controls.Add(this.btDelete);
             this.Controls.Add(this.btAdd);
             this.Controls.Add(this.btEdit);
-            this.Controls.Add(this.cb_project_name);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.panel_Add);
+            this.Controls.Add(this.cb_project_name);
             this.Name = "Project";
             this.Text = "Project";
             this.Load += new System.EventHandler(this.Project_Load);
