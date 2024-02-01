@@ -20,6 +20,7 @@ namespace Management_System
             InitializeComponent();
             panel_project_add.Visible = false;
             panel_project_edit.Visible = false;
+            panel_project_delete.Visible = false;
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -37,7 +38,7 @@ namespace Management_System
         {
 
         }
-
+        // add project
         private void btProjectAddSubmit_Click(object sender, EventArgs e)
         {
             dbOperations.InsertProject(tbProjectAddName.Text, tbProjectAddDescription.Text);
@@ -49,7 +50,7 @@ namespace Management_System
                 cbProjectSelect.Items.Add(projectName);
             }
         }
-
+        // edit project
         private void btProjectEditSubmit_Click(object sender, EventArgs e)
         {
             dbOperations.EditProject(cbProjectSelect.Text, tbProjectEditDescription.Text);
@@ -63,19 +64,34 @@ namespace Management_System
             tbProjectEditDescription.Clear();
             cbProjectSelect.Text = "";
         }
-
+        // delete project
+        private void btProjectDeleteDelete_Click(object sender, EventArgs e)
+        {
+            dbOperations.DeleteProject(cbProjectDeleteSelectProject.Text);
+            MessageBox.Show("Delete Successful");
+            cbProjectDeleteSelectProject.Items.Clear();
+            List<string> projectNames = dbOperations.LoadProjects();
+            foreach (string projectName in projectNames)
+            {
+                cbProjectDeleteSelectProject.Items.Add(projectName);
+            }
+            cbProjectDeleteSelectProject.Text = "";
+        }
+        // select project
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             TreeNode selectdNode = e.Node;//get the select node
             switch (selectdNode.Name)
             {
-                case "ndProjectAdd":
+                case "ndProjectAdd"://if the node is ndProjectAdd
                     panel_project_add.Visible = true;
                     panel_project_add.BringToFront();
                     panel_project_edit.Visible = false;
+                    panel_project_delete.Visible = false;
                     break;
-                case "ndProjectEdit":
+                case "ndProjectEdit"://if the node is ndProjectEdit
                     panel_project_add.Visible = false;
+                    panel_project_delete.Visible = false;
                     panel_project_edit.Visible = true;
                     panel_project_edit.BringToFront();
                     cbProjectSelect.Items.Clear();
@@ -83,6 +99,18 @@ namespace Management_System
                     foreach (string projectName in projectNames)
                     {
                         cbProjectSelect.Items.Add(projectName);
+                    }
+                    break;
+                case "ndProjectDelete":// if the node is ndProjectDelete
+                    panel_project_add.Visible = false;
+                    panel_project_edit.Visible = false;
+                    panel_project_delete.Visible = true;
+                    panel_project_delete.BringToFront();
+                    cbProjectDeleteSelectProject.Items.Clear();
+                    List<string> projectNames2 = dbOperations.LoadProjects();
+                    foreach (string projectName in projectNames2)
+                    {
+                        cbProjectDeleteSelectProject.Items.Add(projectName);
                     }
                     break;
             }
