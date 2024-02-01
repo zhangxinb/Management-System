@@ -101,5 +101,43 @@ namespace Management_System
                 cmd.ExecuteNonQuery();
             }
         }
+        public string GetProjectID(string projectName)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT project_id FROM projects WHERE project_name = @project_name";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@project_name", projectName);
+                connection.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return reader["project_id"].ToString();
+                }
+                else
+                {
+                    throw new Exception("Project not found");
+                }
+            }
+        }
+        public void InsertRequirement(string projectName, string requirementName, string requirementDescription, string requirementStatus, string requirementVersion)
+        {
+            //still missing dependencies
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string projectID = GetProjectID(projectName);
+                string query = "insert into requirements(project_id, requirement_name, requirement_description, requirement_status, requirement_version, requirement_created_at, requirement_updated_at) values (@project_id, @requirement_name, @requirement_description, @requirement_status, @requirement_version, @requirement_created_at, @requirement_updated_at)";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@project_id", projectID);
+                cmd.Parameters.AddWithValue("@requirement_name", requirementName);
+                cmd.Parameters.AddWithValue("@requirement_description", requirementDescription);
+                cmd.Parameters.AddWithValue("@requirement_status", requirementStatus);
+                cmd.Parameters.AddWithValue("@requirement_version", requirementVersion);
+                cmd.Parameters.AddWithValue("@requirement_created_at", DateTime.Now);
+                cmd.Parameters.AddWithValue("@requirement_updated_at", DateTime.Now);
+                connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

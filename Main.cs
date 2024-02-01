@@ -21,6 +21,7 @@ namespace Management_System
             panel_project_add.Visible = false;
             panel_project_edit.Visible = false;
             panel_project_delete.Visible = false;
+            panel_requirement_add.Visible = false;
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -77,6 +78,16 @@ namespace Management_System
             }
             cbProjectDeleteSelectProject.Text = "";
         }
+        private void btRequirementAddSubmit_Click(object sender, EventArgs e)
+        {
+            dbOperations.InsertRequirement(cbRequirementAddProject.Text, tbRequirementAddName.Text, tbRequirementAddDescription.Text, cbRequirementAddStatus.Text, tbRequirementAddVersion.Text);
+            MessageBox.Show("Add Successful");
+            cbRequirementAddProject.Text = "";
+            tbRequirementAddName.Clear();
+            tbRequirementAddDescription.Clear();
+            cbRequirementAddStatus.Text = "";
+            tbRequirementAddVersion.Clear();
+        }
         // select project
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -111,6 +122,15 @@ namespace Management_System
                     foreach (string projectName in projectNames2)
                     {
                         cbProjectDeleteSelectProject.Items.Add(projectName);
+                    }
+                    break;
+                case "ndRequirementAdd":// if the node is ndRequirementAdd
+                    panel_requirement_add.Visible = true;
+                    panel_requirement_add.BringToFront();
+                    List<string> projectNamesRequirement = dbOperations.LoadProjects();
+                    foreach (string projectName in projectNamesRequirement)
+                    {
+                        cbRequirementAddProject.Items.Add(projectName);
                     }
                     break;
             }

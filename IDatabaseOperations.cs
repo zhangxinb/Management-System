@@ -14,6 +14,8 @@ namespace Management_System
         void InsertProject(string projectName, string projectDescriptionr);
         void EditProject(string projectName, string projectDescriptionr);
         void DeleteProject(string projectName);
+        void InsertRequirement(string projectName, string requirementName, string requirementDescription, string requirementStatus, string requirementVersion);
+        string GetProjectID(string projectName);
     }
 
 }
