@@ -10,7 +10,8 @@ namespace Management_System
 
     public class MySqlDatabaseOperations : IDatabaseOperations
     {
-        private string connectionString = "server=localhost;user id=root;database=requirements_management_system; port = 3306";
+        private string connectionString = "server=database-1.c7e2oyq4onm0.eu-north-1.rds.amazonaws.com;user id=admin;password=A871218ss5168;database=management_system; port = 3306";
+
 
         public void InsertUser(string username, string password, string phoneNum)
         {
