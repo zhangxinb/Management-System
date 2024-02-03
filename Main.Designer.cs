@@ -85,10 +85,44 @@
             this.lbRequirementStatus = new System.Windows.Forms.Label();
             this.lbReuirementDescription = new System.Windows.Forms.Label();
             this.lbRequirementRequirementName = new System.Windows.Forms.Label();
+            this.btlogout = new System.Windows.Forms.Button();
+            this.panel_requirement_edit = new System.Windows.Forms.Panel();
+            this.panel_requirement_edit_addDependency = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btRequirementEditAddDependency = new System.Windows.Forms.Button();
+            this.btRequirementEditUpdateRequirement = new System.Windows.Forms.Button();
+            this.btRequirementEditUpdateDependency = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbRequirementEditDependencyChangeTo = new System.Windows.Forms.TextBox();
+            this.btRequirementEditDeleteDependency = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.lbRequirementEditStatus = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.tbRequirementEditDescription = new System.Windows.Forms.TextBox();
+            this.lbRequirementEditDescription = new System.Windows.Forms.Label();
+            this.cbRequirementEditSelectRequirement = new System.Windows.Forms.ComboBox();
+            this.lbRequirementSelectRequirement = new System.Windows.Forms.Label();
+            this.cbRequirementEditSelectProject = new System.Windows.Forms.ComboBox();
+            this.lbRequirementEditSelectProject = new System.Windows.Forms.Label();
+            this.tbRequirementEditAddDependency = new System.Windows.Forms.TextBox();
+            this.btRequirementEditAddDependencyBack = new System.Windows.Forms.Button();
+            this.btRequirementEditAddDependencySubmit = new System.Windows.Forms.Button();
+            this.panel_requirement_delete = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbRequirementDeleteSelectRequirement = new System.Windows.Forms.ComboBox();
+            this.btRequirementDeleteDelete = new System.Windows.Forms.Button();
+            this.cbRequirementDeleteSelectProject = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel_project_add.SuspendLayout();
             this.panel_project_edit.SuspendLayout();
             this.panel_project_delete.SuspendLayout();
             this.panel_requirement_add.SuspendLayout();
+            this.panel_requirement_edit.SuspendLayout();
+            this.panel_requirement_edit_addDependency.SuspendLayout();
+            this.panel_requirement_delete.SuspendLayout();
             this.SuspendLayout();
             // 
             // mySqlCommand1
@@ -140,7 +174,7 @@
             treeNode41,
             treeNode45,
             treeNode48});
-            this.treeView1.Size = new System.Drawing.Size(116, 477);
+            this.treeView1.Size = new System.Drawing.Size(116, 438);
             this.treeView1.TabIndex = 2;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
@@ -404,11 +438,320 @@
             this.lbRequirementRequirementName.TabIndex = 0;
             this.lbRequirementRequirementName.Text = "Requirement Name";
             // 
+            // btlogout
+            // 
+            this.btlogout.Location = new System.Drawing.Point(0, 438);
+            this.btlogout.Name = "btlogout";
+            this.btlogout.Size = new System.Drawing.Size(116, 39);
+            this.btlogout.TabIndex = 7;
+            this.btlogout.Text = "LogOut";
+            this.btlogout.UseVisualStyleBackColor = true;
+            this.btlogout.Click += new System.EventHandler(this.btlogout_Click);
+            // 
+            // panel_requirement_edit
+            // 
+            this.panel_requirement_edit.Controls.Add(this.panel_requirement_edit_addDependency);
+            this.panel_requirement_edit.Controls.Add(this.btRequirementEditAddDependency);
+            this.panel_requirement_edit.Controls.Add(this.btRequirementEditUpdateRequirement);
+            this.panel_requirement_edit.Controls.Add(this.btRequirementEditUpdateDependency);
+            this.panel_requirement_edit.Controls.Add(this.label2);
+            this.panel_requirement_edit.Controls.Add(this.tbRequirementEditDependencyChangeTo);
+            this.panel_requirement_edit.Controls.Add(this.btRequirementEditDeleteDependency);
+            this.panel_requirement_edit.Controls.Add(this.label1);
+            this.panel_requirement_edit.Controls.Add(this.checkBox2);
+            this.panel_requirement_edit.Controls.Add(this.checkBox1);
+            this.panel_requirement_edit.Controls.Add(this.lbRequirementEditStatus);
+            this.panel_requirement_edit.Controls.Add(this.listBox1);
+            this.panel_requirement_edit.Controls.Add(this.tbRequirementEditDescription);
+            this.panel_requirement_edit.Controls.Add(this.lbRequirementEditDescription);
+            this.panel_requirement_edit.Controls.Add(this.cbRequirementEditSelectRequirement);
+            this.panel_requirement_edit.Controls.Add(this.lbRequirementSelectRequirement);
+            this.panel_requirement_edit.Controls.Add(this.cbRequirementEditSelectProject);
+            this.panel_requirement_edit.Controls.Add(this.lbRequirementEditSelectProject);
+            this.panel_requirement_edit.Location = new System.Drawing.Point(122, 0);
+            this.panel_requirement_edit.Name = "panel_requirement_edit";
+            this.panel_requirement_edit.Size = new System.Drawing.Size(793, 477);
+            this.panel_requirement_edit.TabIndex = 8;
+            // 
+            // panel_requirement_edit_addDependency
+            // 
+            this.panel_requirement_edit_addDependency.Controls.Add(this.btRequirementEditAddDependencySubmit);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.btRequirementEditAddDependencyBack);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.tbRequirementEditAddDependency);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.label4);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.label3);
+            this.panel_requirement_edit_addDependency.Location = new System.Drawing.Point(0, 0);
+            this.panel_requirement_edit_addDependency.Name = "panel_requirement_edit_addDependency";
+            this.panel_requirement_edit_addDependency.Size = new System.Drawing.Size(793, 477);
+            this.panel_requirement_edit_addDependency.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(176, 149);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(137, 12);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Dependency Description";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(328, 68);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 12);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Add Dependency";
+            // 
+            // btRequirementEditAddDependency
+            // 
+            this.btRequirementEditAddDependency.Location = new System.Drawing.Point(304, 415);
+            this.btRequirementEditAddDependency.Name = "btRequirementEditAddDependency";
+            this.btRequirementEditAddDependency.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditAddDependency.TabIndex = 16;
+            this.btRequirementEditAddDependency.Text = "Add";
+            this.btRequirementEditAddDependency.UseVisualStyleBackColor = true;
+            this.btRequirementEditAddDependency.Click += new System.EventHandler(this.btRequirementEditAddDependency_Click);
+            // 
+            // btRequirementEditUpdateRequirement
+            // 
+            this.btRequirementEditUpdateRequirement.Location = new System.Drawing.Point(320, 182);
+            this.btRequirementEditUpdateRequirement.Name = "btRequirementEditUpdateRequirement";
+            this.btRequirementEditUpdateRequirement.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditUpdateRequirement.TabIndex = 15;
+            this.btRequirementEditUpdateRequirement.Text = "Update";
+            this.btRequirementEditUpdateRequirement.UseVisualStyleBackColor = true;
+            this.btRequirementEditUpdateRequirement.Click += new System.EventHandler(this.btRequirementEditUpdateRequirement_Click);
+            // 
+            // btRequirementEditUpdateDependency
+            // 
+            this.btRequirementEditUpdateDependency.Location = new System.Drawing.Point(355, 378);
+            this.btRequirementEditUpdateDependency.Name = "btRequirementEditUpdateDependency";
+            this.btRequirementEditUpdateDependency.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditUpdateDependency.TabIndex = 14;
+            this.btRequirementEditUpdateDependency.Text = "Update";
+            this.btRequirementEditUpdateDependency.UseVisualStyleBackColor = true;
+            this.btRequirementEditUpdateDependency.Click += new System.EventHandler(this.btRequirementEditUpdate_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(247, 307);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(197, 12);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Dependency Description Change To";
+            // 
+            // tbRequirementEditDependencyChangeTo
+            // 
+            this.tbRequirementEditDependencyChangeTo.Location = new System.Drawing.Point(249, 334);
+            this.tbRequirementEditDependencyChangeTo.Name = "tbRequirementEditDependencyChangeTo";
+            this.tbRequirementEditDependencyChangeTo.Size = new System.Drawing.Size(195, 21);
+            this.tbRequirementEditDependencyChangeTo.TabIndex = 12;
+            // 
+            // btRequirementEditDeleteDependency
+            // 
+            this.btRequirementEditDeleteDependency.Location = new System.Drawing.Point(249, 378);
+            this.btRequirementEditDeleteDependency.Name = "btRequirementEditDeleteDependency";
+            this.btRequirementEditDeleteDependency.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditDeleteDependency.TabIndex = 11;
+            this.btRequirementEditDeleteDependency.Text = "Delete";
+            this.btRequirementEditDeleteDependency.UseVisualStyleBackColor = true;
+            this.btRequirementEditDeleteDependency.Click += new System.EventHandler(this.btRequirementEditDeleteDependency_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(73, 228);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Dependencies";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(486, 128);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(72, 16);
+            this.checkBox2.TabIndex = 9;
+            this.checkBox2.Text = "Deactive";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(371, 127);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(60, 16);
+            this.checkBox1.TabIndex = 8;
+            this.checkBox1.Text = "Active";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // lbRequirementEditStatus
+            // 
+            this.lbRequirementEditStatus.AutoSize = true;
+            this.lbRequirementEditStatus.Location = new System.Drawing.Point(178, 122);
+            this.lbRequirementEditStatus.Name = "lbRequirementEditStatus";
+            this.lbRequirementEditStatus.Size = new System.Drawing.Size(41, 12);
+            this.lbRequirementEditStatus.TabIndex = 7;
+            this.lbRequirementEditStatus.Text = "Status";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(10, 254);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(209, 208);
+            this.listBox1.TabIndex = 6;
+            // 
+            // tbRequirementEditDescription
+            // 
+            this.tbRequirementEditDescription.Location = new System.Drawing.Point(407, 85);
+            this.tbRequirementEditDescription.Name = "tbRequirementEditDescription";
+            this.tbRequirementEditDescription.Size = new System.Drawing.Size(130, 21);
+            this.tbRequirementEditDescription.TabIndex = 5;
+            // 
+            // lbRequirementEditDescription
+            // 
+            this.lbRequirementEditDescription.AutoSize = true;
+            this.lbRequirementEditDescription.Location = new System.Drawing.Point(178, 84);
+            this.lbRequirementEditDescription.Name = "lbRequirementEditDescription";
+            this.lbRequirementEditDescription.Size = new System.Drawing.Size(71, 12);
+            this.lbRequirementEditDescription.TabIndex = 4;
+            this.lbRequirementEditDescription.Text = "Description";
+            // 
+            // cbRequirementEditSelectRequirement
+            // 
+            this.cbRequirementEditSelectRequirement.FormattingEnabled = true;
+            this.cbRequirementEditSelectRequirement.Location = new System.Drawing.Point(408, 44);
+            this.cbRequirementEditSelectRequirement.Name = "cbRequirementEditSelectRequirement";
+            this.cbRequirementEditSelectRequirement.Size = new System.Drawing.Size(121, 20);
+            this.cbRequirementEditSelectRequirement.TabIndex = 3;
+            this.cbRequirementEditSelectRequirement.SelectedIndexChanged += new System.EventHandler(this.cbRequirementEditSelectRequirement_SelectedIndexChanged);
+            // 
+            // lbRequirementSelectRequirement
+            // 
+            this.lbRequirementSelectRequirement.AutoSize = true;
+            this.lbRequirementSelectRequirement.Location = new System.Drawing.Point(178, 50);
+            this.lbRequirementSelectRequirement.Name = "lbRequirementSelectRequirement";
+            this.lbRequirementSelectRequirement.Size = new System.Drawing.Size(113, 12);
+            this.lbRequirementSelectRequirement.TabIndex = 2;
+            this.lbRequirementSelectRequirement.Text = "Select Requirement";
+            // 
+            // cbRequirementEditSelectProject
+            // 
+            this.cbRequirementEditSelectProject.FormattingEnabled = true;
+            this.cbRequirementEditSelectProject.Location = new System.Drawing.Point(407, 9);
+            this.cbRequirementEditSelectProject.Name = "cbRequirementEditSelectProject";
+            this.cbRequirementEditSelectProject.Size = new System.Drawing.Size(121, 20);
+            this.cbRequirementEditSelectProject.TabIndex = 1;
+            this.cbRequirementEditSelectProject.SelectedIndexChanged += new System.EventHandler(this.cbRequirementEditSelectProject_SelectedIndexChanged);
+            // 
+            // lbRequirementEditSelectProject
+            // 
+            this.lbRequirementEditSelectProject.AutoSize = true;
+            this.lbRequirementEditSelectProject.Location = new System.Drawing.Point(176, 17);
+            this.lbRequirementEditSelectProject.Name = "lbRequirementEditSelectProject";
+            this.lbRequirementEditSelectProject.Size = new System.Drawing.Size(89, 12);
+            this.lbRequirementEditSelectProject.TabIndex = 0;
+            this.lbRequirementEditSelectProject.Text = "Select Project";
+            // 
+            // tbRequirementEditAddDependency
+            // 
+            this.tbRequirementEditAddDependency.Location = new System.Drawing.Point(352, 149);
+            this.tbRequirementEditAddDependency.Name = "tbRequirementEditAddDependency";
+            this.tbRequirementEditAddDependency.Size = new System.Drawing.Size(248, 21);
+            this.tbRequirementEditAddDependency.TabIndex = 2;
+            // 
+            // btRequirementEditAddDependencyBack
+            // 
+            this.btRequirementEditAddDependencyBack.Location = new System.Drawing.Point(238, 274);
+            this.btRequirementEditAddDependencyBack.Name = "btRequirementEditAddDependencyBack";
+            this.btRequirementEditAddDependencyBack.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditAddDependencyBack.TabIndex = 3;
+            this.btRequirementEditAddDependencyBack.Text = "Back";
+            this.btRequirementEditAddDependencyBack.UseVisualStyleBackColor = true;
+            this.btRequirementEditAddDependencyBack.Click += new System.EventHandler(this.btRequirementEditAddDependencyBack_Click);
+            // 
+            // btRequirementEditAddDependencySubmit
+            // 
+            this.btRequirementEditAddDependencySubmit.Location = new System.Drawing.Point(441, 274);
+            this.btRequirementEditAddDependencySubmit.Name = "btRequirementEditAddDependencySubmit";
+            this.btRequirementEditAddDependencySubmit.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditAddDependencySubmit.TabIndex = 4;
+            this.btRequirementEditAddDependencySubmit.Text = "Submit";
+            this.btRequirementEditAddDependencySubmit.UseVisualStyleBackColor = true;
+            this.btRequirementEditAddDependencySubmit.Click += new System.EventHandler(this.btRequirementEditAddDependencySubmit_Click);
+            // 
+            // panel_requirement_delete
+            // 
+            this.panel_requirement_delete.Controls.Add(this.cbRequirementDeleteSelectProject);
+            this.panel_requirement_delete.Controls.Add(this.label6);
+            this.panel_requirement_delete.Controls.Add(this.btRequirementDeleteDelete);
+            this.panel_requirement_delete.Controls.Add(this.cbRequirementDeleteSelectRequirement);
+            this.panel_requirement_delete.Controls.Add(this.label5);
+            this.panel_requirement_delete.Location = new System.Drawing.Point(122, 0);
+            this.panel_requirement_delete.Name = "panel_requirement_delete";
+            this.panel_requirement_delete.Size = new System.Drawing.Size(793, 477);
+            this.panel_requirement_delete.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(233, 167);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(113, 12);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Select Requirement";
+            // 
+            // cbRequirementDeleteSelectRequirement
+            // 
+            this.cbRequirementDeleteSelectRequirement.FormattingEnabled = true;
+            this.cbRequirementDeleteSelectRequirement.Location = new System.Drawing.Point(452, 159);
+            this.cbRequirementDeleteSelectRequirement.Name = "cbRequirementDeleteSelectRequirement";
+            this.cbRequirementDeleteSelectRequirement.Size = new System.Drawing.Size(121, 20);
+            this.cbRequirementDeleteSelectRequirement.TabIndex = 1;
+            // 
+            // btRequirementDeleteDelete
+            // 
+            this.btRequirementDeleteDelete.Location = new System.Drawing.Point(342, 293);
+            this.btRequirementDeleteDelete.Name = "btRequirementDeleteDelete";
+            this.btRequirementDeleteDelete.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementDeleteDelete.TabIndex = 2;
+            this.btRequirementDeleteDelete.Text = "Delete";
+            this.btRequirementDeleteDelete.UseVisualStyleBackColor = true;
+            this.btRequirementDeleteDelete.Click += new System.EventHandler(this.btRequirementDeleteDelete_Click);
+            // 
+            // cbRequirementDeleteSelectProject
+            // 
+            this.cbRequirementDeleteSelectProject.FormattingEnabled = true;
+            this.cbRequirementDeleteSelectProject.Location = new System.Drawing.Point(453, 86);
+            this.cbRequirementDeleteSelectProject.Name = "cbRequirementDeleteSelectProject";
+            this.cbRequirementDeleteSelectProject.Size = new System.Drawing.Size(121, 20);
+            this.cbRequirementDeleteSelectProject.TabIndex = 4;
+            this.cbRequirementDeleteSelectProject.SelectedIndexChanged += new System.EventHandler(this.cbRequirementDeleteSelectProject_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(236, 94);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(89, 12);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Select Project";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 473);
+            this.Controls.Add(this.panel_requirement_delete);
+            this.Controls.Add(this.panel_requirement_edit);
+            this.Controls.Add(this.btlogout);
             this.Controls.Add(this.panel_requirement_add);
             this.Controls.Add(this.panel_project_delete);
             this.Controls.Add(this.panel_project_edit);
@@ -424,6 +767,12 @@
             this.panel_project_delete.PerformLayout();
             this.panel_requirement_add.ResumeLayout(false);
             this.panel_requirement_add.PerformLayout();
+            this.panel_requirement_edit.ResumeLayout(false);
+            this.panel_requirement_edit.PerformLayout();
+            this.panel_requirement_edit_addDependency.ResumeLayout(false);
+            this.panel_requirement_edit_addDependency.PerformLayout();
+            this.panel_requirement_delete.ResumeLayout(false);
+            this.panel_requirement_delete.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -459,5 +808,36 @@
         private System.Windows.Forms.Button btRequirementAddSubmit;
         private System.Windows.Forms.ComboBox cbRequirementAddProject;
         private System.Windows.Forms.Label lbRequirementProject;
+        private System.Windows.Forms.Button btlogout;
+        private System.Windows.Forms.Panel panel_requirement_edit;
+        private System.Windows.Forms.ComboBox cbRequirementEditSelectProject;
+        private System.Windows.Forms.Label lbRequirementEditSelectProject;
+        private System.Windows.Forms.ComboBox cbRequirementEditSelectRequirement;
+        private System.Windows.Forms.Label lbRequirementSelectRequirement;
+        private System.Windows.Forms.TextBox tbRequirementEditDescription;
+        private System.Windows.Forms.Label lbRequirementEditDescription;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label lbRequirementEditStatus;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button btRequirementEditUpdateDependency;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbRequirementEditDependencyChangeTo;
+        private System.Windows.Forms.Button btRequirementEditDeleteDependency;
+        private System.Windows.Forms.Button btRequirementEditUpdateRequirement;
+        private System.Windows.Forms.Button btRequirementEditAddDependency;
+        private System.Windows.Forms.Panel panel_requirement_edit_addDependency;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btRequirementEditAddDependencySubmit;
+        private System.Windows.Forms.Button btRequirementEditAddDependencyBack;
+        private System.Windows.Forms.TextBox tbRequirementEditAddDependency;
+        private System.Windows.Forms.Panel panel_requirement_delete;
+        private System.Windows.Forms.Button btRequirementDeleteDelete;
+        private System.Windows.Forms.ComboBox cbRequirementDeleteSelectRequirement;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbRequirementDeleteSelectProject;
+        private System.Windows.Forms.Label label6;
     }
 }
