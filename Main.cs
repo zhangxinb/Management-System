@@ -21,7 +21,6 @@ namespace Management_System
         //nd = node
         //lb = label
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
-        private Dictionary<string, Dependency> dependencyDict = new Dictionary<string, Dependency>();
         public Main()
         {
             InitializeComponent();
@@ -93,8 +92,6 @@ namespace Management_System
                     cbRequirementEditSelectProject.Text = "";
                     cbRequirementEditSelectRequirement.Items.Clear();
                     cbRequirementEditSelectRequirement.Text = "";
-                    listBox1.Items.Clear();
-
                     List<string> projectNames3 = dbOperations.LoadProjects();
                     foreach (string projectName in projectNames3)
                     {
@@ -196,6 +193,7 @@ namespace Management_System
         private void cbRequirementEditSelectProject_SelectedIndexChanged(object sender, EventArgs e)
         {
             cbRequirementEditSelectRequirement.Items.Clear();
+            cbRequirementEditSelectRequirement.Text = "";
 
             if (!string.IsNullOrEmpty(cbRequirementEditSelectProject.Text))
             {
@@ -224,16 +222,13 @@ namespace Management_System
         private void FillDependenciesListBox()
         {
             listBox1.Items.Clear();
-            dependencyDict.Clear();
 
             if (!string.IsNullOrEmpty(cbRequirementEditSelectRequirement.Text))
             {
-                List<Dependency> dependencies = dbOperations.LoadDependencies(cbRequirementEditSelectRequirement.Text);
-                foreach (Dependency dependency in dependencies)
+                List<string> DependentRequirementNames = dbOperations.LoadDependencies(cbRequirementEditSelectRequirement.Text);
+                foreach (string dependencyName in DependentRequirementNames)
                 {
-                    string item = $"ID: {dependency.ID}, Description: {dependency.Description}";
-                    listBox1.Items.Add(item);
-                    dependencyDict[item] = dependency;
+                    listBox1.Items.Add(dependencyName);
                 }
             }
         }
@@ -255,20 +250,30 @@ namespace Management_System
                 checkBox1.Checked = false;
             }
         }
-        private void btRequirementEditUpdate_Click(object sender, EventArgs e)
+        /*private void btRequirementEditUpdate_Click(object sender, EventArgs e)
         {
             dbOperations.UpdateDependency(dependencyDict[listBox1.SelectedItem.ToString()].ID, tbRequirementEditDependencyChangeTo.Text);
             MessageBox.Show("Update Successful");
             FillDependenciesListBox();
-        }
+        }*/
         private void btRequirementEditDeleteDependency_Click(object sender, EventArgs e)
         {
-            dbOperations.DeleteDependency(dependencyDict[listBox1.SelectedItem.ToString()].ID);
+            string dependentRequirementName = listBox1.SelectedItem.ToString();
+            string requirementName = cbRequirementEditSelectRequirement.Text;
+            string requirementId = dbOperations.GetRequirementID(requirementName);
+            string dependentRequirementId = dbOperations.GetRequirementID(dependentRequirementName);
+            int dependencyId = dbOperations.GetDependencyID(requirementId, dependentRequirementId);
+            dbOperations.DeleteDependency(dependencyId);
             MessageBox.Show("Delete Successful");
             FillDependenciesListBox();
         }
         private void btRequirementEditUpdateRequirement_Click(object sender, EventArgs e)
         {
+            if (cbRequirementEditSelectRequirement.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a requirement first");
+                return;
+            }
             string requirementStatus = "Default";
             if (checkBox1.Checked)
             {
@@ -279,13 +284,26 @@ namespace Management_System
                 requirementStatus = "Deactive";
             }
             string requirementId = dbOperations.GetRequirementID(cbRequirementEditSelectRequirement.Text);
-            dbOperations.UpdateRequirement(cbRequirementEditSelectProject.Text, requirementId, cbRequirementEditSelectRequirement.Text, tbRequirementEditDescription.Text, requirementStatus);
+            dbOperations.UpdateRequirement(cbRequirementEditSelectProject.Text, requirementId, cbRequirementEditSelectRequirement.Text,  requirementStatus);
             MessageBox.Show("Update Successful");
         }
         private void btRequirementEditAddDependency_Click(object sender, EventArgs e)
         {
+            if (cbRequirementEditSelectRequirement.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a requirement first");
+                return;
+            }
             panel_requirement_edit_addDependency.Visible = true;
-            tbRequirementEditAddDependency.Clear();
+            panel_requirement_edit_addDependency.BringToFront();
+            cbRequirementEditAddDependencySelectRequirement.Items.Clear();
+            cbRequirementEditAddDependencySelectRequirement.Text = "";
+            List<string> requirementNames = dbOperations.ListAllRequirements();
+            requirementNames.Remove(cbRequirementEditSelectRequirement.Text);
+            foreach (string requirementName in requirementNames)
+            {
+                cbRequirementEditAddDependencySelectRequirement.Items.Add(requirementName);
+            }
         }
         private void btRequirementEditAddDependencyBack_Click(object sender, EventArgs e)
         {
@@ -293,7 +311,7 @@ namespace Management_System
         }
         private void btRequirementEditAddDependencySubmit_Click(object sender, EventArgs e)
         {
-            dbOperations.InsertDependency(cbRequirementEditSelectRequirement.Text, tbRequirementEditAddDependency.Text);
+            dbOperations.InsertDependency(cbRequirementEditSelectRequirement.Text, cbRequirementEditAddDependencySelectRequirement.Text);
             MessageBox.Show("Add Successful");
             panel_requirement_edit_addDependency.Visible = false;
             FillDependenciesListBox();

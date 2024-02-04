@@ -128,9 +128,25 @@ namespace Management_System
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string projectID = GetProjectID(projectName);
-                string query = "select requirement_name from requirements where project_id = @project_id and IsDeleted = 0";
+                string query = "select requirement_name from requirements where project_id = @project_id and IsDeleted = 0 and requirement_status != 'Deactive'";
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@project_id", projectID);
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    requirementNames.Add(dr.GetString(0));
+                }
+            }
+            return requirementNames;
+        }
+        public List<string> ListAllRequirements()
+        {
+            List<string> requirementNames = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "select requirement_name from requirements where IsDeleted = 0 and requirement_status != 'Deactive'";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -178,7 +194,7 @@ namespace Management_System
             versionNumber++;
             return versionNumber.ToString();
         }
-        public void UpdateRequirement(string projectName, string requirementID, string requirementName, string requirementDescription, string requirementStatus)
+        public void UpdateRequirement(string projectName, string requirementID, string requirementName, string requirementStatus)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -191,11 +207,10 @@ namespace Management_System
                 connection.Close();
                 string newVersion = IncreaseVersionNumber(currentVersion);
 
-                string updateQuery = "update requirements set requirement_description = @requirement_description, requirement_status = @requirement_status, requirement_version = @requirement_version, requirement_updated_at = @requirement_updated_at where project_id = @project_id and requirement_name = @requirement_name";
+                string updateQuery = "update requirements set requirement_status = @requirement_status, requirement_version = @requirement_version, requirement_updated_at = @requirement_updated_at where project_id = @project_id and requirement_name = @requirement_name";
                 MySqlCommand updateCmd = new MySqlCommand(updateQuery, connection);
                 updateCmd.Parameters.AddWithValue("@project_id", projectID);
                 updateCmd.Parameters.AddWithValue("@requirement_name", requirementName);
-                updateCmd.Parameters.AddWithValue("@requirement_description", requirementDescription);
                 updateCmd.Parameters.AddWithValue("@requirement_status", requirementStatus);
                 updateCmd.Parameters.AddWithValue("@requirement_version", newVersion);
                 updateCmd.Parameters.AddWithValue("@requirement_updated_at", DateTime.Now);
@@ -227,14 +242,9 @@ namespace Management_System
                 }
             }
         }
-        public class Dependency
+        public List<string> LoadDependencies(string requirementName)
         {
-            public int ID { get; set; }
-            public string Description { get; set; }
-        }
-        public List<Dependency> LoadDependencies(string requirementName)
-        {
-            List<Dependency> dependencies = new List<Dependency>();
+            List<string> dependencies = new List<string>();
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string query = "select requirement_id from requirements where requirement_name = @requirement_name";
@@ -246,25 +256,54 @@ namespace Management_System
                 {
                     int id = reader.GetInt32(0);
                     reader.Close();
-                    query = "select dependency_id, dependency_description from requirement_dependencies where requirement_id = @requirement_id";
+                    // 连接requirements表和requirement_dependencies表
+                    query = @"select r.requirement_name 
+                      from requirement_dependencies d 
+                      inner join requirements r on d.dependent_requirement_id = r.requirement_id 
+                      where d.requirement_id = @requirement_id";
                     cmd = new MySqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@requirement_id", id);
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Dependency dependency = new Dependency
-                        {
-                            ID = reader.GetInt32(0),
-                            Description = reader.GetString(1)
-                        };
-                        dependencies.Add(dependency);
+                        string dependencyName = reader.GetString(0);
+                        dependencies.Add(dependencyName);
                     }
                 }
                 reader.Close();
             }
             return dependencies;
         }
-        public void InsertDependency(string requirementName, string dependencyDescription)
+        public int GetDependencyID(string requirementID, string dependentRequirementID)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {               
+                const string query = "select dependency_id from requirement_dependencies where requirement_id = @requirement_id and dependent_requirement_id = @dependent_requirement_id";
+                
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@requirement_id", requirementID);
+                    cmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementID);
+                    connection.Open();
+                    
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                       
+                        int dependencyId = 0;
+                        
+                        if (reader.Read())
+                        {
+                            int.TryParse(reader.GetInt32(0).ToString(), out dependencyId);
+                        }
+                        
+                        return dependencyId;
+                    }
+                }
+            }
+        }
+
+        // if you need to finish B, first you need to finish A. In this case, B is dependent on A, and B is requirementName, A is dependentRequirementName
+        public void InsertDependency(string requirementName, string dependentRequirementName)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -275,18 +314,29 @@ namespace Management_System
                 var reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    int id = reader.GetInt32(0);
+                    int requirementId = reader.GetInt32(0);
                     reader.Close();
-                    query = "insert into requirement_dependencies(requirement_id, dependency_description) values (@requirement_id, @dependency_description)";
-                    cmd = new MySqlCommand(query, connection);
-                    cmd.Parameters.AddWithValue("@requirement_id", id);
-                    cmd.Parameters.AddWithValue("@dependency_description", dependencyDescription);
-                    cmd.ExecuteNonQuery();
+
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@requirement_name", dependentRequirementName);
+                    reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        int dependentRequirementId = reader.GetInt32(0);
+                        reader.Close();
+
+                        query = "insert into requirement_dependencies(requirement_id, dependent_requirement_id) values (@requirement_id, @dependent_requirement_id)";
+                        cmd = new MySqlCommand(query, connection);
+                        cmd.Parameters.AddWithValue("@requirement_id", requirementId);
+                        cmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementId);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
                 reader.Close();
             }
         }
-        public void UpdateDependency(int dependencyId, string dependencyDescription)
+
+        /*public void UpdateDependency(int dependencyId, string dependencyDescription)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -297,7 +347,7 @@ namespace Management_System
                 connection.Open();
                 cmd.ExecuteNonQuery();
             }
-        }
+        }*/
         public void DeleteDependency(int dependencyId)
         {         
             using (MySqlConnection connection = new MySqlConnection(connectionString))

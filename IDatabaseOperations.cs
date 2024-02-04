@@ -17,14 +17,16 @@ namespace Management_System
         void DeleteProject(string projectName);
         void InsertRequirement(string projectName, string requirementName, string requirementDescription, string requirementStatus, string requirementVersion);
         string GetRequirementID(string requirementName);
-        void UpdateRequirement(string projectName, string requirementID, string requirementName, string requirementDescription, string requirementStatus);
+        void UpdateRequirement(string projectName, string requirementID, string requirementName, string requirementStatus);
         void DeleteRequirement(string requirementId, string requirementName);
         string GetProjectID(string projectName);
         void Logout();
         List<string> LoadRequirements(string projectName);
-        List<MySqlDatabaseOperations.Dependency> LoadDependencies(string requirementName);
+        List<string> ListAllRequirements();
+        List<string> LoadDependencies(string requirementName);
+        int GetDependencyID(string requirementID, string denpendentRequirementID);
         void InsertDependency(string requirementName, string dependencyDescription);
-        void UpdateDependency(int dependencyID, string dependencyDescription);
+       // void UpdateDependency(int dependencyID, string dependencyDescription);
         void DeleteDependency(int dependencyId);
     }
 

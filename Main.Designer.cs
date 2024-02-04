@@ -28,33 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("User");
-            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
-            treeNode34,
-            treeNode35,
-            treeNode36});
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
-            treeNode38,
-            treeNode39,
-            treeNode40});
-            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode45 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
-            treeNode42,
-            treeNode43,
-            treeNode44});
-            System.Windows.Forms.TreeNode treeNode46 = new System.Windows.Forms.TreeNode("节点10");
-            System.Windows.Forms.TreeNode treeNode47 = new System.Windows.Forms.TreeNode("节点11");
-            System.Windows.Forms.TreeNode treeNode48 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
-            treeNode46,
-            treeNode47});
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("User");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
+            treeNode18,
+            treeNode19,
+            treeNode20});
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
+            treeNode22,
+            treeNode23,
+            treeNode24});
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
+            treeNode26,
+            treeNode27,
+            treeNode28});
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("节点10");
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("节点11");
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
+            treeNode30,
+            treeNode31});
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel_project_add = new System.Windows.Forms.Panel();
@@ -87,35 +87,30 @@
             this.lbRequirementRequirementName = new System.Windows.Forms.Label();
             this.btlogout = new System.Windows.Forms.Button();
             this.panel_requirement_edit = new System.Windows.Forms.Panel();
-            this.panel_requirement_edit_addDependency = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btRequirementEditAddDependency = new System.Windows.Forms.Button();
-            this.btRequirementEditUpdateRequirement = new System.Windows.Forms.Button();
-            this.btRequirementEditUpdateDependency = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbRequirementEditDependencyChangeTo = new System.Windows.Forms.TextBox();
-            this.btRequirementEditDeleteDependency = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btRequirementEditAddDependency = new System.Windows.Forms.Button();
+            this.btRequirementEditDeleteDependency = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.lbRequirementEditStatus = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.tbRequirementEditDescription = new System.Windows.Forms.TextBox();
-            this.lbRequirementEditDescription = new System.Windows.Forms.Label();
+            this.btRequirementEditUpdateRequirement = new System.Windows.Forms.Button();
             this.cbRequirementEditSelectRequirement = new System.Windows.Forms.ComboBox();
             this.lbRequirementSelectRequirement = new System.Windows.Forms.Label();
             this.cbRequirementEditSelectProject = new System.Windows.Forms.ComboBox();
             this.lbRequirementEditSelectProject = new System.Windows.Forms.Label();
-            this.tbRequirementEditAddDependency = new System.Windows.Forms.TextBox();
-            this.btRequirementEditAddDependencyBack = new System.Windows.Forms.Button();
+            this.panel_requirement_edit_addDependency = new System.Windows.Forms.Panel();
+            this.cbRequirementEditAddDependencySelectRequirement = new System.Windows.Forms.ComboBox();
             this.btRequirementEditAddDependencySubmit = new System.Windows.Forms.Button();
+            this.btRequirementEditAddDependencyBack = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel_requirement_delete = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cbRequirementDeleteSelectRequirement = new System.Windows.Forms.ComboBox();
-            this.btRequirementDeleteDelete = new System.Windows.Forms.Button();
             this.cbRequirementDeleteSelectProject = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.btRequirementDeleteDelete = new System.Windows.Forms.Button();
+            this.cbRequirementDeleteSelectRequirement = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel_project_add.SuspendLayout();
             this.panel_project_edit.SuspendLayout();
             this.panel_project_delete.SuspendLayout();
@@ -136,45 +131,45 @@
             // 
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode33.Name = "ndUser";
-            treeNode33.Text = "User";
-            treeNode34.Name = "ndProjectAdd";
-            treeNode34.Text = "Add";
-            treeNode35.Name = "ndProjectEdit";
-            treeNode35.Text = "Edit";
-            treeNode36.Name = "ndProjectDelete";
-            treeNode36.Text = "Delete";
-            treeNode37.Name = "ndProject";
-            treeNode37.Text = "Project";
-            treeNode38.Name = "ndRequirementAdd";
-            treeNode38.Text = "Add";
-            treeNode39.Name = "ndRequirementEdit";
-            treeNode39.Text = "Edit";
-            treeNode40.Name = "ndRequirementDelete";
-            treeNode40.Text = "Delete";
-            treeNode41.Name = "Requirement";
-            treeNode41.Text = "Requirement";
-            treeNode42.Name = "ndCommentAdd";
-            treeNode42.Text = "Add";
-            treeNode43.Name = "ndCommentEdit";
-            treeNode43.Text = "Edit";
-            treeNode44.Name = "ndCommentDelete";
-            treeNode44.Text = "Delete";
-            treeNode45.Name = "Comment";
-            treeNode45.Text = "Comment";
-            treeNode46.Name = "节点10";
-            treeNode46.Text = "节点10";
-            treeNode47.Name = "节点11";
-            treeNode47.Text = "节点11";
-            treeNode48.Name = "Report";
-            treeNode48.Text = "Report";
+            treeNode17.Name = "ndUser";
+            treeNode17.Text = "User";
+            treeNode18.Name = "ndProjectAdd";
+            treeNode18.Text = "Add";
+            treeNode19.Name = "ndProjectEdit";
+            treeNode19.Text = "Edit";
+            treeNode20.Name = "ndProjectDelete";
+            treeNode20.Text = "Delete";
+            treeNode21.Name = "ndProject";
+            treeNode21.Text = "Project";
+            treeNode22.Name = "ndRequirementAdd";
+            treeNode22.Text = "Add";
+            treeNode23.Name = "ndRequirementEdit";
+            treeNode23.Text = "Edit";
+            treeNode24.Name = "ndRequirementDelete";
+            treeNode24.Text = "Delete";
+            treeNode25.Name = "Requirement";
+            treeNode25.Text = "Requirement";
+            treeNode26.Name = "ndCommentAdd";
+            treeNode26.Text = "Add";
+            treeNode27.Name = "ndCommentEdit";
+            treeNode27.Text = "Edit";
+            treeNode28.Name = "ndCommentDelete";
+            treeNode28.Text = "Delete";
+            treeNode29.Name = "Comment";
+            treeNode29.Text = "Comment";
+            treeNode30.Name = "节点10";
+            treeNode30.Text = "节点10";
+            treeNode31.Name = "节点11";
+            treeNode31.Text = "节点11";
+            treeNode32.Name = "Report";
+            treeNode32.Text = "Report";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode33,
-            treeNode37,
-            treeNode41,
-            treeNode45,
-            treeNode48});
-            this.treeView1.Size = new System.Drawing.Size(116, 438);
+            treeNode17,
+            treeNode21,
+            treeNode25,
+            treeNode29,
+            treeNode32});
+            this.treeView1.Size = new System.Drawing.Size(116, 428);
             this.treeView1.TabIndex = 2;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
@@ -440,7 +435,7 @@
             // 
             // btlogout
             // 
-            this.btlogout.Location = new System.Drawing.Point(0, 438);
+            this.btlogout.Location = new System.Drawing.Point(0, 430);
             this.btlogout.Name = "btlogout";
             this.btlogout.Size = new System.Drawing.Size(116, 39);
             this.btlogout.TabIndex = 7;
@@ -450,104 +445,42 @@
             // 
             // panel_requirement_edit
             // 
-            this.panel_requirement_edit.Controls.Add(this.panel_requirement_edit_addDependency);
-            this.panel_requirement_edit.Controls.Add(this.btRequirementEditAddDependency);
-            this.panel_requirement_edit.Controls.Add(this.btRequirementEditUpdateRequirement);
-            this.panel_requirement_edit.Controls.Add(this.btRequirementEditUpdateDependency);
-            this.panel_requirement_edit.Controls.Add(this.label2);
-            this.panel_requirement_edit.Controls.Add(this.tbRequirementEditDependencyChangeTo);
-            this.panel_requirement_edit.Controls.Add(this.btRequirementEditDeleteDependency);
             this.panel_requirement_edit.Controls.Add(this.label1);
+            this.panel_requirement_edit.Controls.Add(this.btRequirementEditAddDependency);
+            this.panel_requirement_edit.Controls.Add(this.btRequirementEditDeleteDependency);
             this.panel_requirement_edit.Controls.Add(this.checkBox2);
             this.panel_requirement_edit.Controls.Add(this.checkBox1);
             this.panel_requirement_edit.Controls.Add(this.lbRequirementEditStatus);
             this.panel_requirement_edit.Controls.Add(this.listBox1);
-            this.panel_requirement_edit.Controls.Add(this.tbRequirementEditDescription);
-            this.panel_requirement_edit.Controls.Add(this.lbRequirementEditDescription);
+            this.panel_requirement_edit.Controls.Add(this.btRequirementEditUpdateRequirement);
             this.panel_requirement_edit.Controls.Add(this.cbRequirementEditSelectRequirement);
             this.panel_requirement_edit.Controls.Add(this.lbRequirementSelectRequirement);
             this.panel_requirement_edit.Controls.Add(this.cbRequirementEditSelectProject);
             this.panel_requirement_edit.Controls.Add(this.lbRequirementEditSelectProject);
+            this.panel_requirement_edit.Controls.Add(this.panel_requirement_edit_addDependency);
             this.panel_requirement_edit.Location = new System.Drawing.Point(122, 0);
             this.panel_requirement_edit.Name = "panel_requirement_edit";
             this.panel_requirement_edit.Size = new System.Drawing.Size(793, 477);
             this.panel_requirement_edit.TabIndex = 8;
             // 
-            // panel_requirement_edit_addDependency
+            // label1
             // 
-            this.panel_requirement_edit_addDependency.Controls.Add(this.btRequirementEditAddDependencySubmit);
-            this.panel_requirement_edit_addDependency.Controls.Add(this.btRequirementEditAddDependencyBack);
-            this.panel_requirement_edit_addDependency.Controls.Add(this.tbRequirementEditAddDependency);
-            this.panel_requirement_edit_addDependency.Controls.Add(this.label4);
-            this.panel_requirement_edit_addDependency.Controls.Add(this.label3);
-            this.panel_requirement_edit_addDependency.Location = new System.Drawing.Point(0, 0);
-            this.panel_requirement_edit_addDependency.Name = "panel_requirement_edit_addDependency";
-            this.panel_requirement_edit_addDependency.Size = new System.Drawing.Size(793, 477);
-            this.panel_requirement_edit_addDependency.TabIndex = 17;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(176, 149);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(137, 12);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Dependency Description";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(328, 68);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 12);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Add Dependency";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(73, 228);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Dependencies";
             // 
             // btRequirementEditAddDependency
             // 
-            this.btRequirementEditAddDependency.Location = new System.Drawing.Point(304, 415);
+            this.btRequirementEditAddDependency.Location = new System.Drawing.Point(249, 427);
             this.btRequirementEditAddDependency.Name = "btRequirementEditAddDependency";
             this.btRequirementEditAddDependency.Size = new System.Drawing.Size(75, 23);
             this.btRequirementEditAddDependency.TabIndex = 16;
             this.btRequirementEditAddDependency.Text = "Add";
             this.btRequirementEditAddDependency.UseVisualStyleBackColor = true;
             this.btRequirementEditAddDependency.Click += new System.EventHandler(this.btRequirementEditAddDependency_Click);
-            // 
-            // btRequirementEditUpdateRequirement
-            // 
-            this.btRequirementEditUpdateRequirement.Location = new System.Drawing.Point(320, 182);
-            this.btRequirementEditUpdateRequirement.Name = "btRequirementEditUpdateRequirement";
-            this.btRequirementEditUpdateRequirement.Size = new System.Drawing.Size(75, 23);
-            this.btRequirementEditUpdateRequirement.TabIndex = 15;
-            this.btRequirementEditUpdateRequirement.Text = "Update";
-            this.btRequirementEditUpdateRequirement.UseVisualStyleBackColor = true;
-            this.btRequirementEditUpdateRequirement.Click += new System.EventHandler(this.btRequirementEditUpdateRequirement_Click);
-            // 
-            // btRequirementEditUpdateDependency
-            // 
-            this.btRequirementEditUpdateDependency.Location = new System.Drawing.Point(355, 378);
-            this.btRequirementEditUpdateDependency.Name = "btRequirementEditUpdateDependency";
-            this.btRequirementEditUpdateDependency.Size = new System.Drawing.Size(75, 23);
-            this.btRequirementEditUpdateDependency.TabIndex = 14;
-            this.btRequirementEditUpdateDependency.Text = "Update";
-            this.btRequirementEditUpdateDependency.UseVisualStyleBackColor = true;
-            this.btRequirementEditUpdateDependency.Click += new System.EventHandler(this.btRequirementEditUpdate_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(247, 307);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(197, 12);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Dependency Description Change To";
-            // 
-            // tbRequirementEditDependencyChangeTo
-            // 
-            this.tbRequirementEditDependencyChangeTo.Location = new System.Drawing.Point(249, 334);
-            this.tbRequirementEditDependencyChangeTo.Name = "tbRequirementEditDependencyChangeTo";
-            this.tbRequirementEditDependencyChangeTo.Size = new System.Drawing.Size(195, 21);
-            this.tbRequirementEditDependencyChangeTo.TabIndex = 12;
             // 
             // btRequirementEditDeleteDependency
             // 
@@ -559,19 +492,10 @@
             this.btRequirementEditDeleteDependency.UseVisualStyleBackColor = true;
             this.btRequirementEditDeleteDependency.Click += new System.EventHandler(this.btRequirementEditDeleteDependency_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(73, 228);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 12);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Dependencies";
-            // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(486, 128);
+            this.checkBox2.Location = new System.Drawing.Point(486, 87);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(72, 16);
             this.checkBox2.TabIndex = 9;
@@ -582,7 +506,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(371, 127);
+            this.checkBox1.Location = new System.Drawing.Point(371, 86);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(60, 16);
             this.checkBox1.TabIndex = 8;
@@ -593,7 +517,7 @@
             // lbRequirementEditStatus
             // 
             this.lbRequirementEditStatus.AutoSize = true;
-            this.lbRequirementEditStatus.Location = new System.Drawing.Point(178, 122);
+            this.lbRequirementEditStatus.Location = new System.Drawing.Point(178, 81);
             this.lbRequirementEditStatus.Name = "lbRequirementEditStatus";
             this.lbRequirementEditStatus.Size = new System.Drawing.Size(41, 12);
             this.lbRequirementEditStatus.TabIndex = 7;
@@ -608,21 +532,15 @@
             this.listBox1.Size = new System.Drawing.Size(209, 208);
             this.listBox1.TabIndex = 6;
             // 
-            // tbRequirementEditDescription
+            // btRequirementEditUpdateRequirement
             // 
-            this.tbRequirementEditDescription.Location = new System.Drawing.Point(407, 85);
-            this.tbRequirementEditDescription.Name = "tbRequirementEditDescription";
-            this.tbRequirementEditDescription.Size = new System.Drawing.Size(130, 21);
-            this.tbRequirementEditDescription.TabIndex = 5;
-            // 
-            // lbRequirementEditDescription
-            // 
-            this.lbRequirementEditDescription.AutoSize = true;
-            this.lbRequirementEditDescription.Location = new System.Drawing.Point(178, 84);
-            this.lbRequirementEditDescription.Name = "lbRequirementEditDescription";
-            this.lbRequirementEditDescription.Size = new System.Drawing.Size(71, 12);
-            this.lbRequirementEditDescription.TabIndex = 4;
-            this.lbRequirementEditDescription.Text = "Description";
+            this.btRequirementEditUpdateRequirement.Location = new System.Drawing.Point(320, 182);
+            this.btRequirementEditUpdateRequirement.Name = "btRequirementEditUpdateRequirement";
+            this.btRequirementEditUpdateRequirement.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditUpdateRequirement.TabIndex = 15;
+            this.btRequirementEditUpdateRequirement.Text = "Update";
+            this.btRequirementEditUpdateRequirement.UseVisualStyleBackColor = true;
+            this.btRequirementEditUpdateRequirement.Click += new System.EventHandler(this.btRequirementEditUpdateRequirement_Click);
             // 
             // cbRequirementEditSelectRequirement
             // 
@@ -660,12 +578,35 @@
             this.lbRequirementEditSelectProject.TabIndex = 0;
             this.lbRequirementEditSelectProject.Text = "Select Project";
             // 
-            // tbRequirementEditAddDependency
+            // panel_requirement_edit_addDependency
             // 
-            this.tbRequirementEditAddDependency.Location = new System.Drawing.Point(352, 149);
-            this.tbRequirementEditAddDependency.Name = "tbRequirementEditAddDependency";
-            this.tbRequirementEditAddDependency.Size = new System.Drawing.Size(248, 21);
-            this.tbRequirementEditAddDependency.TabIndex = 2;
+            this.panel_requirement_edit_addDependency.Controls.Add(this.cbRequirementEditAddDependencySelectRequirement);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.btRequirementEditAddDependencySubmit);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.btRequirementEditAddDependencyBack);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.label4);
+            this.panel_requirement_edit_addDependency.Controls.Add(this.label3);
+            this.panel_requirement_edit_addDependency.Location = new System.Drawing.Point(0, 0);
+            this.panel_requirement_edit_addDependency.Name = "panel_requirement_edit_addDependency";
+            this.panel_requirement_edit_addDependency.Size = new System.Drawing.Size(793, 477);
+            this.panel_requirement_edit_addDependency.TabIndex = 17;
+            // 
+            // cbRequirementEditAddDependencySelectRequirement
+            // 
+            this.cbRequirementEditAddDependencySelectRequirement.FormattingEnabled = true;
+            this.cbRequirementEditAddDependencySelectRequirement.Location = new System.Drawing.Point(443, 149);
+            this.cbRequirementEditAddDependencySelectRequirement.Name = "cbRequirementEditAddDependencySelectRequirement";
+            this.cbRequirementEditAddDependencySelectRequirement.Size = new System.Drawing.Size(121, 20);
+            this.cbRequirementEditAddDependencySelectRequirement.TabIndex = 5;
+            // 
+            // btRequirementEditAddDependencySubmit
+            // 
+            this.btRequirementEditAddDependencySubmit.Location = new System.Drawing.Point(441, 274);
+            this.btRequirementEditAddDependencySubmit.Name = "btRequirementEditAddDependencySubmit";
+            this.btRequirementEditAddDependencySubmit.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementEditAddDependencySubmit.TabIndex = 4;
+            this.btRequirementEditAddDependencySubmit.Text = "Submit";
+            this.btRequirementEditAddDependencySubmit.UseVisualStyleBackColor = true;
+            this.btRequirementEditAddDependencySubmit.Click += new System.EventHandler(this.btRequirementEditAddDependencySubmit_Click);
             // 
             // btRequirementEditAddDependencyBack
             // 
@@ -677,15 +618,23 @@
             this.btRequirementEditAddDependencyBack.UseVisualStyleBackColor = true;
             this.btRequirementEditAddDependencyBack.Click += new System.EventHandler(this.btRequirementEditAddDependencyBack_Click);
             // 
-            // btRequirementEditAddDependencySubmit
+            // label4
             // 
-            this.btRequirementEditAddDependencySubmit.Location = new System.Drawing.Point(441, 274);
-            this.btRequirementEditAddDependencySubmit.Name = "btRequirementEditAddDependencySubmit";
-            this.btRequirementEditAddDependencySubmit.Size = new System.Drawing.Size(75, 23);
-            this.btRequirementEditAddDependencySubmit.TabIndex = 4;
-            this.btRequirementEditAddDependencySubmit.Text = "Submit";
-            this.btRequirementEditAddDependencySubmit.UseVisualStyleBackColor = true;
-            this.btRequirementEditAddDependencySubmit.Click += new System.EventHandler(this.btRequirementEditAddDependencySubmit_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(176, 149);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(113, 12);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Select Requirement";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(328, 68);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 12);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Add Dependency";
             // 
             // panel_requirement_delete
             // 
@@ -698,33 +647,6 @@
             this.panel_requirement_delete.Name = "panel_requirement_delete";
             this.panel_requirement_delete.Size = new System.Drawing.Size(793, 477);
             this.panel_requirement_delete.TabIndex = 9;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(233, 167);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 12);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Select Requirement";
-            // 
-            // cbRequirementDeleteSelectRequirement
-            // 
-            this.cbRequirementDeleteSelectRequirement.FormattingEnabled = true;
-            this.cbRequirementDeleteSelectRequirement.Location = new System.Drawing.Point(452, 159);
-            this.cbRequirementDeleteSelectRequirement.Name = "cbRequirementDeleteSelectRequirement";
-            this.cbRequirementDeleteSelectRequirement.Size = new System.Drawing.Size(121, 20);
-            this.cbRequirementDeleteSelectRequirement.TabIndex = 1;
-            // 
-            // btRequirementDeleteDelete
-            // 
-            this.btRequirementDeleteDelete.Location = new System.Drawing.Point(342, 293);
-            this.btRequirementDeleteDelete.Name = "btRequirementDeleteDelete";
-            this.btRequirementDeleteDelete.Size = new System.Drawing.Size(75, 23);
-            this.btRequirementDeleteDelete.TabIndex = 2;
-            this.btRequirementDeleteDelete.Text = "Delete";
-            this.btRequirementDeleteDelete.UseVisualStyleBackColor = true;
-            this.btRequirementDeleteDelete.Click += new System.EventHandler(this.btRequirementDeleteDelete_Click);
             // 
             // cbRequirementDeleteSelectProject
             // 
@@ -744,19 +666,46 @@
             this.label6.TabIndex = 3;
             this.label6.Text = "Select Project";
             // 
+            // btRequirementDeleteDelete
+            // 
+            this.btRequirementDeleteDelete.Location = new System.Drawing.Point(342, 293);
+            this.btRequirementDeleteDelete.Name = "btRequirementDeleteDelete";
+            this.btRequirementDeleteDelete.Size = new System.Drawing.Size(75, 23);
+            this.btRequirementDeleteDelete.TabIndex = 2;
+            this.btRequirementDeleteDelete.Text = "Delete";
+            this.btRequirementDeleteDelete.UseVisualStyleBackColor = true;
+            this.btRequirementDeleteDelete.Click += new System.EventHandler(this.btRequirementDeleteDelete_Click);
+            // 
+            // cbRequirementDeleteSelectRequirement
+            // 
+            this.cbRequirementDeleteSelectRequirement.FormattingEnabled = true;
+            this.cbRequirementDeleteSelectRequirement.Location = new System.Drawing.Point(452, 159);
+            this.cbRequirementDeleteSelectRequirement.Name = "cbRequirementDeleteSelectRequirement";
+            this.cbRequirementDeleteSelectRequirement.Size = new System.Drawing.Size(121, 20);
+            this.cbRequirementDeleteSelectRequirement.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(233, 167);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(113, 12);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Select Requirement";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 473);
-            this.Controls.Add(this.panel_requirement_delete);
-            this.Controls.Add(this.panel_requirement_edit);
+            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.btlogout);
+            this.Controls.Add(this.panel_requirement_edit);
+            this.Controls.Add(this.panel_requirement_delete);
             this.Controls.Add(this.panel_requirement_add);
             this.Controls.Add(this.panel_project_delete);
             this.Controls.Add(this.panel_project_edit);
             this.Controls.Add(this.panel_project_add);
-            this.Controls.Add(this.treeView1);
             this.Name = "Main";
             this.Text = "Main page";
             this.panel_project_add.ResumeLayout(false);
@@ -814,30 +763,25 @@
         private System.Windows.Forms.Label lbRequirementEditSelectProject;
         private System.Windows.Forms.ComboBox cbRequirementEditSelectRequirement;
         private System.Windows.Forms.Label lbRequirementSelectRequirement;
-        private System.Windows.Forms.TextBox tbRequirementEditDescription;
-        private System.Windows.Forms.Label lbRequirementEditDescription;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label lbRequirementEditStatus;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button btRequirementEditUpdateDependency;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbRequirementEditDependencyChangeTo;
-        private System.Windows.Forms.Button btRequirementEditDeleteDependency;
         private System.Windows.Forms.Button btRequirementEditUpdateRequirement;
         private System.Windows.Forms.Button btRequirementEditAddDependency;
         private System.Windows.Forms.Panel panel_requirement_edit_addDependency;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btRequirementEditAddDependencySubmit;
         private System.Windows.Forms.Button btRequirementEditAddDependencyBack;
-        private System.Windows.Forms.TextBox tbRequirementEditAddDependency;
         private System.Windows.Forms.Panel panel_requirement_delete;
         private System.Windows.Forms.Button btRequirementDeleteDelete;
         private System.Windows.Forms.ComboBox cbRequirementDeleteSelectRequirement;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbRequirementDeleteSelectProject;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btRequirementEditDeleteDependency;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbRequirementEditAddDependencySelectRequirement;
     }
 }
