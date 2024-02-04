@@ -78,6 +78,7 @@ namespace Management_System
                     panel_requirement_add.BringToFront();
                     cbRequirementAddProject.Items.Clear();
                     cbRequirementAddProject.Text = "";
+                    cbRequirementAddStatus.Text = "";
                     List<string> projectNamesRequirement = dbOperations.LoadProjects();
                     foreach (string projectName in projectNamesRequirement)
                     {
@@ -97,14 +98,6 @@ namespace Management_System
                     {
                         cbRequirementEditSelectProject.Items.Add(projectName);
                     }
-                    /*if (!string.IsNullOrEmpty(cbRequirementEditSelectProject.Text))
-                    {
-                        List<string> requirementNames = dbOperations.LoadRequirements(cbRequirementEditSelectProject.Text);
-                        foreach (string requirementName in requirementNames)
-                        {
-                            cbRequirementEditSelectRequirement.Items.Add(requirementName);
-                        }
-                    }*/
                     break;
                 case "ndRequirementDelete":// if the node is ndRequirementDelete
                     cbRequirementDeleteSelectProject.Items.Clear();
@@ -136,51 +129,86 @@ namespace Management_System
         // add project
         private void btProjectAddSubmit_Click(object sender, EventArgs e)
         {
-            dbOperations.InsertProject(tbProjectAddName.Text, tbProjectAddDescription.Text);
-            MessageBox.Show("Add Successful");
-            cbProjectSelect.Items.Clear();
-            List<string> projectNames = dbOperations.LoadProjects();
-            foreach (string projectName in projectNames)
+            try
             {
-                cbProjectSelect.Items.Add(projectName);
+                dbOperations.InsertProject(tbProjectAddName.Text, tbProjectAddDescription.Text);
+                MessageBox.Show("Add Successful");
+                cbProjectSelect.Items.Clear();
+                tbProjectAddName.Text = "";
+                tbProjectAddDescription.Text = "";
+                List<string> projectNames = dbOperations.LoadProjects();
+                foreach (string projectName in projectNames)
+                {
+                    cbProjectSelect.Items.Add(projectName);
+                }
+            }
+            catch (Exception ex)
+            {
+                // if catch an exception, show the message
+                MessageBox.Show("Add Failed: " + ex.Message);
             }
         }
         // edit project
         private void btProjectEditSubmit_Click(object sender, EventArgs e)
         {
-            dbOperations.EditProject(cbProjectSelect.Text, tbProjectEditDescription.Text);
-            MessageBox.Show("Edit Successful");
-            cbProjectSelect.Items.Clear();
-            List<string> projectNames = dbOperations.LoadProjects();
-            foreach (string projectName in projectNames)
+            try
             {
-                cbProjectSelect.Items.Add(projectName);
+                dbOperations.EditProject(cbProjectSelect.Text, tbProjectEditDescription.Text);
+                MessageBox.Show("Edit Successful");
+                cbProjectSelect.Items.Clear();
+                List<string> projectNames = dbOperations.LoadProjects();
+                foreach (string projectName in projectNames)
+                {
+                    cbProjectSelect.Items.Add(projectName);
+                }
+                tbProjectEditDescription.Clear();
+                cbProjectSelect.Text = "";
             }
-            tbProjectEditDescription.Clear();
-            cbProjectSelect.Text = "";
+            catch (Exception ex)
+            {
+                // if catch an exception, show the message
+                MessageBox.Show("Edit Failed: " + ex.Message);
+            }
         }
         // delete project
         private void btProjectDeleteDelete_Click(object sender, EventArgs e)
         {
-            dbOperations.DeleteProject(cbProjectDeleteSelectProject.Text);
-            MessageBox.Show("Delete Successful");
-            cbProjectDeleteSelectProject.Items.Clear();
-            List<string> projectNames = dbOperations.LoadProjects();
-            foreach (string projectName in projectNames)
+            try
             {
-                cbProjectDeleteSelectProject.Items.Add(projectName);
+
+                dbOperations.DeleteProject(cbProjectDeleteSelectProject.Text);
+                MessageBox.Show("Delete Successful");
+                cbProjectDeleteSelectProject.Items.Clear();
+                List<string> projectNames = dbOperations.LoadProjects();
+                foreach (string projectName in projectNames)
+                {
+                    cbProjectDeleteSelectProject.Items.Add(projectName);
+                }
+                cbProjectDeleteSelectProject.Text = "";
             }
-            cbProjectDeleteSelectProject.Text = "";
+            catch (Exception ex)
+            {
+                // if catch an exception, show the message
+                MessageBox.Show("Delete Failed: " + ex.Message);
+            }
         }
         private void btRequirementAddSubmit_Click(object sender, EventArgs e)
         {
-            dbOperations.InsertRequirement(cbRequirementAddProject.Text, tbRequirementAddName.Text, tbRequirementAddDescription.Text, cbRequirementAddStatus.Text, tbRequirementAddVersion.Text);
-            MessageBox.Show("Add Successful");
-            cbRequirementAddProject.Text = "";
-            tbRequirementAddName.Clear();
-            tbRequirementAddDescription.Clear();
-            cbRequirementAddStatus.Text = "";
-            tbRequirementAddVersion.Clear();
+            try
+            {
+                dbOperations.InsertRequirement(cbRequirementAddProject.Text, tbRequirementAddName.Text, tbRequirementAddDescription.Text, cbRequirementAddStatus.Text, tbRequirementAddVersion.Text);
+                MessageBox.Show("Add Successful");
+                cbRequirementAddProject.Text = "";
+                tbRequirementAddName.Clear();
+                tbRequirementAddDescription.Clear();
+                cbRequirementAddStatus.Text = "";
+                tbRequirementAddVersion.Clear();
+            }
+            catch (Exception ex)
+            {
+                // if catch an exception, show the message
+                MessageBox.Show("Add Failed: " + ex.Message);
+            }
         }
         private void btlogout_Click(object sender, EventArgs e)
         {
@@ -258,34 +286,51 @@ namespace Management_System
         }*/
         private void btRequirementEditDeleteDependency_Click(object sender, EventArgs e)
         {
-            string dependentRequirementName = listBox1.SelectedItem.ToString();
-            string requirementName = cbRequirementEditSelectRequirement.Text;
-            string requirementId = dbOperations.GetRequirementID(requirementName);
-            string dependentRequirementId = dbOperations.GetRequirementID(dependentRequirementName);
-            int dependencyId = dbOperations.GetDependencyID(requirementId, dependentRequirementId);
-            dbOperations.DeleteDependency(dependencyId);
-            MessageBox.Show("Delete Successful");
-            FillDependenciesListBox();
+            try
+            {
+                string dependentRequirementName = listBox1.SelectedItem.ToString();
+                string requirementName = cbRequirementEditSelectRequirement.Text;
+                string requirementId = dbOperations.GetRequirementID(requirementName);
+                string dependentRequirementId = dbOperations.GetRequirementID(dependentRequirementName);
+                int dependencyId = dbOperations.GetDependencyID(requirementId, dependentRequirementId);
+                dbOperations.DeleteDependency(dependencyId);
+                MessageBox.Show("Delete Successful");
+                FillDependenciesListBox();
+            }
+            catch (Exception ex)
+            {
+                // if catch an exception, show the message
+                MessageBox.Show("Delete Failed: " + ex.Message);
+            }
         }
+
         private void btRequirementEditUpdateRequirement_Click(object sender, EventArgs e)
         {
-            if (cbRequirementEditSelectRequirement.SelectedItem == null)
+            try
             {
-                MessageBox.Show("Please select a requirement first");
-                return;
+                if (cbRequirementEditSelectRequirement.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select a requirement first");
+                    return;
+                }
+                string requirementStatus = "Default";
+                if (checkBox1.Checked)
+                {
+                    requirementStatus = "Active";
+                }
+                else if (checkBox2.Checked)
+                {
+                    requirementStatus = "Deactive";
+                }
+                string requirementId = dbOperations.GetRequirementID(cbRequirementEditSelectRequirement.Text);
+                dbOperations.UpdateRequirement(cbRequirementEditSelectProject.Text, requirementId, cbRequirementEditSelectRequirement.Text, requirementStatus);
+                MessageBox.Show("Update Successful");
             }
-            string requirementStatus = "Default";
-            if (checkBox1.Checked)
+            catch (Exception ex)
             {
-                requirementStatus = "Active";
+                // if catch an exception, show the message
+                MessageBox.Show("Update Failed: " + ex.Message);
             }
-            else if (checkBox2.Checked)
-            {
-                requirementStatus = "Deactive";
-            }
-            string requirementId = dbOperations.GetRequirementID(cbRequirementEditSelectRequirement.Text);
-            dbOperations.UpdateRequirement(cbRequirementEditSelectProject.Text, requirementId, cbRequirementEditSelectRequirement.Text,  requirementStatus);
-            MessageBox.Show("Update Successful");
         }
         private void btRequirementEditAddDependency_Click(object sender, EventArgs e)
         {
@@ -311,16 +356,32 @@ namespace Management_System
         }
         private void btRequirementEditAddDependencySubmit_Click(object sender, EventArgs e)
         {
+            try
+            { 
             dbOperations.InsertDependency(cbRequirementEditSelectRequirement.Text, cbRequirementEditAddDependencySelectRequirement.Text);
             MessageBox.Show("Add Successful");
             panel_requirement_edit_addDependency.Visible = false;
             FillDependenciesListBox();
+            }
+            catch (Exception ex)
+            {
+                // if catch an exception, show the message
+                MessageBox.Show("Add Failed: " + ex.Message);
+            }
         }
 
         private void btRequirementDeleteDelete_Click(object sender, EventArgs e)
         {
-            dbOperations.DeleteRequirement(dbOperations.GetRequirementID(cbRequirementDeleteSelectRequirement.Text), cbRequirementDeleteSelectRequirement.Text);
-            MessageBox.Show("Delete Successful");
+            try
+            {
+                dbOperations.DeleteRequirement(dbOperations.GetRequirementID(cbRequirementDeleteSelectRequirement.Text), cbRequirementDeleteSelectRequirement.Text);
+                MessageBox.Show("Delete Successful");
+            }
+            catch (Exception ex)
+            {
+                // if catch an exception, show the message
+                MessageBox.Show("Delete Failed: " + ex.Message);
+            }
         }
 
     }
