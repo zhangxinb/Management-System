@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
 
 
 namespace Management_System
@@ -55,14 +47,15 @@ namespace Management_System
                     this.Hide();
                     Main main = new Main();
                     main.Show();
+                    Program.user_name = tbUserName.Text;
                 }
 
                 else
-                    {
-                        MessageBox.Show("Invalid Username or Password");
-                    }
+                {
+                    MessageBox.Show("Invalid Username or Password");
                 }
-            
+            }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);//show exception message

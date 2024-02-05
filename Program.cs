@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Management_System
 {
     internal class Program
     {
+        public static string user_name;
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            //you can change the form when you want to test the program, for example: Application.Run(new Login()); this will run the login form
+            Application.Run(new Login());
         }
     }
 }

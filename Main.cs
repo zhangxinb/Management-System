@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using static Management_System.MySqlDatabaseOperations;
 
 
 namespace Management_System
 {
     public partial class Main : Form
     {
+        private const string V = "";
+
         //bt = button
         //cb = combobox
         //tb = textbox
         //nd = node
         //lb = label
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+        private Dictionary<string, string> userRoles = new Dictionary<string, string>();
+
         public Main()
         {
             InitializeComponent();
@@ -30,55 +27,107 @@ namespace Management_System
             panel_requirement_add.Visible = false;
             panel_requirement_edit.Visible = false;
             panel_requirement_delete.Visible = false;
+            panel_project_management.Visible = false;
         }
         private void Main_Load(object sender, EventArgs e)
         {
-
+            
         }
         // select project
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            string user_name = Program.user_name;
+            string userId = dbOperations.GetUserId(user_name);
+            bool issuperadmin = dbOperations.IsSuperAdmin(userId);
+            dbOperations.LoadUserRoles(userId, userRoles);// load the user roles
             TreeNode selectdNode = e.Node;//get the select node
+            //string userRole = userRoles["role"];
             switch (selectdNode.Name)
             {
+                case "ndUserProjectManagement":
+                    if (issuperadmin == true)
+                    {
+                        panel_project_management.Visible = true;
+                        panel_project_management.BringToFront();
+                        cbUserProjectManagementSelectProject.Items.Clear();
+                        cbUserProjectManagementSelectProject.Text = V;
+
+                        FillUserNames(dataGridView1);
+
+                        List<string> projectNames = dbOperations.LoadProjects();
+                        foreach (string projectName in projectNames)
+                        {
+                            cbUserProjectManagementSelectProject.Items.Add(projectName);
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to manage projects");
+                        break;
+                    }
                 case "ndProjectAdd"://if the node is ndProjectAdd
-                    panel_project_add.Visible = true;
-                    panel_project_add.BringToFront();
-                    panel_project_edit.Visible = false;
-                    panel_project_delete.Visible = false;
-                    break;
+                    if (issuperadmin == true)
+                    {
+                        panel_project_add.Visible = true;
+                        panel_project_add.BringToFront();
+                        panel_project_edit.Visible = false;
+                        panel_project_delete.Visible = false;
+                        break;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to add a project");
+                        break;
+                    }
                 case "ndProjectEdit"://if the node is ndProjectEdit
-                    panel_project_add.Visible = false;
-                    panel_project_delete.Visible = false;
-                    panel_project_edit.Visible = true;
-                    panel_project_edit.BringToFront();
-                    cbProjectSelect.Items.Clear();
-                    cbProjectSelect.Text = "";
-                    List<string> projectNames = dbOperations.LoadProjects();
-                    foreach (string projectName in projectNames)
+                    if (issuperadmin == true)
                     {
-                        cbProjectSelect.Items.Add(projectName);
+                        panel_project_add.Visible = false;
+                        panel_project_delete.Visible = false;
+                        panel_project_edit.Visible = true;
+                        panel_project_edit.BringToFront();
+                        cbProjectSelect.Items.Clear();
+                        cbProjectSelect.Text = V;
+                        List<string> projectNames = dbOperations.LoadProjects();
+                        foreach (string projectName in projectNames)
+                        {
+                            cbProjectSelect.Items.Add(projectName);
+                        }
+                        break;
                     }
-                    break;
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to edit a project");
+                        break;
+                    }
                 case "ndProjectDelete":// if the node is ndProjectDelete
-                    panel_project_add.Visible = false;
-                    panel_project_edit.Visible = false;
-                    panel_project_delete.Visible = true;
-                    panel_project_delete.BringToFront();
-                    cbProjectDeleteSelectProject.Items.Clear();
-                    cbProjectDeleteSelectProject.Text = "";
-                    List<string> projectNames2 = dbOperations.LoadProjects();
-                    foreach (string projectName in projectNames2)
+                    if (issuperadmin == true)
                     {
-                        cbProjectDeleteSelectProject.Items.Add(projectName);
+                        panel_project_add.Visible = false;
+                        panel_project_edit.Visible = false;
+                        panel_project_delete.Visible = true;
+                        panel_project_delete.BringToFront();
+                        cbProjectDeleteSelectProject.Items.Clear();
+                        cbProjectDeleteSelectProject.Text = V;
+                        List<string> projectNames2 = dbOperations.LoadProjects();
+                        foreach (string projectName in projectNames2)
+                        {
+                            cbProjectDeleteSelectProject.Items.Add(projectName);
+                        }
+                        break;
                     }
-                    break;
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to delete a project");
+                        break;
+                    }
                 case "ndRequirementAdd":// if the node is ndRequirementAdd
                     panel_requirement_add.Visible = true;
                     panel_requirement_add.BringToFront();
                     cbRequirementAddProject.Items.Clear();
-                    cbRequirementAddProject.Text = "";
-                    cbRequirementAddStatus.Text = "";
+                    cbRequirementAddProject.Text = V;
+                    cbRequirementAddStatus.Text = V;
                     List<string> projectNamesRequirement = dbOperations.LoadProjects();
                     foreach (string projectName in projectNamesRequirement)
                     {
@@ -90,9 +139,9 @@ namespace Management_System
                     panel_requirement_edit_addDependency.Visible = false;
                     panel_requirement_edit.BringToFront();
                     cbRequirementEditSelectProject.Items.Clear();
-                    cbRequirementEditSelectProject.Text = "";
+                    cbRequirementEditSelectProject.Text = V;
                     cbRequirementEditSelectRequirement.Items.Clear();
-                    cbRequirementEditSelectRequirement.Text = "";
+                    cbRequirementEditSelectRequirement.Text = V;
                     List<string> projectNames3 = dbOperations.LoadProjects();
                     foreach (string projectName in projectNames3)
                     {
@@ -101,9 +150,9 @@ namespace Management_System
                     break;
                 case "ndRequirementDelete":// if the node is ndRequirementDelete
                     cbRequirementDeleteSelectProject.Items.Clear();
-                    cbRequirementDeleteSelectProject.Text = "";
+                    cbRequirementDeleteSelectProject.Text = V;
                     cbRequirementDeleteSelectRequirement.Items.Clear();
-                    cbRequirementDeleteSelectRequirement.Text = "";
+                    cbRequirementDeleteSelectRequirement.Text = V;
                     panel_requirement_delete.Visible = true;
                     panel_requirement_delete.BringToFront();
                     List<string> projectNames4 = dbOperations.LoadProjects();
@@ -134,8 +183,8 @@ namespace Management_System
                 dbOperations.InsertProject(tbProjectAddName.Text, tbProjectAddDescription.Text);
                 MessageBox.Show("Add Successful");
                 cbProjectSelect.Items.Clear();
-                tbProjectAddName.Text = "";
-                tbProjectAddDescription.Text = "";
+                tbProjectAddName.Text = V;
+                tbProjectAddDescription.Text = V;
                 List<string> projectNames = dbOperations.LoadProjects();
                 foreach (string projectName in projectNames)
                 {
@@ -162,7 +211,7 @@ namespace Management_System
                     cbProjectSelect.Items.Add(projectName);
                 }
                 tbProjectEditDescription.Clear();
-                cbProjectSelect.Text = "";
+                cbProjectSelect.Text = V;
             }
             catch (Exception ex)
             {
@@ -184,7 +233,7 @@ namespace Management_System
                 {
                     cbProjectDeleteSelectProject.Items.Add(projectName);
                 }
-                cbProjectDeleteSelectProject.Text = "";
+                cbProjectDeleteSelectProject.Text = V;
             }
             catch (Exception ex)
             {
@@ -198,10 +247,10 @@ namespace Management_System
             {
                 dbOperations.InsertRequirement(cbRequirementAddProject.Text, tbRequirementAddName.Text, tbRequirementAddDescription.Text, cbRequirementAddStatus.Text, tbRequirementAddVersion.Text);
                 MessageBox.Show("Add Successful");
-                cbRequirementAddProject.Text = "";
+                cbRequirementAddProject.Text = V;
                 tbRequirementAddName.Clear();
                 tbRequirementAddDescription.Clear();
-                cbRequirementAddStatus.Text = "";
+                cbRequirementAddStatus.Text = V;
                 tbRequirementAddVersion.Clear();
             }
             catch (Exception ex)
@@ -221,7 +270,7 @@ namespace Management_System
         private void cbRequirementEditSelectProject_SelectedIndexChanged(object sender, EventArgs e)
         {
             cbRequirementEditSelectRequirement.Items.Clear();
-            cbRequirementEditSelectRequirement.Text = "";
+            cbRequirementEditSelectRequirement.Text = V;
 
             if (!string.IsNullOrEmpty(cbRequirementEditSelectProject.Text))
             {
@@ -342,7 +391,7 @@ namespace Management_System
             panel_requirement_edit_addDependency.Visible = true;
             panel_requirement_edit_addDependency.BringToFront();
             cbRequirementEditAddDependencySelectRequirement.Items.Clear();
-            cbRequirementEditAddDependencySelectRequirement.Text = "";
+            cbRequirementEditAddDependencySelectRequirement.Text = V;
             List<string> requirementNames = dbOperations.ListAllRequirements();
             requirementNames.Remove(cbRequirementEditSelectRequirement.Text);
             foreach (string requirementName in requirementNames)
@@ -357,11 +406,11 @@ namespace Management_System
         private void btRequirementEditAddDependencySubmit_Click(object sender, EventArgs e)
         {
             try
-            { 
-            dbOperations.InsertDependency(cbRequirementEditSelectRequirement.Text, cbRequirementEditAddDependencySelectRequirement.Text);
-            MessageBox.Show("Add Successful");
-            panel_requirement_edit_addDependency.Visible = false;
-            FillDependenciesListBox();
+            {
+                dbOperations.InsertDependency(cbRequirementEditSelectRequirement.Text, cbRequirementEditAddDependencySelectRequirement.Text);
+                MessageBox.Show("Add Successful");
+                panel_requirement_edit_addDependency.Visible = false;
+                FillDependenciesListBox();
             }
             catch (Exception ex)
             {
@@ -383,6 +432,22 @@ namespace Management_System
                 MessageBox.Show("Delete Failed: " + ex.Message);
             }
         }
-
+        private void FillUserNames(DataGridView dgv)
+        {
+            List<string> list = dbOperations.ListUsers();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("user_name", typeof(string));
+            foreach (string s in list)
+            {
+                DataRow row = dt.NewRow();
+                row[0] = s;
+                dt.Rows.Add(row);
+            }
+            dgv.DataSource = dt;
+        }
+        private void cbUserProjectManagementSelectProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillUserNames(dataGridView1);
+        }
     }
 }

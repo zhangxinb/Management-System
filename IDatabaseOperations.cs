@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Management_System
 {
@@ -12,6 +7,7 @@ namespace Management_System
         void InsertUser(string username, string password, string phoneNum);
         string GetUserPassword(string username);
         List<string> LoadProjects();
+        List<string> ListUsers();
         void InsertProject(string projectName, string projectDescriptionr);
         void EditProject(string projectName, string projectDescriptionr);
         void DeleteProject(string projectName);
@@ -26,8 +22,12 @@ namespace Management_System
         List<string> LoadDependencies(string requirementName);
         int GetDependencyID(string requirementID, string denpendentRequirementID);
         void InsertDependency(string requirementName, string dependencyDescription);
-       // void UpdateDependency(int dependencyID, string dependencyDescription);
+        // void UpdateDependency(int dependencyID, string dependencyDescription);
         void DeleteDependency(int dependencyId);
+        string GetUserId(string username);
+        void LoadUserRoles(string userId, Dictionary<string, string> userRoles);
+        bool IsSuperAdmin(string userId);
+        void SetProjectAdmin(string userId, string projectId);
     }
 
 }
