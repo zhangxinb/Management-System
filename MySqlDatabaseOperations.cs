@@ -9,9 +9,10 @@ namespace Management_System
 
     public class MySqlDatabaseOperations : IDatabaseOperations
     {
+        // The connection string to the database
         private string connectionString = "server=database-1.c7e2oyq4onm0.eu-north-1.rds.amazonaws.com;user id=admin;password=A871218ss5168;database=management_system; port = 3306";
 
-
+        //insert the user
         public void InsertUser(string username, string password, string phoneNum)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -25,6 +26,7 @@ namespace Management_System
                 cmd.ExecuteNonQuery();
             }
         }
+        //get the user's password from the database
         public string GetUserPassword(string username)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -44,7 +46,7 @@ namespace Management_System
                 }
             }
         }
-        //read all project_naame from database
+        //read all project_names from database
         public List<string> LoadProjects()
         {
             List<string> projectNames = new List<string>();
@@ -64,6 +66,7 @@ namespace Management_System
 
             return projectNames;
         }
+        //insert the project
         public void InsertProject(string projectName, string projectDescription)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -76,6 +79,7 @@ namespace Management_System
                 cmd.ExecuteNonQuery();
             }
         }
+        //edit the project
         public void EditProject(string projectName, string projectDescription)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -89,6 +93,7 @@ namespace Management_System
                 cmd.ExecuteNonQuery();
             }
         }
+        //delete the project
         public void DeleteProject(string projectName)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -101,25 +106,37 @@ namespace Management_System
                 cmd.ExecuteNonQuery();
             }
         }
+        //get the project_id from the database
         public string GetProjectID(string projectName)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string query = "SELECT project_id FROM projects WHERE project_name = @project_name";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@project_name", projectName);
-                connection.Open();
-                MySqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    return reader["project_id"].ToString();
-                }
-                else
-                {
+                try
+                { 
+
+                   string query = "SELECT project_id FROM projects WHERE project_name = @project_name";
+                   MySqlCommand cmd = new MySqlCommand(query, connection);
+                   cmd.Parameters.AddWithValue("@project_name", projectName);
+                   connection.Open();
+                   MySqlDataReader reader = cmd.ExecuteReader();
+                   if (reader.Read())
+                   {
+                       return reader["project_id"].ToString();
+                   }
+                   else
+                   {
                     throw new Exception("Project not found");
+                   }
+                }
+
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return null;
                 }
             }
         }
+        //list all the requirements of the project
         public List<string> LoadRequirements(string projectName)
         {
             List<string> requirementNames = new List<string>();
@@ -138,6 +155,7 @@ namespace Management_System
             }
             return requirementNames;
         }
+        //list all the requirements
         public List<string> ListAllRequirements()
         {
             List<string> requirementNames = new List<string>();
@@ -154,6 +172,7 @@ namespace Management_System
             }
             return requirementNames;
         }
+        //get the requirement_id from the database
         public string GetRequirementID(string requirementName)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -167,6 +186,7 @@ namespace Management_System
                 return reader["requirement_id"].ToString();
             }
         }
+        //insert the requirement
         public void InsertRequirement(string projectName, string requirementName, string requirementDescription, string requirementStatus, string requirementVersion)
         {
             //still missing dependencies
@@ -192,6 +212,7 @@ namespace Management_System
             versionNumber++;
             return versionNumber.ToString();
         }
+        //update the requirement
         public void UpdateRequirement(string projectName, string requirementID, string requirementName, string requirementStatus)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -223,6 +244,7 @@ namespace Management_System
                 updateCmd.ExecuteNonQuery();
             }
         }
+        //delete the requirement
         public void DeleteRequirement(string requirementId, string requirementName)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -259,8 +281,7 @@ namespace Management_System
                 }
             }
         }
-
-
+        //Disconnect from the database
         public void Logout()
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -271,6 +292,7 @@ namespace Management_System
                 }
             }
         }
+        // Get the dependencies ID from the database
         public List<string> LoadDependencies(string requirementName)
         {
             List<string> dependencies = new List<string>();
@@ -303,6 +325,7 @@ namespace Management_System
             }
             return dependencies;
         }
+        // Get the dependency ID from the database
         public int GetDependencyID(string requirementID, string dependentRequirementID)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -377,6 +400,7 @@ namespace Management_System
                 cmd.ExecuteNonQuery();
             }
         }*/
+        //delete the dependency
         public void DeleteDependency(int dependencyId)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -388,6 +412,7 @@ namespace Management_System
                 cmd.ExecuteNonQuery();
             }
         }
+        // Get the user's ID from the database
         public string GetUserId(string username)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -407,6 +432,7 @@ namespace Management_System
                 }
             }
         }
+        // Check if the user is a super admin
         public bool IsSuperAdmin(string userId)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -427,6 +453,7 @@ namespace Management_System
 
             }
         }
+        // Load the user's roles in each project
         public void LoadUserRoles(string userId, Dictionary<string, string> userRoles)
         {
             // Clear the dictionary before loading new roles
@@ -464,6 +491,7 @@ namespace Management_System
                 Console.WriteLine("An error occurred while loading user roles: " + ex.Message);
             }
         }
+        // List all users except the admin
         public List<string> ListUsers()
         {
             try
@@ -472,7 +500,7 @@ namespace Management_System
                 {
                     connection.Open();
 
-                    string sql = "SELECT user_name FROM users";
+                    string sql = "SELECT user_name FROM users WHERE user_name != 'admin'";
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -498,6 +526,7 @@ namespace Management_System
             }
 
         }
+        // Set the user as the admin of the project
         public void SetProjectAdmin(string userId, string projectId)
         {
             try
@@ -522,6 +551,166 @@ namespace Management_System
                 Console.WriteLine("An error occurred while setting project admin: " + ex.Message);
             }
         }
+        // Link the user to the project
+        public void LinkUserToProject(string userId, string projectId)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, 'User', @create_time)";
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.Parameters.AddWithValue("@projectId", projectId);
+                        command.Parameters.AddWithValue("@create_time", DateTime.Now);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Handle any errors that occur during the database operations
+                Console.WriteLine("An error occurred while linking user to project: " + ex.Message);
+            }
+        }
+        // Check if the user is an admin of any project
+        public bool IsAdminOfAnyProjects(string userId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "select role from user_roles where user_id = @userId";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                connection.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return result.ToString() == "Admin";
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        // Check if the user is an admin of the project
+        public bool IsAdminOfThisProject(string userId, string projectId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "select role from user_roles where user_id = @userId and project_id = @projectId";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                connection.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return result.ToString() == "Admin";
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        // Get the admin of the project
+        public string AdminOfProject(string projectId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "select user_id from user_roles where project_id = @projectId and role = 'Admin'";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                connection.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return result.ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        // Get the names of the projects that the user is an admin of
+        public List<string> GetUserAdminProjects(string userId)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sql = "SELECT project_id FROM user_roles WHERE user_id = @userId AND role = 'Admin'";
+                    List<string> projectIds = new List<string>();
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", userId);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string projectId = reader["project_id"].ToString();
+                                projectIds.Add(projectId);
+                            }
+                        }
+                    }
+
+                    List<string> projectNames = new List<string>();
+                    foreach (string projectId in projectIds)
+                    {
+                        string sqlProject = "SELECT project_name FROM projects WHERE project_id = @projectId";
+                        using (MySqlCommand commandProject = new MySqlCommand(sqlProject, connection))
+                        {
+                            commandProject.Parameters.AddWithValue("@projectId", projectId);
+
+                            using (MySqlDataReader readerProject = commandProject.ExecuteReader())
+                            {
+                                if (readerProject.Read())
+                                {
+                                    string projectName = readerProject["project_name"].ToString();
+                                    projectNames.Add(projectName);
+                                }
+                            }
+                        }
+                    }
+                    return projectNames;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Handle any errors that occur during the database operations
+                Console.WriteLine("An error occurred while getting user admin projects: " + ex.Message);
+                return new List<string>();
+            }
+        }
+        // Get the user's name from the database
+        public string GetUserName(string userId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "select user_name from users where user_id = @userId";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                connection.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return result.ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
     }
 
 }

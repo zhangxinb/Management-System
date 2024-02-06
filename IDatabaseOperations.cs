@@ -28,6 +28,12 @@ namespace Management_System
         void LoadUserRoles(string userId, Dictionary<string, string> userRoles);
         bool IsSuperAdmin(string userId);
         void SetProjectAdmin(string userId, string projectId);
+        void LinkUserToProject(string userId, string projectId);
+        bool IsAdminOfAnyProjects(string userId);
+        string AdminOfProject(string projectId);
+        bool IsAdminOfThisProject(string userId, string projectId);
+        List<string> GetUserAdminProjects(string userId);
+        string GetUserName(string userId);
     }
 
 }

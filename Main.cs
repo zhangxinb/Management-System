@@ -28,6 +28,7 @@ namespace Management_System
             panel_requirement_edit.Visible = false;
             panel_requirement_delete.Visible = false;
             panel_project_management.Visible = false;
+            panel_member_management.Visible = false;
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -39,6 +40,7 @@ namespace Management_System
             string user_name = Program.user_name;
             string userId = dbOperations.GetUserId(user_name);
             bool issuperadmin = dbOperations.IsSuperAdmin(userId);
+            bool isadminofanyprojects = dbOperations.IsAdminOfAnyProjects(userId);
             dbOperations.LoadUserRoles(userId, userRoles);// load the user roles
             TreeNode selectdNode = e.Node;//get the select node
             //string userRole = userRoles["role"];
@@ -52,7 +54,7 @@ namespace Management_System
                         cbUserProjectManagementSelectProject.Items.Clear();
                         cbUserProjectManagementSelectProject.Text = V;
 
-                        FillUserNames(dataGridView1);
+                        FillUserNames(dgvSelectProjectAdmin);
 
                         List<string> projectNames = dbOperations.LoadProjects();
                         foreach (string projectName in projectNames)
@@ -66,6 +68,27 @@ namespace Management_System
                         MessageBox.Show("You do not have permission to manage projects");
                         break;
                     }
+
+                case "ndUserMemberManagement":// if the node is ndMemberManagement
+                    if (isadminofanyprojects == true)
+                    { 
+                        panel_member_management.Visible = true;
+                        panel_member_management.BringToFront();
+                        cbMemberManagementSelectProject.Items.Clear();
+                        cbMemberManagementSelectProject.Text = V;
+                        List<string> projectNames5 = dbOperations.GetUserAdminProjects(userId);
+                        foreach (string projectName in projectNames5)
+                        {
+                            cbMemberManagementSelectProject.Items.Add(projectName);
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to manage members");
+                        break;
+                    }
+                   
                 case "ndProjectAdd"://if the node is ndProjectAdd
                     if (issuperadmin == true)
                     {
@@ -161,6 +184,7 @@ namespace Management_System
                         cbRequirementDeleteSelectProject.Items.Add(projectName);
                     }
                     break;
+               
             }
         }
         private void Project_Load(object sender, EventArgs e)
@@ -437,17 +461,70 @@ namespace Management_System
             List<string> list = dbOperations.ListUsers();
             DataTable dt = new DataTable();
             dt.Columns.Add("user_name", typeof(string));
+            
+            string projectId = dbOperations.GetProjectID(cbUserProjectManagementSelectProject.Text);
+            string adminUserId = dbOperations.AdminOfProject(projectId);
+            string adminUser = dbOperations.GetUserName(adminUserId);
+
             foreach (string s in list)
             {
-                DataRow row = dt.NewRow();
-                row[0] = s;
-                dt.Rows.Add(row);
+                if (s != adminUser)
+                {
+                    DataRow row = dt.NewRow();
+                    row[0] = s;
+                    dt.Rows.Add(row);
+                }
             }
+               
             dgv.DataSource = dt;
         }
         private void cbUserProjectManagementSelectProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillUserNames(dataGridView1);
+            FillUserNames(dgvSelectProjectAdmin);
+        }
+        // control the checkbox, only one checkbox can be checked
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            int columnIndex = e.ColumnIndex;            
+
+            DataGridViewCell cell = dgvSelectProjectAdmin.CurrentRow.Cells[1];
+            if (cell is DataGridViewCheckBoxCell)
+            {
+                DataGridViewCheckBoxCell checkBoxCell = (DataGridViewCheckBoxCell)cell;
+                bool cellValue = (bool)cell.FormattedValue;
+            }
+
+            foreach (DataGridViewRow row in dgvSelectProjectAdmin.Rows)
+            {
+                if (row.Index != rowIndex)
+                {
+                    row.Cells[columnIndex].Value = false;
+                }
+            }
+        }
+
+        private void btUserProjectManagementSubmit_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvSelectProjectAdmin.Rows)
+            {
+                try
+                {
+                    DataGridViewCheckBoxCell cell = (DataGridViewCheckBoxCell)row.Cells["Admin"];
+                    if ((bool)cell.FormattedValue)
+                    {
+                        string userId = dbOperations.GetUserId(row.Cells["user_name"].Value.ToString());
+                        dbOperations.SetProjectAdmin(userId, dbOperations.GetProjectID(cbUserProjectManagementSelectProject.Text));
+                        MessageBox.Show("Submit Successful");
+                    }      
+                }
+                catch (Exception ex)
+                {
+                    // if catch an exception, show the message
+                    MessageBox.Show("Submit Failed: " + ex.Message);
+                }
+            }
+ 
         }
     }
 }

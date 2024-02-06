@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project Management");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Member Manggement");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Member Management");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2});
@@ -117,12 +117,16 @@
             this.cbRequirementDeleteSelectRequirement = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel_project_management = new System.Windows.Forms.Panel();
-            this.cbUserProjectManagementSelectProject = new System.Windows.Forms.ComboBox();
-            this.lbSelectProject = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btUserProjectManagementSubmit = new System.Windows.Forms.Button();
+            this.dgvSelectProjectAdmin = new System.Windows.Forms.DataGridView();
             this.user_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Admin = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbUserProjectManagementSelectProject = new System.Windows.Forms.ComboBox();
+            this.lbSelectProject = new System.Windows.Forms.Label();
+            this.panel_member_management = new System.Windows.Forms.Panel();
+            this.cbMemberManagementSelectProject = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.panel_project_add.SuspendLayout();
             this.panel_project_edit.SuspendLayout();
             this.panel_project_delete.SuspendLayout();
@@ -131,7 +135,8 @@
             this.panel_requirement_edit_addDependency.SuspendLayout();
             this.panel_requirement_delete.SuspendLayout();
             this.panel_project_management.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectProjectAdmin)).BeginInit();
+            this.panel_member_management.SuspendLayout();
             this.SuspendLayout();
             // 
             // mySqlCommand1
@@ -148,7 +153,7 @@
             treeNode1.Name = "ndUserProjectManagement";
             treeNode1.Text = "Project Management";
             treeNode2.Name = "ndUserMemberManagement";
-            treeNode2.Text = "Member Manggement";
+            treeNode2.Text = "Member Management";
             treeNode3.Name = "ndUser";
             treeNode3.Text = "User";
             treeNode4.Name = "ndProjectAdd";
@@ -713,7 +718,8 @@
             // 
             // panel_project_management
             // 
-            this.panel_project_management.Controls.Add(this.dataGridView1);
+            this.panel_project_management.Controls.Add(this.btUserProjectManagementSubmit);
+            this.panel_project_management.Controls.Add(this.dgvSelectProjectAdmin);
             this.panel_project_management.Controls.Add(this.label2);
             this.panel_project_management.Controls.Add(this.cbUserProjectManagementSelectProject);
             this.panel_project_management.Controls.Add(this.lbSelectProject);
@@ -721,6 +727,67 @@
             this.panel_project_management.Name = "panel_project_management";
             this.panel_project_management.Size = new System.Drawing.Size(793, 477);
             this.panel_project_management.TabIndex = 10;
+            // 
+            // btUserProjectManagementSubmit
+            // 
+            this.btUserProjectManagementSubmit.Location = new System.Drawing.Point(342, 386);
+            this.btUserProjectManagementSubmit.Name = "btUserProjectManagementSubmit";
+            this.btUserProjectManagementSubmit.Size = new System.Drawing.Size(75, 23);
+            this.btUserProjectManagementSubmit.TabIndex = 4;
+            this.btUserProjectManagementSubmit.Text = "Submit";
+            this.btUserProjectManagementSubmit.UseVisualStyleBackColor = true;
+            this.btUserProjectManagementSubmit.Click += new System.EventHandler(this.btUserProjectManagementSubmit_Click);
+            // 
+            // dgvSelectProjectAdmin
+            // 
+            this.dgvSelectProjectAdmin.AllowUserToAddRows = false;
+            this.dgvSelectProjectAdmin.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSelectProjectAdmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvSelectProjectAdmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSelectProjectAdmin.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.user_name,
+            this.Admin});
+            this.dgvSelectProjectAdmin.Location = new System.Drawing.Point(235, 118);
+            this.dgvSelectProjectAdmin.MultiSelect = false;
+            this.dgvSelectProjectAdmin.Name = "dgvSelectProjectAdmin";
+            this.dgvSelectProjectAdmin.RowHeadersVisible = false;
+            this.dgvSelectProjectAdmin.RowTemplate.Height = 23;
+            this.dgvSelectProjectAdmin.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvSelectProjectAdmin.Size = new System.Drawing.Size(301, 254);
+            this.dgvSelectProjectAdmin.TabIndex = 3;
+            this.dgvSelectProjectAdmin.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // user_name
+            // 
+            this.user_name.DataPropertyName = "user_name";
+            this.user_name.HeaderText = "Name";
+            this.user_name.Name = "user_name";
+            this.user_name.Width = 150;
+            // 
+            // Admin
+            // 
+            this.Admin.DataPropertyName = "Is_admin";
+            this.Admin.FalseValue = "";
+            this.Admin.HeaderText = "Admin";
+            this.Admin.Name = "Admin";
+            this.Admin.TrueValue = "";
+            this.Admin.Width = 150;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(321, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(125, 12);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Select Project Admin";
             // 
             // cbUserProjectManagementSelectProject
             // 
@@ -740,62 +807,38 @@
             this.lbSelectProject.TabIndex = 0;
             this.lbSelectProject.Text = "Select Project";
             // 
-            // label2
+            // panel_member_management
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(321, 88);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Select Project Admin";
+            this.panel_member_management.Controls.Add(this.cbMemberManagementSelectProject);
+            this.panel_member_management.Controls.Add(this.label7);
+            this.panel_member_management.Location = new System.Drawing.Point(122, 0);
+            this.panel_member_management.Name = "panel_member_management";
+            this.panel_member_management.Size = new System.Drawing.Size(793, 477);
+            this.panel_member_management.TabIndex = 11;
             // 
-            // dataGridView1
+            // cbMemberManagementSelectProject
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.user_name,
-            this.Admin});
-            this.dataGridView1.Location = new System.Drawing.Point(235, 118);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(299, 254);
-            this.dataGridView1.TabIndex = 3;
+            this.cbMemberManagementSelectProject.FormattingEnabled = true;
+            this.cbMemberManagementSelectProject.Location = new System.Drawing.Point(441, 44);
+            this.cbMemberManagementSelectProject.Name = "cbMemberManagementSelectProject";
+            this.cbMemberManagementSelectProject.Size = new System.Drawing.Size(121, 20);
+            this.cbMemberManagementSelectProject.TabIndex = 1;
             // 
-            // user_name
+            // label7
             // 
-            this.user_name.DataPropertyName = "user_name";
-            this.user_name.HeaderText = "Name";
-            this.user_name.Name = "user_name";
-            this.user_name.ReadOnly = true;
-            this.user_name.Width = 150;
-            // 
-            // Admin
-            // 
-            this.Admin.DataPropertyName = "Is_admin";
-            this.Admin.HeaderText = "Admin";
-            this.Admin.Name = "Admin";
-            this.Admin.ReadOnly = true;
-            this.Admin.Width = 150;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(200, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 12);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Select Project";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 473);
+            this.Controls.Add(this.panel_member_management);
             this.Controls.Add(this.panel_project_management);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.btlogout);
@@ -823,7 +866,9 @@
             this.panel_requirement_delete.PerformLayout();
             this.panel_project_management.ResumeLayout(false);
             this.panel_project_management.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectProjectAdmin)).EndInit();
+            this.panel_member_management.ResumeLayout(false);
+            this.panel_member_management.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -889,8 +934,12 @@
         private System.Windows.Forms.ComboBox cbUserProjectManagementSelectProject;
         private System.Windows.Forms.Label lbSelectProject;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvSelectProjectAdmin;
+        private System.Windows.Forms.Button btUserProjectManagementSubmit;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_name;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Admin;
+        private System.Windows.Forms.Panel panel_member_management;
+        private System.Windows.Forms.ComboBox cbMemberManagementSelectProject;
+        private System.Windows.Forms.Label label7;
     }
 }
