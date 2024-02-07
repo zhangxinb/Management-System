@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Management_System
@@ -492,7 +493,7 @@ namespace Management_System
             }
         }
         // List all users except the admin
-        public List<string> ListUsers()
+        public List<string> ListAllUsersExceptSadmin()
         {
             try
             {
@@ -646,6 +647,11 @@ namespace Management_System
                 {
                     connection.Open();
 
+                    if (IsSuperAdmin(userId))
+                    {
+                        return LoadProjects();
+                    }
+
                     string sql = "SELECT project_id FROM user_roles WHERE user_id = @userId AND role = 'Admin'";
                     List<string> projectIds = new List<string>();
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
@@ -708,6 +714,178 @@ namespace Management_System
                 {
                     return null;
                 }
+            }
+        }
+        // List the users that belong to the project
+        public List<string> ListUsersBelongToProject(string projectId)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sql = "SELECT user_id FROM user_roles WHERE project_id = @projectId AND role != 'Admin'";
+                    List<string> userIds = new List<string>();
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@projectId", projectId);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string userId = reader["user_id"].ToString();
+                                userIds.Add(userId);
+                            }
+                        }
+                    }
+
+                    List<string> userNames = new List<string>();
+                    foreach (string userId in userIds)
+                    {
+                        string sqlUser = "SELECT user_name FROM users WHERE user_id = @userId";
+                        using (MySqlCommand commandUser = new MySqlCommand(sqlUser, connection))
+                        {
+                            commandUser.Parameters.AddWithValue("@userId", userId);
+
+                            using (MySqlDataReader readerUser = commandUser.ExecuteReader())
+                            {
+                                if (readerUser.Read())
+                                {
+                                    string userName = readerUser["user_name"].ToString();
+                                    userNames.Add(userName);
+                                }
+                            }
+                        }
+                    }
+                    return userNames;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Handle any errors that occur during the database operations
+                Console.WriteLine("An error occurred while getting users of this project: " + ex.Message);
+                return new List<string>();
+            }
+        }
+        //select user_id from user_roles with projectId, then select user_name from users where user_id in (user_id from users where user_id not in (user_id from user_roles))
+        public List<string> ListUsersDontBeloneToProject(string projectId)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sql = "SELECT user_id FROM user_roles WHERE project_id = @projectId";
+                    List<string> userIds = new List<string>();
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@projectId", projectId);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string userId = reader["user_id"].ToString();
+                                userIds.Add(userId);
+                            }
+                        }
+                    }
+
+                    List<string> userNames = new List<string>();
+                    if (userIds.Count > 0)
+                    {
+                        string sqlUser = "SELECT user_name FROM users WHERE user_id not in (";
+                        for (int i = 0; i < userIds.Count; i++)
+                        {
+                            if (i == userIds.Count - 1)
+                            {
+                                sqlUser += userIds[i] + ")";
+                            }
+                            else
+                            {
+                                sqlUser += userIds[i] + ",";
+                            }
+                        }
+                        sqlUser += " and user_name != 'admin'";
+                        using (MySqlCommand commandUser = new MySqlCommand(sqlUser, connection))
+                        {
+                            using (MySqlDataReader readerUser = commandUser.ExecuteReader())
+                            {
+                                while (readerUser.Read())
+                                {
+                                    string userName = readerUser["user_name"].ToString();
+                                    userNames.Add(userName);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string sqlUser = "SELECT user_name FROM users WHERE user_name != 'admin' AND user_id NOT IN (SELECT user_id FROM user_roles WHERE project_id = @projectId AND role = 'admin')";
+                        using (MySqlCommand commandUser = new MySqlCommand(sqlUser, connection))
+                        {
+                            commandUser.Parameters.AddWithValue("@projectId", projectId);
+                            using (MySqlDataReader readerUser = commandUser.ExecuteReader())
+                            {
+                                while (readerUser.Read())
+                                {
+                                    string userName = readerUser["user_name"].ToString();
+                                    userNames.Add(userName);
+                                }
+                            }
+                        }
+                    }
+                    return userNames;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Handle any errors that occur during the database operations
+                Console.WriteLine("An error occurred while getting users of this project: " + ex.Message);
+                return new List<string>();
+            }
+        }
+        public bool UpdateUserRoles(string userId, string projectId, string role, bool isAdd)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sql = "";
+                    if (isAdd)
+                    {
+                        sql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, @role, @create_time)";
+                    }
+                    else
+                    {
+                        sql = "DELETE FROM user_roles WHERE user_id = @userId AND project_id = @projectId AND role = @role";
+                    }
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.Parameters.AddWithValue("@projectId", projectId);
+                        command.Parameters.AddWithValue("@role", role);
+
+                        if (isAdd)
+                        {
+                            command.Parameters.AddWithValue("@create_time", DateTime.Now);
+                        }
+
+                        int affectedRows = command.ExecuteNonQuery();
+                        return affectedRows > 0;
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Handle any errors that occur during the database operations
+                Console.WriteLine("An error occurred while updating user roles: " + ex.Message);
+                return false;
             }
         }
 

@@ -18,9 +18,11 @@ namespace Management_System
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
         private Dictionary<string, string> userRoles = new Dictionary<string, string>();
 
+
         public Main()
         {
             InitializeComponent();
+            lbUser_Now.Text = "User: " + Program.user_name;
             panel_project_add.Visible = false;
             panel_project_edit.Visible = false;
             panel_project_delete.Visible = false;
@@ -32,12 +34,18 @@ namespace Management_System
         }
         private void Main_Load(object sender, EventArgs e)
         {
+
             
+        }
+        public void UpdateUserNow()
+        {
+            lbUser_Now.Text = "User: " + Program.user_name;
         }
         // select project
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             string user_name = Program.user_name;
+            
             string userId = dbOperations.GetUserId(user_name);
             bool issuperadmin = dbOperations.IsSuperAdmin(userId);
             bool isadminofanyprojects = dbOperations.IsAdminOfAnyProjects(userId);
@@ -54,7 +62,7 @@ namespace Management_System
                         cbUserProjectManagementSelectProject.Items.Clear();
                         cbUserProjectManagementSelectProject.Text = V;
 
-                        FillUserNames(dgvSelectProjectAdmin);
+                        FillSelectAdmin(dgvSelectProjectAdmin);
 
                         List<string> projectNames = dbOperations.LoadProjects();
                         foreach (string projectName in projectNames)
@@ -70,7 +78,7 @@ namespace Management_System
                     }
 
                 case "ndUserMemberManagement":// if the node is ndMemberManagement
-                    if (isadminofanyprojects == true)
+                    if (isadminofanyprojects == true || issuperadmin == true)
                     { 
                         panel_member_management.Visible = true;
                         panel_member_management.BringToFront();
@@ -456,9 +464,9 @@ namespace Management_System
                 MessageBox.Show("Delete Failed: " + ex.Message);
             }
         }
-        private void FillUserNames(DataGridView dgv)
+        private void FillSelectAdmin(DataGridView dgv)
         {
-            List<string> list = dbOperations.ListUsers();
+            List<string> list = dbOperations.ListAllUsersExceptSadmin();
             DataTable dt = new DataTable();
             dt.Columns.Add("user_name", typeof(string));
             
@@ -478,9 +486,35 @@ namespace Management_System
                
             dgv.DataSource = dt;
         }
+        private void FillUsersBelongToProject(DataGridView dgv)
+        {
+            List<string> list = dbOperations.ListUsersBelongToProject(dbOperations.GetProjectID(cbMemberManagementSelectProject.Text));
+            DataTable dt = new DataTable();
+            dt.Columns.Add("user_name", typeof(string));
+            foreach (string s in list)
+            {
+                DataRow row = dt.NewRow();
+                row[0] = s;
+                dt.Rows.Add(row);
+            }
+            dgv.DataSource = dt;
+        }
+        private void FillUsersDontBelongToProject(DataGridView dgv)
+        {
+            List<string> list = dbOperations.ListUsersDontBeloneToProject(dbOperations.GetProjectID(cbMemberManagementSelectProject.Text));
+            DataTable dt = new DataTable();
+            dt.Columns.Add("user_name", typeof(string));
+            foreach (string s in list)
+            {
+                DataRow row = dt.NewRow();
+                row[0] = s;
+                dt.Rows.Add(row);
+            }
+            dgv.DataSource = dt;
+        }
         private void cbUserProjectManagementSelectProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillUserNames(dgvSelectProjectAdmin);
+            FillSelectAdmin(dgvSelectProjectAdmin);
         }
         // control the checkbox, only one checkbox can be checked
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -525,6 +559,59 @@ namespace Management_System
                 }
             }
  
+        }
+
+        private void cbMemberManagementSelectProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbAdmin_now.Text = "Admin of this project: " + dbOperations.GetUserName(dbOperations.AdminOfProject(dbOperations.GetProjectID(cbMemberManagementSelectProject.Text)));
+            FillUsersDontBelongToProject(dgvUsersDontBelone);
+            FillUsersBelongToProject(dgvProjectMembers);
+        }
+
+        private void btUserProjectMembersSubmit_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvUsersDontBelone.Rows)
+            {
+                try
+                {
+                    DataGridViewCheckBoxCell cell = (DataGridViewCheckBoxCell)row.Cells["dgvcbAdd_To_Member"];
+                    if (cell.FormattedValue != null && (bool)cell.FormattedValue)
+                    {
+                        string  userId = dbOperations.GetUserId(row.Cells["dgvcbUsers_Dont_Belone"].Value.ToString());
+                        string projectId = dbOperations.GetProjectID(cbMemberManagementSelectProject.Text);
+                        string role = "User";
+                        bool isAdd = true;
+                        dbOperations.UpdateUserRoles(userId, projectId, role, isAdd);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // if catch an exception, show the message
+                    MessageBox.Show("Submit Failed: " + ex.Message);
+                }
+            }
+            foreach (DataGridViewRow row in dgvProjectMembers.Rows)
+            {
+                try
+                {
+                    DataGridViewCheckBoxCell cell = (DataGridViewCheckBoxCell)row.Cells["dgvcbRemove_Member"];
+                    if (cell.FormattedValue != null && (bool)cell.FormattedValue)
+                    {
+                        string userId = dbOperations.GetUserId(row.Cells["dgvcbMembers"].Value.ToString());
+                        string projectId = dbOperations.GetProjectID(cbMemberManagementSelectProject.Text);
+                        string role = "User";
+                        bool isAdd = false;
+                        dbOperations.UpdateUserRoles(userId, projectId, role, isAdd);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // if catch an exception, show the message
+                    MessageBox.Show("Submit Failed: " + ex.Message);
+                }
+            }
+            FillUsersBelongToProject(dgvProjectMembers);
+            FillUsersDontBelongToProject(dgvUsersDontBelone);
         }
     }
 }

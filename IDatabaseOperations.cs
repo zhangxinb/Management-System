@@ -7,7 +7,7 @@ namespace Management_System
         void InsertUser(string username, string password, string phoneNum);
         string GetUserPassword(string username);
         List<string> LoadProjects();
-        List<string> ListUsers();
+        List<string> ListAllUsersExceptSadmin();
         void InsertProject(string projectName, string projectDescriptionr);
         void EditProject(string projectName, string projectDescriptionr);
         void DeleteProject(string projectName);
@@ -34,6 +34,9 @@ namespace Management_System
         bool IsAdminOfThisProject(string userId, string projectId);
         List<string> GetUserAdminProjects(string userId);
         string GetUserName(string userId);
+        List<string> ListUsersBelongToProject(string projectId);
+        List<string> ListUsersDontBeloneToProject(string projectId);
+        bool UpdateUserRoles(string userId, string projectId, string role, bool isAdd);
     }
 
 }

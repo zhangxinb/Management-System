@@ -28,38 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project Management");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Member Management");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9,
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13,
-            treeNode14});
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("节点10");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("节点11");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
-            treeNode16,
-            treeNode17});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode55 = new System.Windows.Forms.TreeNode("Project Management");
+            System.Windows.Forms.TreeNode treeNode56 = new System.Windows.Forms.TreeNode("Member Management");
+            System.Windows.Forms.TreeNode treeNode57 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
+            treeNode55,
+            treeNode56});
+            System.Windows.Forms.TreeNode treeNode58 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode59 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode60 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode61 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
+            treeNode58,
+            treeNode59,
+            treeNode60});
+            System.Windows.Forms.TreeNode treeNode62 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode65 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
+            treeNode62,
+            treeNode63,
+            treeNode64});
+            System.Windows.Forms.TreeNode treeNode66 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode67 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode68 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode69 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
+            treeNode66,
+            treeNode67,
+            treeNode68});
+            System.Windows.Forms.TreeNode treeNode70 = new System.Windows.Forms.TreeNode("节点10");
+            System.Windows.Forms.TreeNode treeNode71 = new System.Windows.Forms.TreeNode("节点11");
+            System.Windows.Forms.TreeNode treeNode72 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
+            treeNode70,
+            treeNode71});
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel_project_add = new System.Windows.Forms.Panel();
@@ -127,6 +129,17 @@
             this.panel_member_management = new System.Windows.Forms.Panel();
             this.cbMemberManagementSelectProject = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dgvUsersDontBelone = new System.Windows.Forms.DataGridView();
+            this.dgvcbUsers_Dont_Belone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvcbAdd_To_Member = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgvProjectMembers = new System.Windows.Forms.DataGridView();
+            this.dgvcbMembers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvcbRemove_Member = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btUserProjectMembersSubmit = new System.Windows.Forms.Button();
+            this.lbUser_Now = new System.Windows.Forms.Label();
+            this.lbAdmin_now = new System.Windows.Forms.Label();
             this.panel_project_add.SuspendLayout();
             this.panel_project_edit.SuspendLayout();
             this.panel_project_delete.SuspendLayout();
@@ -137,6 +150,8 @@
             this.panel_project_management.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectProjectAdmin)).BeginInit();
             this.panel_member_management.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProjectMembers)).BeginInit();
             this.SuspendLayout();
             // 
             // mySqlCommand1
@@ -150,49 +165,49 @@
             // 
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "ndUserProjectManagement";
-            treeNode1.Text = "Project Management";
-            treeNode2.Name = "ndUserMemberManagement";
-            treeNode2.Text = "Member Management";
-            treeNode3.Name = "ndUser";
-            treeNode3.Text = "User";
-            treeNode4.Name = "ndProjectAdd";
-            treeNode4.Text = "Add";
-            treeNode5.Name = "ndProjectEdit";
-            treeNode5.Text = "Edit";
-            treeNode6.Name = "ndProjectDelete";
-            treeNode6.Text = "Delete";
-            treeNode7.Name = "ndProject";
-            treeNode7.Text = "Project";
-            treeNode8.Name = "ndRequirementAdd";
-            treeNode8.Text = "Add";
-            treeNode9.Name = "ndRequirementEdit";
-            treeNode9.Text = "Edit";
-            treeNode10.Name = "ndRequirementDelete";
-            treeNode10.Text = "Delete";
-            treeNode11.Name = "Requirement";
-            treeNode11.Text = "Requirement";
-            treeNode12.Name = "ndCommentAdd";
-            treeNode12.Text = "Add";
-            treeNode13.Name = "ndCommentEdit";
-            treeNode13.Text = "Edit";
-            treeNode14.Name = "ndCommentDelete";
-            treeNode14.Text = "Delete";
-            treeNode15.Name = "Comment";
-            treeNode15.Text = "Comment";
-            treeNode16.Name = "节点10";
-            treeNode16.Text = "节点10";
-            treeNode17.Name = "节点11";
-            treeNode17.Text = "节点11";
-            treeNode18.Name = "Report";
-            treeNode18.Text = "Report";
+            treeNode55.Name = "ndUserProjectManagement";
+            treeNode55.Text = "Project Management";
+            treeNode56.Name = "ndUserMemberManagement";
+            treeNode56.Text = "Member Management";
+            treeNode57.Name = "ndUser";
+            treeNode57.Text = "User";
+            treeNode58.Name = "ndProjectAdd";
+            treeNode58.Text = "Add";
+            treeNode59.Name = "ndProjectEdit";
+            treeNode59.Text = "Edit";
+            treeNode60.Name = "ndProjectDelete";
+            treeNode60.Text = "Delete";
+            treeNode61.Name = "ndProject";
+            treeNode61.Text = "Project";
+            treeNode62.Name = "ndRequirementAdd";
+            treeNode62.Text = "Add";
+            treeNode63.Name = "ndRequirementEdit";
+            treeNode63.Text = "Edit";
+            treeNode64.Name = "ndRequirementDelete";
+            treeNode64.Text = "Delete";
+            treeNode65.Name = "Requirement";
+            treeNode65.Text = "Requirement";
+            treeNode66.Name = "ndCommentAdd";
+            treeNode66.Text = "Add";
+            treeNode67.Name = "ndCommentEdit";
+            treeNode67.Text = "Edit";
+            treeNode68.Name = "ndCommentDelete";
+            treeNode68.Text = "Delete";
+            treeNode69.Name = "Comment";
+            treeNode69.Text = "Comment";
+            treeNode70.Name = "节点10";
+            treeNode70.Text = "节点10";
+            treeNode71.Name = "节点11";
+            treeNode71.Text = "节点11";
+            treeNode72.Name = "Report";
+            treeNode72.Text = "Report";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode7,
-            treeNode11,
-            treeNode15,
-            treeNode18});
-            this.treeView1.Size = new System.Drawing.Size(116, 428);
+            treeNode57,
+            treeNode61,
+            treeNode65,
+            treeNode69,
+            treeNode72});
+            this.treeView1.Size = new System.Drawing.Size(116, 372);
             this.treeView1.TabIndex = 2;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
@@ -742,14 +757,14 @@
             // 
             this.dgvSelectProjectAdmin.AllowUserToAddRows = false;
             this.dgvSelectProjectAdmin.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSelectProjectAdmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSelectProjectAdmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvSelectProjectAdmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSelectProjectAdmin.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.user_name,
@@ -809,6 +824,12 @@
             // 
             // panel_member_management
             // 
+            this.panel_member_management.Controls.Add(this.lbAdmin_now);
+            this.panel_member_management.Controls.Add(this.btUserProjectMembersSubmit);
+            this.panel_member_management.Controls.Add(this.dgvProjectMembers);
+            this.panel_member_management.Controls.Add(this.dgvUsersDontBelone);
+            this.panel_member_management.Controls.Add(this.label9);
+            this.panel_member_management.Controls.Add(this.label8);
             this.panel_member_management.Controls.Add(this.cbMemberManagementSelectProject);
             this.panel_member_management.Controls.Add(this.label7);
             this.panel_member_management.Location = new System.Drawing.Point(122, 0);
@@ -823,6 +844,7 @@
             this.cbMemberManagementSelectProject.Name = "cbMemberManagementSelectProject";
             this.cbMemberManagementSelectProject.Size = new System.Drawing.Size(121, 20);
             this.cbMemberManagementSelectProject.TabIndex = 1;
+            this.cbMemberManagementSelectProject.SelectedIndexChanged += new System.EventHandler(this.cbMemberManagementSelectProject_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -833,11 +855,136 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Select Project";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(542, 110);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(119, 12);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Project Members Now";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(160, 110);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 12);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "All Users";
+            // 
+            // dgvUsersDontBelone
+            // 
+            this.dgvUsersDontBelone.AllowUserToAddRows = false;
+            this.dgvUsersDontBelone.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvUsersDontBelone.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.dgvUsersDontBelone.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsersDontBelone.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvcbUsers_Dont_Belone,
+            this.dgvcbAdd_To_Member});
+            this.dgvUsersDontBelone.Location = new System.Drawing.Point(35, 134);
+            this.dgvUsersDontBelone.Name = "dgvUsersDontBelone";
+            this.dgvUsersDontBelone.RowHeadersVisible = false;
+            this.dgvUsersDontBelone.RowTemplate.Height = 23;
+            this.dgvUsersDontBelone.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUsersDontBelone.Size = new System.Drawing.Size(301, 254);
+            this.dgvUsersDontBelone.TabIndex = 6;
+            // 
+            // dgvcbUsers_Dont_Belone
+            // 
+            this.dgvcbUsers_Dont_Belone.DataPropertyName = "user_name";
+            this.dgvcbUsers_Dont_Belone.HeaderText = "Name";
+            this.dgvcbUsers_Dont_Belone.Name = "dgvcbUsers_Dont_Belone";
+            this.dgvcbUsers_Dont_Belone.Width = 150;
+            // 
+            // dgvcbAdd_To_Member
+            // 
+            this.dgvcbAdd_To_Member.DataPropertyName = "add_to_member";
+            this.dgvcbAdd_To_Member.FalseValue = "";
+            this.dgvcbAdd_To_Member.HeaderText = "Add to Member";
+            this.dgvcbAdd_To_Member.Name = "dgvcbAdd_To_Member";
+            this.dgvcbAdd_To_Member.TrueValue = "";
+            this.dgvcbAdd_To_Member.Width = 150;
+            // 
+            // dgvProjectMembers
+            // 
+            this.dgvProjectMembers.AllowUserToAddRows = false;
+            this.dgvProjectMembers.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProjectMembers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            this.dgvProjectMembers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProjectMembers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvcbMembers,
+            this.dgvcbRemove_Member});
+            this.dgvProjectMembers.Location = new System.Drawing.Point(441, 134);
+            this.dgvProjectMembers.Name = "dgvProjectMembers";
+            this.dgvProjectMembers.RowHeadersVisible = false;
+            this.dgvProjectMembers.RowTemplate.Height = 23;
+            this.dgvProjectMembers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvProjectMembers.Size = new System.Drawing.Size(301, 254);
+            this.dgvProjectMembers.TabIndex = 7;
+            // 
+            // dgvcbMembers
+            // 
+            this.dgvcbMembers.DataPropertyName = "user_name";
+            this.dgvcbMembers.HeaderText = "Name";
+            this.dgvcbMembers.Name = "dgvcbMembers";
+            this.dgvcbMembers.Width = 150;
+            // 
+            // dgvcbRemove_Member
+            // 
+            this.dgvcbRemove_Member.DataPropertyName = "remove_members";
+            this.dgvcbRemove_Member.FalseValue = "";
+            this.dgvcbRemove_Member.HeaderText = "Remove";
+            this.dgvcbRemove_Member.Name = "dgvcbRemove_Member";
+            this.dgvcbRemove_Member.TrueValue = "";
+            this.dgvcbRemove_Member.Width = 150;
+            // 
+            // btUserProjectMembersSubmit
+            // 
+            this.btUserProjectMembersSubmit.Location = new System.Drawing.Point(352, 249);
+            this.btUserProjectMembersSubmit.Name = "btUserProjectMembersSubmit";
+            this.btUserProjectMembersSubmit.Size = new System.Drawing.Size(75, 23);
+            this.btUserProjectMembersSubmit.TabIndex = 8;
+            this.btUserProjectMembersSubmit.Text = "Submit";
+            this.btUserProjectMembersSubmit.UseVisualStyleBackColor = true;
+            this.btUserProjectMembersSubmit.Click += new System.EventHandler(this.btUserProjectMembersSubmit_Click);
+            // 
+            // lbUser_Now
+            // 
+            this.lbUser_Now.AutoSize = true;
+            this.lbUser_Now.Location = new System.Drawing.Point(12, 378);
+            this.lbUser_Now.Name = "lbUser_Now";
+            this.lbUser_Now.Size = new System.Drawing.Size(0, 12);
+            this.lbUser_Now.TabIndex = 12;
+            // 
+            // lbAdmin_now
+            // 
+            this.lbAdmin_now.AutoSize = true;
+            this.lbAdmin_now.Location = new System.Drawing.Point(200, 81);
+            this.lbAdmin_now.Name = "lbAdmin_now";
+            this.lbAdmin_now.Size = new System.Drawing.Size(0, 12);
+            this.lbAdmin_now.TabIndex = 9;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 473);
+            this.Controls.Add(this.lbUser_Now);
             this.Controls.Add(this.panel_member_management);
             this.Controls.Add(this.panel_project_management);
             this.Controls.Add(this.treeView1);
@@ -850,6 +997,7 @@
             this.Controls.Add(this.panel_project_add);
             this.Name = "Main";
             this.Text = "Main page";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.panel_project_add.ResumeLayout(false);
             this.panel_project_add.PerformLayout();
             this.panel_project_edit.ResumeLayout(false);
@@ -869,7 +1017,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectProjectAdmin)).EndInit();
             this.panel_member_management.ResumeLayout(false);
             this.panel_member_management.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProjectMembers)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -941,5 +1092,16 @@
         private System.Windows.Forms.Panel panel_member_management;
         private System.Windows.Forms.ComboBox cbMemberManagementSelectProject;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridView dgvUsersDontBelone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvcbUsers_Dont_Belone;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dgvcbAdd_To_Member;
+        private System.Windows.Forms.DataGridView dgvProjectMembers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvcbMembers;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dgvcbRemove_Member;
+        private System.Windows.Forms.Button btUserProjectMembersSubmit;
+        private System.Windows.Forms.Label lbUser_Now;
+        private System.Windows.Forms.Label lbAdmin_now;
     }
 }

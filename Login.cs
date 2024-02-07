@@ -48,6 +48,7 @@ namespace Management_System
                     Main main = new Main();
                     main.Show();
                     Program.user_name = tbUserName.Text;
+                    main.UpdateUserNow();
                 }
 
                 else
