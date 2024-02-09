@@ -28,42 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode55 = new System.Windows.Forms.TreeNode("Project Management");
-            System.Windows.Forms.TreeNode treeNode56 = new System.Windows.Forms.TreeNode("Member Management");
-            System.Windows.Forms.TreeNode treeNode57 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
-            treeNode55,
-            treeNode56});
-            System.Windows.Forms.TreeNode treeNode58 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode59 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode60 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode61 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
-            treeNode58,
-            treeNode59,
+            System.Windows.Forms.TreeNode treeNode49 = new System.Windows.Forms.TreeNode("Project Management");
+            System.Windows.Forms.TreeNode treeNode50 = new System.Windows.Forms.TreeNode("Member Management");
+            System.Windows.Forms.TreeNode treeNode51 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
+            treeNode49,
+            treeNode50});
+            System.Windows.Forms.TreeNode treeNode52 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode53 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode54 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode55 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
+            treeNode52,
+            treeNode53,
+            treeNode54});
+            System.Windows.Forms.TreeNode treeNode56 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode57 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode58 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode59 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
+            treeNode56,
+            treeNode57,
+            treeNode58});
+            System.Windows.Forms.TreeNode treeNode60 = new System.Windows.Forms.TreeNode("View");
+            System.Windows.Forms.TreeNode treeNode61 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
             treeNode60});
-            System.Windows.Forms.TreeNode treeNode62 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode65 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode62 = new System.Windows.Forms.TreeNode("节点10");
+            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("节点11");
+            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
             treeNode62,
-            treeNode63,
-            treeNode64});
-            System.Windows.Forms.TreeNode treeNode66 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode67 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode68 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode69 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
-            treeNode66,
-            treeNode67,
-            treeNode68});
-            System.Windows.Forms.TreeNode treeNode70 = new System.Windows.Forms.TreeNode("节点10");
-            System.Windows.Forms.TreeNode treeNode71 = new System.Windows.Forms.TreeNode("节点11");
-            System.Windows.Forms.TreeNode treeNode72 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
-            treeNode70,
-            treeNode71});
+            treeNode63});
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tvMenuTree = new System.Windows.Forms.TreeView();
             this.panel_project_add = new System.Windows.Forms.Panel();
             this.tbProjectAddDescription = new System.Windows.Forms.TextBox();
             this.lbProjectAddDescription = new System.Windows.Forms.Label();
@@ -127,19 +123,26 @@
             this.cbUserProjectManagementSelectProject = new System.Windows.Forms.ComboBox();
             this.lbSelectProject = new System.Windows.Forms.Label();
             this.panel_member_management = new System.Windows.Forms.Panel();
-            this.cbMemberManagementSelectProject = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.dgvUsersDontBelone = new System.Windows.Forms.DataGridView();
-            this.dgvcbUsers_Dont_Belone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvcbAdd_To_Member = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.lbAdmin_now = new System.Windows.Forms.Label();
+            this.btUserProjectMembersSubmit = new System.Windows.Forms.Button();
             this.dgvProjectMembers = new System.Windows.Forms.DataGridView();
             this.dgvcbMembers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvcbRemove_Member = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.btUserProjectMembersSubmit = new System.Windows.Forms.Button();
+            this.dgvUsersDontBelone = new System.Windows.Forms.DataGridView();
+            this.dgvcbUsers_Dont_Belone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvcbAdd_To_Member = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbMemberManagementSelectProject = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.lbUser_Now = new System.Windows.Forms.Label();
-            this.lbAdmin_now = new System.Windows.Forms.Label();
+            this.panel_comment_view = new System.Windows.Forms.Panel();
+            this.lvComments = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lbAdminNow = new System.Windows.Forms.Label();
             this.panel_project_add.SuspendLayout();
             this.panel_project_edit.SuspendLayout();
             this.panel_project_delete.SuspendLayout();
@@ -150,8 +153,9 @@
             this.panel_project_management.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectProjectAdmin)).BeginInit();
             this.panel_member_management.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProjectMembers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).BeginInit();
+            this.panel_comment_view.SuspendLayout();
             this.SuspendLayout();
             // 
             // mySqlCommand1
@@ -161,55 +165,51 @@
             this.mySqlCommand1.EnableCaching = false;
             this.mySqlCommand1.Transaction = null;
             // 
-            // treeView1
+            // tvMenuTree
             // 
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            treeNode55.Name = "ndUserProjectManagement";
-            treeNode55.Text = "Project Management";
-            treeNode56.Name = "ndUserMemberManagement";
-            treeNode56.Text = "Member Management";
-            treeNode57.Name = "ndUser";
-            treeNode57.Text = "User";
-            treeNode58.Name = "ndProjectAdd";
-            treeNode58.Text = "Add";
-            treeNode59.Name = "ndProjectEdit";
-            treeNode59.Text = "Edit";
-            treeNode60.Name = "ndProjectDelete";
-            treeNode60.Text = "Delete";
-            treeNode61.Name = "ndProject";
-            treeNode61.Text = "Project";
-            treeNode62.Name = "ndRequirementAdd";
-            treeNode62.Text = "Add";
-            treeNode63.Name = "ndRequirementEdit";
-            treeNode63.Text = "Edit";
-            treeNode64.Name = "ndRequirementDelete";
-            treeNode64.Text = "Delete";
-            treeNode65.Name = "Requirement";
-            treeNode65.Text = "Requirement";
-            treeNode66.Name = "ndCommentAdd";
-            treeNode66.Text = "Add";
-            treeNode67.Name = "ndCommentEdit";
-            treeNode67.Text = "Edit";
-            treeNode68.Name = "ndCommentDelete";
-            treeNode68.Text = "Delete";
-            treeNode69.Name = "Comment";
-            treeNode69.Text = "Comment";
-            treeNode70.Name = "节点10";
-            treeNode70.Text = "节点10";
-            treeNode71.Name = "节点11";
-            treeNode71.Text = "节点11";
-            treeNode72.Name = "Report";
-            treeNode72.Text = "Report";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode57,
+            this.tvMenuTree.Location = new System.Drawing.Point(0, 0);
+            this.tvMenuTree.Name = "tvMenuTree";
+            treeNode49.Name = "ndUserProjectManagement";
+            treeNode49.Text = "Project Management";
+            treeNode50.Name = "ndUserMemberManagement";
+            treeNode50.Text = "Member Management";
+            treeNode51.Name = "ndUser";
+            treeNode51.Text = "User";
+            treeNode52.Name = "ndProjectAdd";
+            treeNode52.Text = "Add";
+            treeNode53.Name = "ndProjectEdit";
+            treeNode53.Text = "Edit";
+            treeNode54.Name = "ndProjectDelete";
+            treeNode54.Text = "Delete";
+            treeNode55.Name = "ndProject";
+            treeNode55.Text = "Project";
+            treeNode56.Name = "ndRequirementAdd";
+            treeNode56.Text = "Add";
+            treeNode57.Name = "ndRequirementEdit";
+            treeNode57.Text = "Edit";
+            treeNode58.Name = "ndRequirementDelete";
+            treeNode58.Text = "Delete";
+            treeNode59.Name = "Requirement";
+            treeNode59.Text = "Requirement";
+            treeNode60.Name = "ndCommentView";
+            treeNode60.Text = "View";
+            treeNode61.Name = "Comment";
+            treeNode61.Text = "Comment";
+            treeNode62.Name = "节点10";
+            treeNode62.Text = "节点10";
+            treeNode63.Name = "节点11";
+            treeNode63.Text = "节点11";
+            treeNode64.Name = "Report";
+            treeNode64.Text = "Report";
+            this.tvMenuTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode51,
+            treeNode55,
+            treeNode59,
             treeNode61,
-            treeNode65,
-            treeNode69,
-            treeNode72});
-            this.treeView1.Size = new System.Drawing.Size(116, 372);
-            this.treeView1.TabIndex = 2;
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            treeNode64});
+            this.tvMenuTree.Size = new System.Drawing.Size(116, 372);
+            this.tvMenuTree.TabIndex = 2;
+            this.tvMenuTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
             // panel_project_add
             // 
@@ -733,6 +733,7 @@
             // 
             // panel_project_management
             // 
+            this.panel_project_management.Controls.Add(this.lbAdminNow);
             this.panel_project_management.Controls.Add(this.btUserProjectManagementSubmit);
             this.panel_project_management.Controls.Add(this.dgvSelectProjectAdmin);
             this.panel_project_management.Controls.Add(this.label2);
@@ -800,9 +801,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(321, 88);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 12);
+            this.label2.Size = new System.Drawing.Size(161, 12);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Select Project Admin";
+            this.label2.Text = "Select A New Project Admin";
             // 
             // cbUserProjectManagementSelectProject
             // 
@@ -837,81 +838,23 @@
             this.panel_member_management.Size = new System.Drawing.Size(793, 477);
             this.panel_member_management.TabIndex = 11;
             // 
-            // cbMemberManagementSelectProject
+            // lbAdmin_now
             // 
-            this.cbMemberManagementSelectProject.FormattingEnabled = true;
-            this.cbMemberManagementSelectProject.Location = new System.Drawing.Point(441, 44);
-            this.cbMemberManagementSelectProject.Name = "cbMemberManagementSelectProject";
-            this.cbMemberManagementSelectProject.Size = new System.Drawing.Size(121, 20);
-            this.cbMemberManagementSelectProject.TabIndex = 1;
-            this.cbMemberManagementSelectProject.SelectedIndexChanged += new System.EventHandler(this.cbMemberManagementSelectProject_SelectedIndexChanged);
+            this.lbAdmin_now.AutoSize = true;
+            this.lbAdmin_now.Location = new System.Drawing.Point(200, 81);
+            this.lbAdmin_now.Name = "lbAdmin_now";
+            this.lbAdmin_now.Size = new System.Drawing.Size(0, 12);
+            this.lbAdmin_now.TabIndex = 9;
             // 
-            // label7
+            // btUserProjectMembersSubmit
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(200, 46);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 12);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Select Project";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(542, 110);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(119, 12);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "Project Members Now";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(160, 110);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 12);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "All Users";
-            // 
-            // dgvUsersDontBelone
-            // 
-            this.dgvUsersDontBelone.AllowUserToAddRows = false;
-            this.dgvUsersDontBelone.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvUsersDontBelone.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            this.dgvUsersDontBelone.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsersDontBelone.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgvcbUsers_Dont_Belone,
-            this.dgvcbAdd_To_Member});
-            this.dgvUsersDontBelone.Location = new System.Drawing.Point(35, 134);
-            this.dgvUsersDontBelone.Name = "dgvUsersDontBelone";
-            this.dgvUsersDontBelone.RowHeadersVisible = false;
-            this.dgvUsersDontBelone.RowTemplate.Height = 23;
-            this.dgvUsersDontBelone.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsersDontBelone.Size = new System.Drawing.Size(301, 254);
-            this.dgvUsersDontBelone.TabIndex = 6;
-            // 
-            // dgvcbUsers_Dont_Belone
-            // 
-            this.dgvcbUsers_Dont_Belone.DataPropertyName = "user_name";
-            this.dgvcbUsers_Dont_Belone.HeaderText = "Name";
-            this.dgvcbUsers_Dont_Belone.Name = "dgvcbUsers_Dont_Belone";
-            this.dgvcbUsers_Dont_Belone.Width = 150;
-            // 
-            // dgvcbAdd_To_Member
-            // 
-            this.dgvcbAdd_To_Member.DataPropertyName = "add_to_member";
-            this.dgvcbAdd_To_Member.FalseValue = "";
-            this.dgvcbAdd_To_Member.HeaderText = "Add to Member";
-            this.dgvcbAdd_To_Member.Name = "dgvcbAdd_To_Member";
-            this.dgvcbAdd_To_Member.TrueValue = "";
-            this.dgvcbAdd_To_Member.Width = 150;
+            this.btUserProjectMembersSubmit.Location = new System.Drawing.Point(352, 249);
+            this.btUserProjectMembersSubmit.Name = "btUserProjectMembersSubmit";
+            this.btUserProjectMembersSubmit.Size = new System.Drawing.Size(75, 23);
+            this.btUserProjectMembersSubmit.TabIndex = 8;
+            this.btUserProjectMembersSubmit.Text = "Submit";
+            this.btUserProjectMembersSubmit.UseVisualStyleBackColor = true;
+            this.btUserProjectMembersSubmit.Click += new System.EventHandler(this.btUserProjectMembersSubmit_Click);
             // 
             // dgvProjectMembers
             // 
@@ -953,15 +896,81 @@
             this.dgvcbRemove_Member.TrueValue = "";
             this.dgvcbRemove_Member.Width = 150;
             // 
-            // btUserProjectMembersSubmit
+            // dgvUsersDontBelone
             // 
-            this.btUserProjectMembersSubmit.Location = new System.Drawing.Point(352, 249);
-            this.btUserProjectMembersSubmit.Name = "btUserProjectMembersSubmit";
-            this.btUserProjectMembersSubmit.Size = new System.Drawing.Size(75, 23);
-            this.btUserProjectMembersSubmit.TabIndex = 8;
-            this.btUserProjectMembersSubmit.Text = "Submit";
-            this.btUserProjectMembersSubmit.UseVisualStyleBackColor = true;
-            this.btUserProjectMembersSubmit.Click += new System.EventHandler(this.btUserProjectMembersSubmit_Click);
+            this.dgvUsersDontBelone.AllowUserToAddRows = false;
+            this.dgvUsersDontBelone.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvUsersDontBelone.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.dgvUsersDontBelone.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsersDontBelone.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvcbUsers_Dont_Belone,
+            this.dgvcbAdd_To_Member});
+            this.dgvUsersDontBelone.Location = new System.Drawing.Point(35, 134);
+            this.dgvUsersDontBelone.Name = "dgvUsersDontBelone";
+            this.dgvUsersDontBelone.RowHeadersVisible = false;
+            this.dgvUsersDontBelone.RowTemplate.Height = 23;
+            this.dgvUsersDontBelone.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUsersDontBelone.Size = new System.Drawing.Size(301, 254);
+            this.dgvUsersDontBelone.TabIndex = 6;
+            // 
+            // dgvcbUsers_Dont_Belone
+            // 
+            this.dgvcbUsers_Dont_Belone.DataPropertyName = "user_name";
+            this.dgvcbUsers_Dont_Belone.HeaderText = "Name";
+            this.dgvcbUsers_Dont_Belone.Name = "dgvcbUsers_Dont_Belone";
+            this.dgvcbUsers_Dont_Belone.Width = 150;
+            // 
+            // dgvcbAdd_To_Member
+            // 
+            this.dgvcbAdd_To_Member.DataPropertyName = "add_to_member";
+            this.dgvcbAdd_To_Member.FalseValue = "";
+            this.dgvcbAdd_To_Member.HeaderText = "Add to Member";
+            this.dgvcbAdd_To_Member.Name = "dgvcbAdd_To_Member";
+            this.dgvcbAdd_To_Member.TrueValue = "";
+            this.dgvcbAdd_To_Member.Width = 150;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(160, 110);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 12);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "All Users";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(542, 110);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(119, 12);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Project Members Now";
+            // 
+            // cbMemberManagementSelectProject
+            // 
+            this.cbMemberManagementSelectProject.FormattingEnabled = true;
+            this.cbMemberManagementSelectProject.Location = new System.Drawing.Point(441, 44);
+            this.cbMemberManagementSelectProject.Name = "cbMemberManagementSelectProject";
+            this.cbMemberManagementSelectProject.Size = new System.Drawing.Size(121, 20);
+            this.cbMemberManagementSelectProject.TabIndex = 1;
+            this.cbMemberManagementSelectProject.SelectedIndexChanged += new System.EventHandler(this.cbMemberManagementSelectProject_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(200, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 12);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Select Project";
             // 
             // lbUser_Now
             // 
@@ -971,23 +980,66 @@
             this.lbUser_Now.Size = new System.Drawing.Size(0, 12);
             this.lbUser_Now.TabIndex = 12;
             // 
-            // lbAdmin_now
+            // panel_comment_view
             // 
-            this.lbAdmin_now.AutoSize = true;
-            this.lbAdmin_now.Location = new System.Drawing.Point(200, 81);
-            this.lbAdmin_now.Name = "lbAdmin_now";
-            this.lbAdmin_now.Size = new System.Drawing.Size(0, 12);
-            this.lbAdmin_now.TabIndex = 9;
+            this.panel_comment_view.Controls.Add(this.lvComments);
+            this.panel_comment_view.Location = new System.Drawing.Point(122, 0);
+            this.panel_comment_view.Name = "panel_comment_view";
+            this.panel_comment_view.Size = new System.Drawing.Size(793, 477);
+            this.panel_comment_view.TabIndex = 13;
+            // 
+            // lvComments
+            // 
+            this.lvComments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            this.lvComments.HideSelection = false;
+            this.lvComments.Location = new System.Drawing.Point(35, 50);
+            this.lvComments.Name = "lvComments";
+            this.lvComments.Size = new System.Drawing.Size(566, 400);
+            this.lvComments.TabIndex = 0;
+            this.lvComments.UseCompatibleStateImageBehavior = false;
+            this.lvComments.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Requirement";
+            this.columnHeader2.Width = 200;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Comment";
+            this.columnHeader3.Width = 200;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Created Time";
+            this.columnHeader4.Width = 100;
+            // 
+            // lbAdminNow
+            // 
+            this.lbAdminNow.AutoSize = true;
+            this.lbAdminNow.Location = new System.Drawing.Point(321, 65);
+            this.lbAdminNow.Name = "lbAdminNow";
+            this.lbAdminNow.Size = new System.Drawing.Size(0, 12);
+            this.lbAdminNow.TabIndex = 1;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 473);
+            this.Controls.Add(this.panel_comment_view);
             this.Controls.Add(this.lbUser_Now);
             this.Controls.Add(this.panel_member_management);
             this.Controls.Add(this.panel_project_management);
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.tvMenuTree);
             this.Controls.Add(this.btlogout);
             this.Controls.Add(this.panel_requirement_edit);
             this.Controls.Add(this.panel_requirement_delete);
@@ -1017,8 +1069,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectProjectAdmin)).EndInit();
             this.panel_member_management.ResumeLayout(false);
             this.panel_member_management.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProjectMembers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).EndInit();
+            this.panel_comment_view.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1026,7 +1079,7 @@
 
         #endregion
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tvMenuTree;
         private System.Windows.Forms.Panel panel_project_add;
         private System.Windows.Forms.TextBox tbProjectAddName;
         private System.Windows.Forms.Label lbProjectAddName;
@@ -1103,5 +1156,12 @@
         private System.Windows.Forms.Button btUserProjectMembersSubmit;
         private System.Windows.Forms.Label lbUser_Now;
         private System.Windows.Forms.Label lbAdmin_now;
+        private System.Windows.Forms.Panel panel_comment_view;
+        private System.Windows.Forms.ListView lvComments;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.Label lbAdminNow;
     }
 }

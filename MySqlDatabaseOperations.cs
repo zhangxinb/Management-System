@@ -1,8 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Management_System
@@ -113,21 +111,21 @@ namespace Management_System
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
-                { 
+                {
 
-                   string query = "SELECT project_id FROM projects WHERE project_name = @project_name";
-                   MySqlCommand cmd = new MySqlCommand(query, connection);
-                   cmd.Parameters.AddWithValue("@project_name", projectName);
-                   connection.Open();
-                   MySqlDataReader reader = cmd.ExecuteReader();
-                   if (reader.Read())
-                   {
-                       return reader["project_id"].ToString();
-                   }
-                   else
-                   {
-                    throw new Exception("Project not found");
-                   }
+                    string query = "SELECT project_id FROM projects WHERE project_name = @project_name";
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@project_name", projectName);
+                    connection.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return reader["project_id"].ToString();
+                    }
+                    else
+                    {
+                        throw new Exception("Project not found");
+                    }
                 }
 
                 catch (Exception e)
@@ -164,6 +162,25 @@ namespace Management_System
             {
                 string query = "select requirement_name from requirements where IsDeleted = 0 and requirement_status != 'Deactive'";
                 MySqlCommand cmd = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    requirementNames.Add(dr.GetString(0));
+                }
+            }
+            return requirementNames;
+        }
+        public List<string> ListAllRequirementsYouCanSee(string userId)
+        {
+            List<string> requirementNames = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                //if the user is a super admin, then he can see all the requirements
+                string query = @"SELECT requirement_name FROM requirements WHERE IsDeleted = 0 AND requirement_status != 'Deactive' AND (SELECT role FROM user_roles WHERE user_id = @userId) = 'SuperAdmin' OR project_id IN (SELECT project_id FROM user_roles WHERE user_id = @userId)";
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@userId", userId);
                 connection.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -536,13 +553,44 @@ namespace Management_System
                 {
                     connection.Open();
 
-                    string sql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, 'Admin', @create_time)";
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    // get the user ID of the original admin
+                    string oldAdminUserId = AdminOfProject(projectId);
+
+                    // if there is an old admin, update the role to 'User'
+                    if (!string.IsNullOrEmpty(oldAdminUserId))
                     {
-                        command.Parameters.AddWithValue("@userId", userId);
-                        command.Parameters.AddWithValue("@projectId", projectId);
-                        command.Parameters.AddWithValue("@create_time", DateTime.Now);
-                        command.ExecuteNonQuery();
+                        string updateOldAdminSql = "UPDATE user_roles SET role = 'User' WHERE user_id = @oldAdminUserId AND project_id = @projectId";
+                        MySqlCommand updateOldAdminCommand = new MySqlCommand(updateOldAdminSql, connection);
+                        updateOldAdminCommand.Parameters.AddWithValue("@oldAdminUserId", oldAdminUserId);
+                        updateOldAdminCommand.Parameters.AddWithValue("@projectId", projectId);
+                        updateOldAdminCommand.ExecuteNonQuery();
+                    }
+                    //check if the user is already a member of the project
+                    string checkSql = "SELECT COUNT(*) FROM user_roles WHERE user_id = @userId AND project_id = @projectId";
+                    MySqlCommand checkCommand = new MySqlCommand(checkSql, connection);
+                    checkCommand.Parameters.AddWithValue("@userId", userId);
+                    checkCommand.Parameters.AddWithValue("@projectId", projectId);
+                    int count = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+                    if (count > 0)
+                    {
+                        //if the user is already a member of the project, update the role
+                        string updateSql = "UPDATE user_roles SET role = 'Admin', create_time = @create_time WHERE user_id = @userId AND project_id = @projectId";
+                        MySqlCommand updateCommand = new MySqlCommand(updateSql, connection);
+                        updateCommand.Parameters.AddWithValue("@userId", userId);
+                        updateCommand.Parameters.AddWithValue("@projectId", projectId);
+                        updateCommand.Parameters.AddWithValue("@create_time", DateTime.Now);
+                        updateCommand.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        //if the user is not a member of the project, insert the user into the user_roles table
+                        string insertSql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, 'Admin', @create_time)";
+                        MySqlCommand insertCommand = new MySqlCommand(insertSql, connection);
+                        insertCommand.Parameters.AddWithValue("@userId", userId);
+                        insertCommand.Parameters.AddWithValue("@projectId", projectId);
+                        insertCommand.Parameters.AddWithValue("@create_time", DateTime.Now);
+                        insertCommand.ExecuteNonQuery();
                     }
                 }
             }
@@ -552,6 +600,7 @@ namespace Management_System
                 Console.WriteLine("An error occurred while setting project admin: " + ex.Message);
             }
         }
+
         // Link the user to the project
         public void LinkUserToProject(string userId, string projectId)
         {
@@ -888,6 +937,79 @@ namespace Management_System
                 return false;
             }
         }
+        public void InsertComment(int userId, string commentContent, List<int> requirementIds)
+        {
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "START TRANSACTION;";
+                cmd.ExecuteNonQuery();
+
+                try
+                {
+                    // Insert the comment
+                    cmd.CommandText = @"INSERT INTO comments (user_id, comment_content, comment_created_at)
+                                VALUES (@userId, @commentContent, CURRENT_TIMESTAMP);";
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@commentContent", commentContent);
+                    cmd.ExecuteNonQuery();
+
+                    // Get the ID of the inserted comment
+                    cmd.CommandText = "SELECT LAST_INSERT_ID();";
+                    int commentId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    // Link the comment to the requirements
+                    cmd.CommandText = "INSERT INTO comment_requirements (comment_id, requirement_id) VALUES (@commentId, @requirementId);";
+                    cmd.Parameters.Add("@commentId", MySqlDbType.Int32).Value = commentId;
+                    cmd.Parameters.Add("@requirementId", MySqlDbType.Int32);
+
+                    foreach (int requirementId in requirementIds)
+                    {
+                        cmd.Parameters["@requirementId"].Value = requirementId;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    cmd.CommandText = "COMMIT;";
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    cmd.CommandText = "ROLLBACK;";
+                    cmd.ExecuteNonQuery();
+                    throw;
+                }
+            }
+        }
+        public List<string> ListAllCommentsYouCanSee(string userId)
+        {
+            List<string> comments = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                //List all the comments that the user can see
+                string sql = @"SELECT r.requirement_name, u.user_name, c.comment_content, c.comment_created_at FROM comments c INNER JOIN users u ON c.user_id = u.user_id INNER JOIN comment_requirements cr ON c.comment_id = cr.comment_id INNER JOIN requirements r ON cr.requirement_id = r.requirement_id WHERE EXISTS (SELECT 1 FROM user_roles ur WHERE ur.user_id = @userId AND (ur.role = 'SuperAdmin' OR r.project_id = r.project_id));";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string comment = $"{reader["user_name"]},{reader["requirement_name"]},  {reader["comment_content"]}, {reader["comment_created_at"]}";
+                            comments.Add(comment);
+                        }
+                    }
+                }
+            }
+            return comments;
+        }
+
 
     }
 

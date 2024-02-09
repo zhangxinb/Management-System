@@ -31,25 +31,27 @@ namespace Management_System
             panel_requirement_delete.Visible = false;
             panel_project_management.Visible = false;
             panel_member_management.Visible = false;
+            panel_comment_view.Visible = false;
         }
         private void Main_Load(object sender, EventArgs e)
         {
 
-            
+
         }
         public void UpdateUserNow()
         {
             lbUser_Now.Text = "User: " + Program.user_name;
         }
-        // select project
+        //select project
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             string user_name = Program.user_name;
-            
             string userId = dbOperations.GetUserId(user_name);
             bool issuperadmin = dbOperations.IsSuperAdmin(userId);
             bool isadminofanyprojects = dbOperations.IsAdminOfAnyProjects(userId);
+
             dbOperations.LoadUserRoles(userId, userRoles);// load the user roles
+
             TreeNode selectdNode = e.Node;//get the select node
             //string userRole = userRoles["role"];
             switch (selectdNode.Name)
@@ -62,7 +64,7 @@ namespace Management_System
                         cbUserProjectManagementSelectProject.Items.Clear();
                         cbUserProjectManagementSelectProject.Text = V;
 
-                        FillSelectAdmin(dgvSelectProjectAdmin);
+                        //FillSelectAdmin(dgvSelectProjectAdmin);
 
                         List<string> projectNames = dbOperations.LoadProjects();
                         foreach (string projectName in projectNames)
@@ -79,12 +81,20 @@ namespace Management_System
 
                 case "ndUserMemberManagement":// if the node is ndMemberManagement
                     if (isadminofanyprojects == true || issuperadmin == true)
-                    { 
+                    {
                         panel_member_management.Visible = true;
                         panel_member_management.BringToFront();
                         cbMemberManagementSelectProject.Items.Clear();
                         cbMemberManagementSelectProject.Text = V;
-                        List<string> projectNames5 = dbOperations.GetUserAdminProjects(userId);
+                        List<string> projectNames5;
+                        if (issuperadmin == true)
+                        {
+                            projectNames5 = dbOperations.LoadProjects();
+                        }
+                        else
+                        {
+                            projectNames5 = dbOperations.GetUserAdminProjects(userId);
+                        }
                         foreach (string projectName in projectNames5)
                         {
                             cbMemberManagementSelectProject.Items.Add(projectName);
@@ -96,7 +106,7 @@ namespace Management_System
                         MessageBox.Show("You do not have permission to manage members");
                         break;
                     }
-                   
+
                 case "ndProjectAdd"://if the node is ndProjectAdd
                     if (issuperadmin == true)
                     {
@@ -112,7 +122,7 @@ namespace Management_System
                         break;
                     }
                 case "ndProjectEdit"://if the node is ndProjectEdit
-                    if (issuperadmin == true)
+                    if (issuperadmin == true || isadminofanyprojects == true)
                     {
                         panel_project_add.Visible = false;
                         panel_project_delete.Visible = false;
@@ -120,7 +130,15 @@ namespace Management_System
                         panel_project_edit.BringToFront();
                         cbProjectSelect.Items.Clear();
                         cbProjectSelect.Text = V;
-                        List<string> projectNames = dbOperations.LoadProjects();
+                        List<string> projectNames;
+                        if (issuperadmin == true)
+                        {
+                            projectNames = dbOperations.LoadProjects();
+                        }
+                        else
+                        {
+                            projectNames = dbOperations.GetUserAdminProjects(userId);
+                        }
                         foreach (string projectName in projectNames)
                         {
                             cbProjectSelect.Items.Add(projectName);
@@ -154,45 +172,106 @@ namespace Management_System
                         break;
                     }
                 case "ndRequirementAdd":// if the node is ndRequirementAdd
-                    panel_requirement_add.Visible = true;
-                    panel_requirement_add.BringToFront();
-                    cbRequirementAddProject.Items.Clear();
-                    cbRequirementAddProject.Text = V;
-                    cbRequirementAddStatus.Text = V;
-                    List<string> projectNamesRequirement = dbOperations.LoadProjects();
-                    foreach (string projectName in projectNamesRequirement)
+                    if (issuperadmin == true || isadminofanyprojects == true)
                     {
-                        cbRequirementAddProject.Items.Add(projectName);
+                        panel_requirement_add.Visible = true;
+                        panel_requirement_add.BringToFront();
+                        cbRequirementAddProject.Items.Clear();
+                        cbRequirementAddProject.Text = V;
+                        cbRequirementAddStatus.Text = V;
+                        List<string> projectNamesRequirement;
+                        if (issuperadmin == true)
+                        {
+                            projectNamesRequirement = dbOperations.LoadProjects();
+                        }
+                        else
+                        {
+                            projectNamesRequirement = dbOperations.GetUserAdminProjects(userId);
+                        }
+                        foreach (string projectName in projectNamesRequirement)
+                        {
+                            cbRequirementAddProject.Items.Add(projectName);
+                        }
+                        break;
                     }
-                    break;
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to add a requirement");
+                        break;
+                    }
                 case "ndRequirementEdit":// if the node is ndRequirementEdit
-                    panel_requirement_edit.Visible = true;
-                    panel_requirement_edit_addDependency.Visible = false;
-                    panel_requirement_edit.BringToFront();
-                    cbRequirementEditSelectProject.Items.Clear();
-                    cbRequirementEditSelectProject.Text = V;
-                    cbRequirementEditSelectRequirement.Items.Clear();
-                    cbRequirementEditSelectRequirement.Text = V;
-                    List<string> projectNames3 = dbOperations.LoadProjects();
-                    foreach (string projectName in projectNames3)
+                    if (issuperadmin == true || isadminofanyprojects == true)
                     {
-                        cbRequirementEditSelectProject.Items.Add(projectName);
+                        panel_requirement_edit.Visible = true;
+                        panel_requirement_edit_addDependency.Visible = false;
+                        panel_requirement_edit.BringToFront();
+                        cbRequirementEditSelectProject.Items.Clear();
+                        cbRequirementEditSelectProject.Text = V;
+                        cbRequirementEditSelectRequirement.Items.Clear();
+                        cbRequirementEditSelectRequirement.Text = V;
+                        List<string> projectNames3;
+                        if (issuperadmin == true)
+                        {
+                            projectNames3 = dbOperations.LoadProjects();
+                        }
+                        else
+                        {
+                            projectNames3 = dbOperations.GetUserAdminProjects(userId);
+                        }
+                        foreach (string projectName in projectNames3)
+                        {
+                            cbRequirementEditSelectProject.Items.Add(projectName);
+                        }
+                        break;
                     }
-                    break;
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to edit a requirement");
+                        break;
+                    }
                 case "ndRequirementDelete":// if the node is ndRequirementDelete
-                    cbRequirementDeleteSelectProject.Items.Clear();
-                    cbRequirementDeleteSelectProject.Text = V;
-                    cbRequirementDeleteSelectRequirement.Items.Clear();
-                    cbRequirementDeleteSelectRequirement.Text = V;
-                    panel_requirement_delete.Visible = true;
-                    panel_requirement_delete.BringToFront();
-                    List<string> projectNames4 = dbOperations.LoadProjects();
-                    foreach (string projectName in projectNames4)
+                    if (issuperadmin == true || isadminofanyprojects == true)
                     {
-                        cbRequirementDeleteSelectProject.Items.Add(projectName);
+                        panel_requirement_delete.Visible = true;
+                        panel_requirement_delete.BringToFront();
+                        cbRequirementDeleteSelectProject.Items.Clear();
+                        cbRequirementDeleteSelectProject.Text = V;
+                        cbRequirementDeleteSelectRequirement.Items.Clear();
+                        cbRequirementDeleteSelectRequirement.Text = V;
+                        List<string> projectNames4;
+                        if (issuperadmin == true)
+                        {
+                            projectNames4 = dbOperations.LoadProjects();
+                        }
+                        else
+                        {
+                            projectNames4 = dbOperations.GetUserAdminProjects(userId);
+                        }
+                        foreach (string projectName in projectNames4)
+                        {
+                            cbRequirementDeleteSelectProject.Items.Add(projectName);
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to delete a requirement");
+                        break;
+                    }
+                case "ndCommentView":// if the node is ndCommentView
+                    panel_comment_view.Visible = true;
+                    panel_comment_view.BringToFront();
+                    List<string> comments = dbOperations.ListAllCommentsYouCanSee(userId);
+                    foreach (string comment in comments)
+                    {
+                        string[] parts = comment.Split(',');
+                        ListViewItem item = new ListViewItem(parts[0]);
+                        item.SubItems.Add(parts[1]);
+                        item.SubItems.Add(parts[2]);
+                        item.SubItems.Add(parts[3]);
+                        lvComments.Items.Add(item);
                     }
                     break;
-               
             }
         }
         private void Project_Load(object sender, EventArgs e)
@@ -469,7 +548,7 @@ namespace Management_System
             List<string> list = dbOperations.ListAllUsersExceptSadmin();
             DataTable dt = new DataTable();
             dt.Columns.Add("user_name", typeof(string));
-            
+
             string projectId = dbOperations.GetProjectID(cbUserProjectManagementSelectProject.Text);
             string adminUserId = dbOperations.AdminOfProject(projectId);
             string adminUser = dbOperations.GetUserName(adminUserId);
@@ -483,7 +562,7 @@ namespace Management_System
                     dt.Rows.Add(row);
                 }
             }
-               
+
             dgv.DataSource = dt;
         }
         private void FillUsersBelongToProject(DataGridView dgv)
@@ -514,13 +593,14 @@ namespace Management_System
         }
         private void cbUserProjectManagementSelectProject_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lbAdminNow.Text = "Admin of this project: " + dbOperations.GetUserName(dbOperations.AdminOfProject(dbOperations.GetProjectID(cbUserProjectManagementSelectProject.Text)));
             FillSelectAdmin(dgvSelectProjectAdmin);
         }
         // control the checkbox, only one checkbox can be checked
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            int columnIndex = e.ColumnIndex;            
+            int columnIndex = e.ColumnIndex;
 
             DataGridViewCell cell = dgvSelectProjectAdmin.CurrentRow.Cells[1];
             if (cell is DataGridViewCheckBoxCell)
@@ -550,7 +630,7 @@ namespace Management_System
                         string userId = dbOperations.GetUserId(row.Cells["user_name"].Value.ToString());
                         dbOperations.SetProjectAdmin(userId, dbOperations.GetProjectID(cbUserProjectManagementSelectProject.Text));
                         MessageBox.Show("Submit Successful");
-                    }      
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -558,7 +638,7 @@ namespace Management_System
                     MessageBox.Show("Submit Failed: " + ex.Message);
                 }
             }
- 
+
         }
 
         private void cbMemberManagementSelectProject_SelectedIndexChanged(object sender, EventArgs e)
@@ -577,7 +657,7 @@ namespace Management_System
                     DataGridViewCheckBoxCell cell = (DataGridViewCheckBoxCell)row.Cells["dgvcbAdd_To_Member"];
                     if (cell.FormattedValue != null && (bool)cell.FormattedValue)
                     {
-                        string  userId = dbOperations.GetUserId(row.Cells["dgvcbUsers_Dont_Belone"].Value.ToString());
+                        string userId = dbOperations.GetUserId(row.Cells["dgvcbUsers_Dont_Belone"].Value.ToString());
                         string projectId = dbOperations.GetProjectID(cbMemberManagementSelectProject.Text);
                         string role = "User";
                         bool isAdd = true;
