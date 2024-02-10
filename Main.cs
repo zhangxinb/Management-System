@@ -18,7 +18,9 @@ namespace Management_System
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
         private Dictionary<string, string> userRoles = new Dictionary<string, string>();
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Main"/> class.
+        /// </summary>
         public Main()
         {
             InitializeComponent();
@@ -38,11 +40,19 @@ namespace Management_System
 
 
         }
+        /// <summary>
+        /// Update the user name label
+        /// </summary>
         public void UpdateUserNow()
         {
             lbUser_Now.Text = "User: " + Program.user_name;
         }
-        //select project
+
+        /// <summary>
+        /// Main form tree view node mouse click event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             string user_name = Program.user_name;
@@ -53,6 +63,7 @@ namespace Management_System
             dbOperations.LoadUserRoles(userId, userRoles);// load the user roles
 
             TreeNode selectdNode = e.Node;//get the select node
+
             //string userRole = userRoles["role"];
             switch (selectdNode.Name)
             {
@@ -620,6 +631,7 @@ namespace Management_System
 
         private void btUserProjectManagementSubmit_Click(object sender, EventArgs e)
         {
+            string projectId = dbOperations.GetProjectID(cbUserProjectManagementSelectProject.Text);
             foreach (DataGridViewRow row in dgvSelectProjectAdmin.Rows)
             {
                 try
@@ -628,7 +640,7 @@ namespace Management_System
                     if ((bool)cell.FormattedValue)
                     {
                         string userId = dbOperations.GetUserId(row.Cells["user_name"].Value.ToString());
-                        dbOperations.SetProjectAdmin(userId, dbOperations.GetProjectID(cbUserProjectManagementSelectProject.Text));
+                        dbOperations.SetProjectAdmin(userId, projectId);
                         MessageBox.Show("Submit Successful");
                     }
                 }
@@ -638,9 +650,13 @@ namespace Management_System
                     MessageBox.Show("Submit Failed: " + ex.Message);
                 }
             }
-
         }
 
+        /// <summary>
+        /// Event handler for the selection change of the project in the member management combobox.
+        /// </summary>
+        /// <param name="sender">The event sender</param>
+        /// <param name="e">The event arguments</param>
         private void cbMemberManagementSelectProject_SelectedIndexChanged(object sender, EventArgs e)
         {
             lbAdmin_now.Text = "Admin of this project: " + dbOperations.GetUserName(dbOperations.AdminOfProject(dbOperations.GetProjectID(cbMemberManagementSelectProject.Text)));
@@ -648,50 +664,47 @@ namespace Management_System
             FillUsersBelongToProject(dgvProjectMembers);
         }
 
+        /// <summary>
+        /// Submit user project member changes
+        /// </summary>
+        /// <param name="sender">The event sender</param>
+        /// <param name="e">The event arguments</param>
         private void btUserProjectMembersSubmit_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dgvUsersDontBelone.Rows)
+            try
             {
-                try
+                string projectId = dbOperations.GetProjectID(cbMemberManagementSelectProject.Text);
+                foreach (DataGridViewRow row in dgvUsersDontBelone.Rows)
                 {
                     DataGridViewCheckBoxCell cell = (DataGridViewCheckBoxCell)row.Cells["dgvcbAdd_To_Member"];
                     if (cell.FormattedValue != null && (bool)cell.FormattedValue)
                     {
                         string userId = dbOperations.GetUserId(row.Cells["dgvcbUsers_Dont_Belone"].Value.ToString());
-                        string projectId = dbOperations.GetProjectID(cbMemberManagementSelectProject.Text);
                         string role = "User";
                         bool isAdd = true;
                         dbOperations.UpdateUserRoles(userId, projectId, role, isAdd);
                     }
                 }
-                catch (Exception ex)
-                {
-                    // if catch an exception, show the message
-                    MessageBox.Show("Submit Failed: " + ex.Message);
-                }
-            }
-            foreach (DataGridViewRow row in dgvProjectMembers.Rows)
-            {
-                try
+
+                foreach (DataGridViewRow row in dgvProjectMembers.Rows)
                 {
                     DataGridViewCheckBoxCell cell = (DataGridViewCheckBoxCell)row.Cells["dgvcbRemove_Member"];
                     if (cell.FormattedValue != null && (bool)cell.FormattedValue)
                     {
                         string userId = dbOperations.GetUserId(row.Cells["dgvcbMembers"].Value.ToString());
-                        string projectId = dbOperations.GetProjectID(cbMemberManagementSelectProject.Text);
                         string role = "User";
                         bool isAdd = false;
                         dbOperations.UpdateUserRoles(userId, projectId, role, isAdd);
                     }
                 }
-                catch (Exception ex)
-                {
-                    // if catch an exception, show the message
-                    MessageBox.Show("Submit Failed: " + ex.Message);
-                }
+
+                FillUsersBelongToProject(dgvProjectMembers);
+                FillUsersDontBelongToProject(dgvUsersDontBelone);
             }
-            FillUsersBelongToProject(dgvProjectMembers);
-            FillUsersDontBelongToProject(dgvUsersDontBelone);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Submission failed: " + ex.Message);
+            }
         }
     }
 }
