@@ -37,9 +37,10 @@ namespace Management_System
         List<string> ListUsersBelongToProject(string projectId);
         List<string> ListUsersDontBeloneToProject(string projectId);
         bool UpdateUserRoles(string userId, string projectId, string role, bool isAdd);
-        void InsertComment(int userId, string commentContent, List<int> requirementIds);
+        void InsertComment(string userId, string commentContent, List<string> projectIds, List<string> requirementIds = null);
         List<string> ListAllRequirementsYouCanSee(string userId);
         List<string> ListAllCommentsYouCanSee(string userId);
+        List<string> ListAllProjectsYouCanSee(string userId);
     }
 
 }

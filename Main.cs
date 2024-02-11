@@ -34,6 +34,7 @@ namespace Management_System
             panel_project_management.Visible = false;
             panel_member_management.Visible = false;
             panel_comment_view.Visible = false;
+            panel_comment_add.Visible = false;
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -273,6 +274,7 @@ namespace Management_System
                     panel_comment_view.Visible = true;
                     panel_comment_view.BringToFront();
                     List<string> comments = dbOperations.ListAllCommentsYouCanSee(userId);
+                    lvComments.Items.Clear();
                     foreach (string comment in comments)
                     {
                         string[] parts = comment.Split(',');
@@ -280,7 +282,24 @@ namespace Management_System
                         item.SubItems.Add(parts[1]);
                         item.SubItems.Add(parts[2]);
                         item.SubItems.Add(parts[3]);
+                        item.SubItems.Add(parts[4]);
                         lvComments.Items.Add(item);
+                    }
+                    break;
+                case "ndCommentAdd":// if the node is ndCommentAdd
+                    panel_comment_add.Visible = true;
+                    panel_comment_add.BringToFront();
+                    clbCommentAddSelectProject.Items.Clear();
+                    clbCommentAddSelectRequirement.Items.Clear();
+                    List<string> projects = dbOperations.ListAllProjectsYouCanSee(userId);
+                    foreach (string project in projects)
+                    {
+                        clbCommentAddSelectProject.Items.Add(project);
+                    }
+                    List<string> requirements = dbOperations.ListAllRequirementsYouCanSee(userId);
+                    foreach (string requirement in requirements)
+                    {
+                        clbCommentAddSelectRequirement.Items.Add(requirement);
                     }
                     break;
             }
@@ -704,6 +723,34 @@ namespace Management_System
             catch (Exception ex)
             {
                 MessageBox.Show("Submission failed: " + ex.Message);
+            }
+        }
+
+        private void btCommentAdd_Click(object sender, EventArgs e)
+        {
+            try
+            { 
+                string userId = dbOperations.GetUserId(Program.user_name);
+                string commentContent = tbCommentAddText.Text;
+                List<string> projectIds = new List<string>();
+                List<string> requirementIds = new List<string>();
+
+                foreach (string project in clbCommentAddSelectProject.CheckedItems)
+                {
+                    projectIds.Add(dbOperations.GetProjectID(project));
+                }
+                    foreach (string requirement in clbCommentAddSelectRequirement.CheckedItems)
+                {
+                    requirementIds.Add(dbOperations.GetRequirementID(requirement));
+                }
+
+                dbOperations.InsertComment(userId, commentContent, projectIds, requirementIds);
+                MessageBox.Show("Add Successful");
+             }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Add Failed: " + ex.Message);
             }
         }
     }

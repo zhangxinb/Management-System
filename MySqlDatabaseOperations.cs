@@ -219,10 +219,10 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <returns>A list of requirement names.</returns>
     public List<string> ListAllRequirementsYouCanSee(string userId)
     {
-        List<string> requirementNames = new List<string>();
+        HashSet<string> requirementNames = new HashSet<string>();
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @"SELECT requirement_name FROM requirements WHERE IsDeleted = 0 AND requirement_status != 'Deactive' AND (SELECT role FROM user_roles WHERE user_id = @userId) = 'SuperAdmin' OR project_id IN (SELECT project_id FROM user_roles WHERE user_id = @userId)";
+            string query = @"SELECT requirement_name FROM requirements WHERE IsDeleted = 0 AND requirement_status != 'Deactive' AND 'SuperAdmin' IN (SELECT role FROM user_roles WHERE user_id = @userId) OR project_id IN (SELECT project_id FROM user_roles WHERE user_id = @userId)";
             MySqlCommand cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@userId", userId);
             connection.Open();
@@ -232,9 +232,31 @@ public class MySqlDatabaseOperations : IDatabaseOperations
                 requirementNames.Add(dr.GetString(0));
             }
         }
-        return requirementNames;
+        return new List<string>(requirementNames);
     }
 
+    /// <summary>
+    /// Load all projects that a user can see from the database.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns>A list of project name</returns>
+    public List<string> ListAllProjectsYouCanSee(string userId)
+    {
+        HashSet<string> projectNames = new HashSet<string>();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            string query = @"SELECT project_name FROM projects WHERE 'SuperAdmin' IN (SELECT role FROM user_roles WHERE user_id = @userId) OR project_id IN (SELECT project_id FROM user_roles WHERE user_id = @userId)";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                projectNames.Add(dr.GetString(0));
+            }
+        }
+        return new List<string>(projectNames);
+    }
     /// <summary>
     /// Get the requirement ID from the database.
     /// </summary>
@@ -1088,85 +1110,110 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <param name="commentContent">The content of the comment.</param>
+    /// <param name="projectId">The ID of the project associated with the comment.</param>-->-->
     /// <param name="requirementIds">A list of requirement IDs associated with the comment.</param>
-    public void InsertComment(int userId, string commentContent, List<int> requirementIds)
+    public void InsertComment(string userId, string commentContent, List<string> projectIds, List<string> requirementIds = null)
+    {
+        using (MySqlConnection conn = new MySqlConnection(connectionString))
         {
+            conn.Open();
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "START TRANSACTION;";
+            cmd.ExecuteNonQuery();
+
+            try
             {
-                conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = "START TRANSACTION;";
+                // Insert the comment
+                cmd.CommandText = @"INSERT INTO comments (user_id, comment_content, comment_created_at)
+                            VALUES (@userId, @commentContent, CURRENT_TIMESTAMP);";
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@commentContent", commentContent);
                 cmd.ExecuteNonQuery();
 
-                try
+                // Get the ID of the inserted comment
+                cmd.CommandText = "SELECT LAST_INSERT_ID();";
+                int commentId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                // Define the '@commentId' parameter
+                cmd.Parameters.AddWithValue("@commentId", commentId);
+
+                // Link the comment to the projects
+                cmd.CommandText = "INSERT INTO comment_projects (comment_id, project_id) VALUES (@commentId, @projectId);";
+                cmd.Parameters.Add("@projectId", MySqlDbType.Int32);
+                foreach (string projectId in projectIds)
                 {
-                    // Insert the comment
-                    cmd.CommandText = @"INSERT INTO comments (user_id, comment_content, comment_created_at)
-                                VALUES (@userId, @commentContent, CURRENT_TIMESTAMP);";
-                    cmd.Parameters.AddWithValue("@userId", userId);
-                    cmd.Parameters.AddWithValue("@commentContent", commentContent);
+                    cmd.Parameters["@projectId"].Value = projectId;
                     cmd.ExecuteNonQuery();
+                }
 
-                    // Get the ID of the inserted comment
-                    cmd.CommandText = "SELECT LAST_INSERT_ID();";
-                    int commentId = Convert.ToInt32(cmd.ExecuteScalar());
-
-                    // Link the comment to the requirements
+                // Link the comment to the requirements, if any
+                if (requirementIds != null)
+                {
                     cmd.CommandText = "INSERT INTO comment_requirements (comment_id, requirement_id) VALUES (@commentId, @requirementId);";
-                    cmd.Parameters.Add("@commentId", MySqlDbType.Int32).Value = commentId;
                     cmd.Parameters.Add("@requirementId", MySqlDbType.Int32);
-
-                    foreach (int requirementId in requirementIds)
+                    foreach (string requirementId in requirementIds)
                     {
                         cmd.Parameters["@requirementId"].Value = requirementId;
                         cmd.ExecuteNonQuery();
                     }
+                }
 
-                    cmd.CommandText = "COMMIT;";
-                    cmd.ExecuteNonQuery();
-                }
-                catch
-                {
-                    cmd.CommandText = "ROLLBACK;";
-                    cmd.ExecuteNonQuery();
-                    throw;
-                }
+                cmd.CommandText = "COMMIT;";
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                cmd.CommandText = "ROLLBACK;";
+                cmd.ExecuteNonQuery();
+                throw;
             }
         }
+    }
     /// <summary>
     /// Lists all comments that a user can see from the database.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <returns>A list of comments.</returns>
     public List<string> ListAllCommentsYouCanSee(string userId)
+    {
+        List<string> comments = new List<string>();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            List<string> comments = new List<string>();
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            connection.Open();
+
+            // List all the comments that the user can see
+            string sql = @"SELECT COALESCE(p1.project_name, p2.project_name) AS project_name, 
+                                  r.requirement_name, 
+                                  u.user_name, 
+                                  c.comment_content, 
+                                  c.comment_created_at 
+                           FROM comments c 
+                           INNER JOIN users u ON c.user_id = u.user_id 
+                           LEFT JOIN comment_requirements cr ON c.comment_id = cr.comment_id 
+                           LEFT JOIN requirements r ON cr.requirement_id = r.requirement_id 
+                           LEFT JOIN projects p1 ON r.project_id = p1.project_id
+                           LEFT JOIN comment_projects cp ON c.comment_id = cp.comment_id
+                           LEFT JOIN projects p2 ON cp.project_id = p2.project_id
+                           WHERE EXISTS (SELECT 1 FROM user_roles ur WHERE ur.user_id = @userId AND (ur.role = 'SuperAdmin' OR p1.project_id = p1.project_id OR p2.project_id = p2.project_id))
+                           ORDER BY c.comment_created_at DESC;";
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
-                connection.Open();
+                command.Parameters.AddWithValue("@userId", userId);
 
-                //List all the comments that the user can see
-                string sql = @"SELECT r.requirement_name, u.user_name, c.comment_content, c.comment_created_at FROM comments c INNER JOIN users u ON c.user_id = u.user_id INNER JOIN comment_requirements cr ON c.comment_id = cr.comment_id INNER JOIN requirements r ON cr.requirement_id = r.requirement_id WHERE EXISTS (SELECT 1 FROM user_roles ur WHERE ur.user_id = @userId AND (ur.role = 'SuperAdmin' OR r.project_id = r.project_id));";
-                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    command.Parameters.AddWithValue("@userId", userId);
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            string comment = $"{reader["user_name"]},{reader["requirement_name"]},  {reader["comment_content"]}, {reader["comment_created_at"]}";
-                            comments.Add(comment);
-                        }
+                        string comment = $"{reader["user_name"]}, {reader["project_name"] ?? "N/A"}, {reader["requirement_name"] ?? "N/A"}, {reader["comment_content"]}, {reader["comment_created_at"]}";
+                        comments.Add(comment);
                     }
                 }
             }
-            return comments;
         }
-
+        return comments;
+    }
 
 }
 
