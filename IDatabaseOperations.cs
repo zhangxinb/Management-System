@@ -41,6 +41,7 @@ namespace Management_System
         List<string> ListAllRequirementsYouCanSee(string userId);
         List<string> ListAllCommentsYouCanSee(string userId);
         List<string> ListAllProjectsYouCanSee(string userId);
+        List<string> ListCommentsByRequirementId(string requirementId);
     }
 
 }

@@ -140,21 +140,33 @@
             this.label7 = new System.Windows.Forms.Label();
             this.lbUser_Now = new System.Windows.Forms.Label();
             this.panel_comment_view = new System.Windows.Forms.Panel();
+            this.panel_list_comments_by_requirement = new System.Windows.Forms.Panel();
+            this.lvCommentsByRequirement = new System.Windows.Forms.ListView();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cbListCommentsByRequirement = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btListByRequirement = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
             this.lvComments = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label10 = new System.Windows.Forms.Label();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel_comment_add = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.clbCommentAddSelectProject = new System.Windows.Forms.CheckedListBox();
-            this.clbCommentAddSelectRequirement = new System.Windows.Forms.CheckedListBox();
-            this.tbCommentAddText = new System.Windows.Forms.TextBox();
             this.btCommentAdd = new System.Windows.Forms.Button();
+            this.tbCommentAddText = new System.Windows.Forms.TextBox();
+            this.clbCommentAddSelectRequirement = new System.Windows.Forms.CheckedListBox();
+            this.clbCommentAddSelectProject = new System.Windows.Forms.CheckedListBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btListCommentsByRequirement = new System.Windows.Forms.Button();
             this.panel_project_add.SuspendLayout();
             this.panel_project_edit.SuspendLayout();
             this.panel_project_delete.SuspendLayout();
@@ -168,6 +180,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvProjectMembers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).BeginInit();
             this.panel_comment_view.SuspendLayout();
+            this.panel_list_comments_by_requirement.SuspendLayout();
             this.panel_comment_add.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1005,12 +1018,108 @@
             // 
             // panel_comment_view
             // 
+            this.panel_comment_view.Controls.Add(this.panel_list_comments_by_requirement);
+            this.panel_comment_view.Controls.Add(this.btListByRequirement);
             this.panel_comment_view.Controls.Add(this.label10);
             this.panel_comment_view.Controls.Add(this.lvComments);
             this.panel_comment_view.Location = new System.Drawing.Point(122, 0);
             this.panel_comment_view.Name = "panel_comment_view";
             this.panel_comment_view.Size = new System.Drawing.Size(793, 477);
             this.panel_comment_view.TabIndex = 13;
+            // 
+            // panel_list_comments_by_requirement
+            // 
+            this.panel_list_comments_by_requirement.Controls.Add(this.btListCommentsByRequirement);
+            this.panel_list_comments_by_requirement.Controls.Add(this.lvCommentsByRequirement);
+            this.panel_list_comments_by_requirement.Controls.Add(this.cbListCommentsByRequirement);
+            this.panel_list_comments_by_requirement.Controls.Add(this.label14);
+            this.panel_list_comments_by_requirement.Location = new System.Drawing.Point(0, 0);
+            this.panel_list_comments_by_requirement.Name = "panel_list_comments_by_requirement";
+            this.panel_list_comments_by_requirement.Size = new System.Drawing.Size(790, 474);
+            this.panel_list_comments_by_requirement.TabIndex = 3;
+            // 
+            // lvCommentsByRequirement
+            // 
+            this.lvCommentsByRequirement.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11});
+            this.lvCommentsByRequirement.HideSelection = false;
+            this.lvCommentsByRequirement.Location = new System.Drawing.Point(0, 100);
+            this.lvCommentsByRequirement.Name = "lvCommentsByRequirement";
+            this.lvCommentsByRequirement.Size = new System.Drawing.Size(787, 321);
+            this.lvCommentsByRequirement.TabIndex = 2;
+            this.lvCommentsByRequirement.UseCompatibleStateImageBehavior = false;
+            this.lvCommentsByRequirement.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Name";
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Project";
+            this.columnHeader7.Width = 100;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Requirement";
+            this.columnHeader8.Width = 150;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Comment";
+            this.columnHeader9.Width = 195;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Link Requirements";
+            this.columnHeader10.Width = 150;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Created Time";
+            this.columnHeader11.Width = 130;
+            // 
+            // cbListCommentsByRequirement
+            // 
+            this.cbListCommentsByRequirement.FormattingEnabled = true;
+            this.cbListCommentsByRequirement.Location = new System.Drawing.Point(276, 55);
+            this.cbListCommentsByRequirement.Name = "cbListCommentsByRequirement";
+            this.cbListCommentsByRequirement.Size = new System.Drawing.Size(197, 20);
+            this.cbListCommentsByRequirement.TabIndex = 1;
+            this.cbListCommentsByRequirement.SelectedIndexChanged += new System.EventHandler(this.cbListCommentsByRequirement_SelectedIndexChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(315, 29);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(125, 12);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Select a requirement";
+            // 
+            // btListByRequirement
+            // 
+            this.btListByRequirement.Location = new System.Drawing.Point(276, 415);
+            this.btListByRequirement.Name = "btListByRequirement";
+            this.btListByRequirement.Size = new System.Drawing.Size(200, 23);
+            this.btListByRequirement.TabIndex = 2;
+            this.btListByRequirement.Text = "Show comments by requirement";
+            this.btListByRequirement.UseVisualStyleBackColor = true;
+            this.btListByRequirement.Click += new System.EventHandler(this.btListByRequirement_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(305, 23);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(173, 12);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "All the comments you can see";
             // 
             // lvComments
             // 
@@ -1023,7 +1132,7 @@
             this.lvComments.HideSelection = false;
             this.lvComments.Location = new System.Drawing.Point(59, 50);
             this.lvComments.Name = "lvComments";
-            this.lvComments.Size = new System.Drawing.Size(664, 400);
+            this.lvComments.Size = new System.Drawing.Size(664, 338);
             this.lvComments.TabIndex = 0;
             this.lvComments.UseCompatibleStateImageBehavior = false;
             this.lvComments.View = System.Windows.Forms.View.Details;
@@ -1031,6 +1140,11 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Name";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Project";
+            this.columnHeader2.Width = 100;
             // 
             // columnHeader3
             // 
@@ -1047,20 +1161,6 @@
             this.columnHeader5.Text = "Created Time";
             this.columnHeader5.Width = 130;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(305, 23);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(173, 12);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "All the comments you can see";
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Project";
-            this.columnHeader2.Width = 100;
-            // 
             // panel_comment_add
             // 
             this.panel_comment_add.Controls.Add(this.btCommentAdd);
@@ -1075,56 +1175,6 @@
             this.panel_comment_add.Size = new System.Drawing.Size(793, 477);
             this.panel_comment_add.TabIndex = 14;
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(339, 17);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(83, 12);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Add a comment";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(197, 57);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(89, 12);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "Select project";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(466, 59);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(113, 12);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "Select requirement";
-            // 
-            // clbCommentAddSelectProject
-            // 
-            this.clbCommentAddSelectProject.FormattingEnabled = true;
-            this.clbCommentAddSelectProject.Location = new System.Drawing.Point(148, 82);
-            this.clbCommentAddSelectProject.Name = "clbCommentAddSelectProject";
-            this.clbCommentAddSelectProject.Size = new System.Drawing.Size(190, 244);
-            this.clbCommentAddSelectProject.TabIndex = 5;
-            // 
-            // clbCommentAddSelectRequirement
-            // 
-            this.clbCommentAddSelectRequirement.FormattingEnabled = true;
-            this.clbCommentAddSelectRequirement.Location = new System.Drawing.Point(423, 81);
-            this.clbCommentAddSelectRequirement.Name = "clbCommentAddSelectRequirement";
-            this.clbCommentAddSelectRequirement.Size = new System.Drawing.Size(190, 244);
-            this.clbCommentAddSelectRequirement.TabIndex = 6;
-            // 
-            // tbCommentAddText
-            // 
-            this.tbCommentAddText.Location = new System.Drawing.Point(148, 368);
-            this.tbCommentAddText.Name = "tbCommentAddText";
-            this.tbCommentAddText.Size = new System.Drawing.Size(465, 21);
-            this.tbCommentAddText.TabIndex = 7;
-            // 
             // btCommentAdd
             // 
             this.btCommentAdd.Location = new System.Drawing.Point(341, 427);
@@ -1135,14 +1185,74 @@
             this.btCommentAdd.UseVisualStyleBackColor = true;
             this.btCommentAdd.Click += new System.EventHandler(this.btCommentAdd_Click);
             // 
+            // tbCommentAddText
+            // 
+            this.tbCommentAddText.Location = new System.Drawing.Point(148, 368);
+            this.tbCommentAddText.Name = "tbCommentAddText";
+            this.tbCommentAddText.Size = new System.Drawing.Size(465, 21);
+            this.tbCommentAddText.TabIndex = 7;
+            // 
+            // clbCommentAddSelectRequirement
+            // 
+            this.clbCommentAddSelectRequirement.FormattingEnabled = true;
+            this.clbCommentAddSelectRequirement.Location = new System.Drawing.Point(423, 81);
+            this.clbCommentAddSelectRequirement.Name = "clbCommentAddSelectRequirement";
+            this.clbCommentAddSelectRequirement.Size = new System.Drawing.Size(190, 244);
+            this.clbCommentAddSelectRequirement.TabIndex = 6;
+            // 
+            // clbCommentAddSelectProject
+            // 
+            this.clbCommentAddSelectProject.FormattingEnabled = true;
+            this.clbCommentAddSelectProject.Location = new System.Drawing.Point(148, 82);
+            this.clbCommentAddSelectProject.Name = "clbCommentAddSelectProject";
+            this.clbCommentAddSelectProject.Size = new System.Drawing.Size(190, 244);
+            this.clbCommentAddSelectProject.TabIndex = 5;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(466, 59);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(113, 12);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "Select requirement";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(197, 57);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(89, 12);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "Select project";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(339, 17);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(83, 12);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Add a comment";
+            // 
+            // btListCommentsByRequirement
+            // 
+            this.btListCommentsByRequirement.Location = new System.Drawing.Point(330, 430);
+            this.btListCommentsByRequirement.Name = "btListCommentsByRequirement";
+            this.btListCommentsByRequirement.Size = new System.Drawing.Size(75, 23);
+            this.btListCommentsByRequirement.TabIndex = 3;
+            this.btListCommentsByRequirement.Text = "Back";
+            this.btListCommentsByRequirement.UseVisualStyleBackColor = true;
+            this.btListCommentsByRequirement.Click += new System.EventHandler(this.btListCommentsByRequirement_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 473);
-            this.Controls.Add(this.panel_comment_add);
             this.Controls.Add(this.panel_comment_view);
             this.Controls.Add(this.lbUser_Now);
+            this.Controls.Add(this.panel_comment_add);
             this.Controls.Add(this.panel_member_management);
             this.Controls.Add(this.panel_project_management);
             this.Controls.Add(this.tvMenuTree);
@@ -1179,6 +1289,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsersDontBelone)).EndInit();
             this.panel_comment_view.ResumeLayout(false);
             this.panel_comment_view.PerformLayout();
+            this.panel_list_comments_by_requirement.ResumeLayout(false);
+            this.panel_list_comments_by_requirement.PerformLayout();
             this.panel_comment_add.ResumeLayout(false);
             this.panel_comment_add.PerformLayout();
             this.ResumeLayout(false);
@@ -1282,5 +1394,17 @@
         private System.Windows.Forms.CheckedListBox clbCommentAddSelectProject;
         private System.Windows.Forms.Button btCommentAdd;
         private System.Windows.Forms.TextBox tbCommentAddText;
+        private System.Windows.Forms.Button btListByRequirement;
+        private System.Windows.Forms.Panel panel_list_comments_by_requirement;
+        private System.Windows.Forms.ComboBox cbListCommentsByRequirement;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ListView lvCommentsByRequirement;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.Button btListCommentsByRequirement;
     }
 }

@@ -35,6 +35,7 @@ namespace Management_System
             panel_member_management.Visible = false;
             panel_comment_view.Visible = false;
             panel_comment_add.Visible = false;
+            panel_list_comments_by_requirement.Visible = false;
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -272,6 +273,7 @@ namespace Management_System
                     }
                 case "ndCommentView":// if the node is ndCommentView
                     panel_comment_view.Visible = true;
+                    panel_list_comments_by_requirement.Visible = false;
                     panel_comment_view.BringToFront();
                     List<string> comments = dbOperations.ListAllCommentsYouCanSee(userId);
                     lvComments.Items.Clear();
@@ -752,6 +754,48 @@ namespace Management_System
             {
                 MessageBox.Show("Add Failed: " + ex.Message);
             }
+        }
+
+        private void btListByRequirement_Click(object sender, EventArgs e)
+        {
+            panel_list_comments_by_requirement.Visible = true;
+            panel_list_comments_by_requirement.BringToFront();
+            cbListCommentsByRequirement.Items.Clear();
+            cbListCommentsByRequirement.Text = V;
+            lvCommentsByRequirement.Items.Clear();
+            string userId = dbOperations.GetUserId(Program.user_name);
+            List<string> requirementNames = dbOperations.ListAllRequirementsYouCanSee(userId);
+            foreach (string requirementName in requirementNames)
+            {
+                cbListCommentsByRequirement.Items.Add(requirementName);
+            }
+
+        }
+
+        private void cbListCommentsByRequirement_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string requirementId = dbOperations.GetRequirementID(cbListCommentsByRequirement.Text);
+            List<string> comments = dbOperations.ListCommentsByRequirementId(requirementId);
+            lvCommentsByRequirement.Items.Clear();
+            foreach (string comment in comments)
+            {
+                string[] parts = comment.Split(',');
+                ListViewItem item = new ListViewItem(parts[0]);
+                item.SubItems.Add(parts[1]);
+                item.SubItems.Add(parts[2]);
+                item.SubItems.Add(parts[3]);
+                item.SubItems.Add(parts[4]);
+                item.SubItems.Add(parts[5]);
+                lvCommentsByRequirement.Items.Add(item);
+            }
+        }
+
+        private void btListCommentsByRequirement_Click(object sender, EventArgs e)
+        {
+            panel_list_comments_by_requirement.Visible = false;
+            panel_list_comments_by_requirement.SendToBack();
+            cbListCommentsByRequirement.Text = V;
+            lvCommentsByRequirement.Items.Clear();
         }
     }
 }

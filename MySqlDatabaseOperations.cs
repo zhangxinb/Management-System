@@ -1214,6 +1214,57 @@ public class MySqlDatabaseOperations : IDatabaseOperations
         }
         return comments;
     }
+    public List<string> ListCommentsByRequirementId(string requirementId)
+    {
+        try
+        {
+            List<string> comments = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = @"SELECT c.comment_id,
+                                  p.project_name, 
+                                  r.requirement_name, 
+                                  u.user_name, 
+                                  c.comment_content, 
+                                  c.comment_created_at,
+                                  GROUP_CONCAT(DISTINCT CONCAT(p2.project_name, ':', r2.requirement_name) SEPARATOR ', ') AS link_requirements
+                            FROM comments c 
+                            INNER JOIN users u ON c.user_id = u.user_id 
+                            INNER JOIN comment_requirements cr ON c.comment_id = cr.comment_id 
+                            INNER JOIN requirements r ON cr.requirement_id = r.requirement_id 
+                            LEFT JOIN projects p ON r.project_id = p.project_id
+                            LEFT JOIN comment_requirements cr2 ON c.comment_id = cr2.comment_id
+                            LEFT JOIN requirements r2 ON cr2.requirement_id = r2.requirement_id AND r2.requirement_id != @requirementId
+                            LEFT JOIN projects p2 ON r2.project_id = p2.project_id
+                            WHERE cr.requirement_id = @requirementId
+                            GROUP BY c.comment_id, p.project_name, r.requirement_name, u.user_name, c.comment_content, c.comment_created_at
+                            ORDER BY c.comment_created_at DESC;";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@requirementId", requirementId);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string comment = $"{reader["user_name"]}, {reader["project_name"] ?? "N/A"}, {reader["requirement_name"] ?? "N/A"}, {reader["comment_content"]}, {reader["link_requirements"] ?? "N/A"}, {reader["comment_created_at"]}";
+                            comments.Add(comment);
+                        }
+                    }
+                }
+
+            }
+            return comments;
+        }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            MessageBox.Show("An error occurred while listing comments by requirement ID: " + ex.Message);
+            return new List<string>();
+        }
+    }
 
 }
 
