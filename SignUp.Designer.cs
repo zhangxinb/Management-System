@@ -44,6 +44,7 @@
             // 
             // sign_up
             // 
+            this.sign_up.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.sign_up.AutoSize = true;
             this.sign_up.Font = new System.Drawing.Font("Arial Narrow", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sign_up.Location = new System.Drawing.Point(424, 127);
@@ -54,6 +55,7 @@
             // 
             // user_name
             // 
+            this.user_name.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.user_name.AutoSize = true;
             this.user_name.Location = new System.Drawing.Point(366, 233);
             this.user_name.Name = "user_name";
@@ -63,6 +65,7 @@
             // 
             // password
             // 
+            this.password.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.password.AutoSize = true;
             this.password.Location = new System.Drawing.Point(366, 274);
             this.password.Name = "password";
@@ -72,6 +75,7 @@
             // 
             // phone_num
             // 
+            this.phone_num.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.phone_num.AutoSize = true;
             this.phone_num.Location = new System.Drawing.Point(366, 365);
             this.phone_num.Name = "phone_num";
@@ -81,6 +85,7 @@
             // 
             // tbUserName
             // 
+            this.tbUserName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbUserName.Location = new System.Drawing.Point(564, 233);
             this.tbUserName.Name = "tbUserName";
             this.tbUserName.Size = new System.Drawing.Size(100, 21);
@@ -88,6 +93,7 @@
             // 
             // tbPassword
             // 
+            this.tbPassword.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbPassword.Location = new System.Drawing.Point(564, 274);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
@@ -96,6 +102,7 @@
             // 
             // tbRe_Password
             // 
+            this.tbRe_Password.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbRe_Password.Location = new System.Drawing.Point(564, 314);
             this.tbRe_Password.Name = "tbRe_Password";
             this.tbRe_Password.PasswordChar = '*';
@@ -104,6 +111,8 @@
             // 
             // btCancle
             // 
+            this.btCancle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btCancle.AutoSize = true;
             this.btCancle.Location = new System.Drawing.Point(410, 413);
             this.btCancle.Name = "btCancle";
             this.btCancle.Size = new System.Drawing.Size(75, 23);
@@ -114,6 +123,8 @@
             // 
             // btSubmit
             // 
+            this.btSubmit.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btSubmit.AutoSize = true;
             this.btSubmit.Location = new System.Drawing.Point(532, 412);
             this.btSubmit.Name = "btSubmit";
             this.btSubmit.Size = new System.Drawing.Size(75, 23);
@@ -124,6 +135,7 @@
             // 
             // tbPhoneNum
             // 
+            this.tbPhoneNum.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbPhoneNum.Location = new System.Drawing.Point(564, 365);
             this.tbPhoneNum.Name = "tbPhoneNum";
             this.tbPhoneNum.Size = new System.Drawing.Size(100, 21);
@@ -131,6 +143,7 @@
             // 
             // re_password
             // 
+            this.re_password.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.re_password.AutoSize = true;
             this.re_password.Location = new System.Drawing.Point(366, 323);
             this.re_password.Name = "re_password";

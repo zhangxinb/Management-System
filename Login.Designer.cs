@@ -51,6 +51,7 @@
             // 
             // username
             // 
+            this.username.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.username.AutoSize = true;
             this.username.Location = new System.Drawing.Point(302, 260);
             this.username.Name = "username";
@@ -60,6 +61,7 @@
             // 
             // password
             // 
+            this.password.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.password.AutoSize = true;
             this.password.Location = new System.Drawing.Point(304, 310);
             this.password.Name = "password";
@@ -69,6 +71,7 @@
             // 
             // tbUserName
             // 
+            this.tbUserName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbUserName.Location = new System.Drawing.Point(426, 257);
             this.tbUserName.Name = "tbUserName";
             this.tbUserName.Size = new System.Drawing.Size(251, 21);
@@ -76,6 +79,7 @@
             // 
             // tbPassword
             // 
+            this.tbPassword.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbPassword.Location = new System.Drawing.Point(426, 310);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
@@ -85,6 +89,8 @@
             // 
             // btLogin
             // 
+            this.btLogin.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btLogin.AutoSize = true;
             this.btLogin.Location = new System.Drawing.Point(601, 395);
             this.btLogin.Name = "btLogin";
             this.btLogin.Size = new System.Drawing.Size(75, 23);
@@ -95,6 +101,8 @@
             // 
             // btSignUp
             // 
+            this.btSignUp.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btSignUp.AutoSize = true;
             this.btSignUp.Location = new System.Drawing.Point(426, 394);
             this.btSignUp.Name = "btSignUp";
             this.btSignUp.Size = new System.Drawing.Size(75, 23);

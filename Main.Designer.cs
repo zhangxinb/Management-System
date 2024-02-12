@@ -28,38 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project Management");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Member Management");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9,
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("View");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13});
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("节点10");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("节点11");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
-            treeNode15,
-            treeNode16});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Project Management");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Member Management");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
+            treeNode18,
+            treeNode19});
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
+            treeNode21,
+            treeNode22,
+            treeNode23});
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
+            treeNode25,
+            treeNode26,
+            treeNode27});
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("View");
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
+            treeNode29,
+            treeNode30});
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("节点10");
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("节点11");
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
+            treeNode32,
+            treeNode33});
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.tvMenuTree = new System.Windows.Forms.TreeView();
             this.panel_project_add = new System.Windows.Forms.Panel();
@@ -141,6 +141,7 @@
             this.lbUser_Now = new System.Windows.Forms.Label();
             this.panel_comment_view = new System.Windows.Forms.Panel();
             this.panel_list_comments_by_requirement = new System.Windows.Forms.Panel();
+            this.btListCommentsByRequirement = new System.Windows.Forms.Button();
             this.lvCommentsByRequirement = new System.Windows.Forms.ListView();
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -166,7 +167,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.btListCommentsByRequirement = new System.Windows.Forms.Button();
             this.panel_project_add.SuspendLayout();
             this.panel_project_edit.SuspendLayout();
             this.panel_project_delete.SuspendLayout();
@@ -195,46 +195,46 @@
             // 
             this.tvMenuTree.Location = new System.Drawing.Point(0, 0);
             this.tvMenuTree.Name = "tvMenuTree";
-            treeNode1.Name = "ndUserProjectManagement";
-            treeNode1.Text = "Project Management";
-            treeNode2.Name = "ndUserMemberManagement";
-            treeNode2.Text = "Member Management";
-            treeNode3.Name = "ndUser";
-            treeNode3.Text = "User";
-            treeNode4.Name = "ndProjectAdd";
-            treeNode4.Text = "Add";
-            treeNode5.Name = "ndProjectEdit";
-            treeNode5.Text = "Edit";
-            treeNode6.Name = "ndProjectDelete";
-            treeNode6.Text = "Delete";
-            treeNode7.Name = "ndProject";
-            treeNode7.Text = "Project";
-            treeNode8.Name = "ndRequirementAdd";
-            treeNode8.Text = "Add";
-            treeNode9.Name = "ndRequirementEdit";
-            treeNode9.Text = "Edit";
-            treeNode10.Name = "ndRequirementDelete";
-            treeNode10.Text = "Delete";
-            treeNode11.Name = "Requirement";
-            treeNode11.Text = "Requirement";
-            treeNode12.Name = "ndCommentView";
-            treeNode12.Text = "View";
-            treeNode13.Name = "ndCommentAdd";
-            treeNode13.Text = "Add";
-            treeNode14.Name = "Comment";
-            treeNode14.Text = "Comment";
-            treeNode15.Name = "节点10";
-            treeNode15.Text = "节点10";
-            treeNode16.Name = "节点11";
-            treeNode16.Text = "节点11";
-            treeNode17.Name = "Report";
-            treeNode17.Text = "Report";
+            treeNode18.Name = "ndUserProjectManagement";
+            treeNode18.Text = "Project Management";
+            treeNode19.Name = "ndUserMemberManagement";
+            treeNode19.Text = "Member Management";
+            treeNode20.Name = "ndUser";
+            treeNode20.Text = "User";
+            treeNode21.Name = "ndProjectAdd";
+            treeNode21.Text = "Add";
+            treeNode22.Name = "ndProjectEdit";
+            treeNode22.Text = "Edit";
+            treeNode23.Name = "ndProjectDelete";
+            treeNode23.Text = "Delete";
+            treeNode24.Name = "ndProject";
+            treeNode24.Text = "Project";
+            treeNode25.Name = "ndRequirementAdd";
+            treeNode25.Text = "Add";
+            treeNode26.Name = "ndRequirementEdit";
+            treeNode26.Text = "Edit";
+            treeNode27.Name = "ndRequirementDelete";
+            treeNode27.Text = "Delete";
+            treeNode28.Name = "Requirement";
+            treeNode28.Text = "Requirement";
+            treeNode29.Name = "ndCommentView";
+            treeNode29.Text = "View";
+            treeNode30.Name = "ndCommentAdd";
+            treeNode30.Text = "Add";
+            treeNode31.Name = "Comment";
+            treeNode31.Text = "Comment";
+            treeNode32.Name = "节点10";
+            treeNode32.Text = "节点10";
+            treeNode33.Name = "节点11";
+            treeNode33.Text = "节点11";
+            treeNode34.Name = "Report";
+            treeNode34.Text = "Report";
             this.tvMenuTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode7,
-            treeNode11,
-            treeNode14,
-            treeNode17});
+            treeNode20,
+            treeNode24,
+            treeNode28,
+            treeNode31,
+            treeNode34});
             this.tvMenuTree.Size = new System.Drawing.Size(116, 372);
             this.tvMenuTree.TabIndex = 2;
             this.tvMenuTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
@@ -501,6 +501,7 @@
             // 
             // btlogout
             // 
+            this.btlogout.AutoSize = true;
             this.btlogout.Location = new System.Drawing.Point(0, 430);
             this.btlogout.Name = "btlogout";
             this.btlogout.Size = new System.Drawing.Size(116, 39);
@@ -794,14 +795,14 @@
             // 
             this.dgvSelectProjectAdmin.AllowUserToAddRows = false;
             this.dgvSelectProjectAdmin.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSelectProjectAdmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSelectProjectAdmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvSelectProjectAdmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSelectProjectAdmin.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.user_name,
@@ -896,14 +897,14 @@
             // 
             this.dgvProjectMembers.AllowUserToAddRows = false;
             this.dgvProjectMembers.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProjectMembers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProjectMembers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvProjectMembers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProjectMembers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvcbMembers,
@@ -936,14 +937,14 @@
             // 
             this.dgvUsersDontBelone.AllowUserToAddRows = false;
             this.dgvUsersDontBelone.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvUsersDontBelone.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvUsersDontBelone.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvUsersDontBelone.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsersDontBelone.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvcbUsers_Dont_Belone,
@@ -1037,6 +1038,16 @@
             this.panel_list_comments_by_requirement.Name = "panel_list_comments_by_requirement";
             this.panel_list_comments_by_requirement.Size = new System.Drawing.Size(790, 474);
             this.panel_list_comments_by_requirement.TabIndex = 3;
+            // 
+            // btListCommentsByRequirement
+            // 
+            this.btListCommentsByRequirement.Location = new System.Drawing.Point(330, 430);
+            this.btListCommentsByRequirement.Name = "btListCommentsByRequirement";
+            this.btListCommentsByRequirement.Size = new System.Drawing.Size(75, 23);
+            this.btListCommentsByRequirement.TabIndex = 3;
+            this.btListCommentsByRequirement.Text = "Back";
+            this.btListCommentsByRequirement.UseVisualStyleBackColor = true;
+            this.btListCommentsByRequirement.Click += new System.EventHandler(this.btListCommentsByRequirement_Click);
             // 
             // lvCommentsByRequirement
             // 
@@ -1235,16 +1246,6 @@
             this.label11.TabIndex = 0;
             this.label11.Text = "Add a comment";
             // 
-            // btListCommentsByRequirement
-            // 
-            this.btListCommentsByRequirement.Location = new System.Drawing.Point(330, 430);
-            this.btListCommentsByRequirement.Name = "btListCommentsByRequirement";
-            this.btListCommentsByRequirement.Size = new System.Drawing.Size(75, 23);
-            this.btListCommentsByRequirement.TabIndex = 3;
-            this.btListCommentsByRequirement.Text = "Back";
-            this.btListCommentsByRequirement.UseVisualStyleBackColor = true;
-            this.btListCommentsByRequirement.Click += new System.EventHandler(this.btListCommentsByRequirement_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1266,6 +1267,7 @@
             this.Name = "Main";
             this.Text = "Main page";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.Resize += new System.EventHandler(this.Main_Resize);
             this.panel_project_add.ResumeLayout(false);
             this.panel_project_add.PerformLayout();
             this.panel_project_edit.ResumeLayout(false);

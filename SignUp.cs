@@ -2,17 +2,24 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Management_System
 {
     public partial class SignUp : Form
     {
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+        private Size originalFormSize;
         public SignUp()
         {
             InitializeComponent();
+            originalFormSize = this.Size;
+            FormResizer.SetInitialSize(this);
         }
-
+        private void SignUp_Resize(object sender, EventArgs e)
+        {
+            FormResizer.ResizeForm(this, originalFormSize);
+        }
         private void SignUp_Load(object sender, EventArgs e)
         {
 

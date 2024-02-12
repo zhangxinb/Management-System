@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using System.Drawing;
 
 
 namespace Management_System
@@ -9,6 +10,7 @@ namespace Management_System
     public partial class Main : Form
     {
         private const string V = "";
+        private Size originalFormSize;
 
         //bt = button
         //cb = combobox
@@ -36,6 +38,12 @@ namespace Management_System
             panel_comment_view.Visible = false;
             panel_comment_add.Visible = false;
             panel_list_comments_by_requirement.Visible = false;
+            originalFormSize = this.Size;
+            FormResizer.SetInitialSize(this);
+        }
+        private void Main_Resize(object sender, EventArgs e)
+        {
+            FormResizer.ResizeForm(this, originalFormSize);
         }
         private void Main_Load(object sender, EventArgs e)
         {

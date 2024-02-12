@@ -115,6 +115,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormResizer.cs" />
     <Compile Include="UserRoleControl.cs" />
     <Compile Include="Project.cs">
       <SubType>Form</SubType>
