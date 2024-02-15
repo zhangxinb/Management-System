@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing;
 
 
 namespace Management_System
@@ -10,8 +10,6 @@ namespace Management_System
     public partial class Login : Form
     {
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
-        private float x;
-        private float y;
         private Size originalFormSize;
         public Login()
         {
@@ -21,7 +19,7 @@ namespace Management_System
         }
 
         private void Login_Resize(object sender, EventArgs e)
-        {           
+        {
             FormResizer.ResizeForm(this, originalFormSize);
         }
         private void Login_Load(object sender, EventArgs e)//load the form

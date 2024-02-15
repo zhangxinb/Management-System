@@ -1,9 +1,8 @@
 ﻿using Management_System;
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
-using System;
 
 /// <summary>
 /// Represents the operations performed on the MySQL database.
@@ -12,7 +11,38 @@ public class MySqlDatabaseOperations : IDatabaseOperations
 {
     // The connection string to the database
     private string connectionString = "server=database-1.c7e2oyq4onm0.eu-north-1.rds.amazonaws.com;user id=admin;password=A871218ss5168;database=management_system; port = 3306";
-
+    /// <summary>
+    ///  For all the void methods, they are used to insert, update, delete data from the database.
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="parameters"></param>
+    public void ExecuteNonQuery(string sql, params MySqlParameter[] parameters)
+    {
+        using (MySqlConnection conn = new MySqlConnection(connectionString))
+        {
+            conn.Open();
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddRange(parameters);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+    /// <summary>
+    /// For all the void methods, they are used to insert, update, delete data from the database.
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="parameters"></param>
+    /// <param name="connection"></param>
+    /// <param name="transaction"></param>
+    public void ExecuteNonQuery(string sql, MySqlParameter[] parameters, MySqlConnection connection, MySqlTransaction transaction)
+    {
+        using (MySqlCommand cmd = new MySqlCommand(sql, connection, transaction))
+        {
+            cmd.Parameters.AddRange(parameters);
+            cmd.ExecuteNonQuery();
+        }
+    }
     /// <summary>
     /// Insert a new user into the database.
     /// </summary>
@@ -21,16 +51,13 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <param name="phoneNum">The phone number of the user.</param>
     public void InsertUser(string username, string password, string phoneNum)
     {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            string query = "insert into users(user_name, user_password, phone_num) values (@username, @password, @phone_num)";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@phone_num", phoneNum);
-            connection.Open();
-            cmd.ExecuteNonQuery();
-        }
+        string sql = "INSERT INTO users (user_name, user_password, phone_num) VALUES (@Username, @Password, @PhoneNum)";
+        MySqlParameter[] parameters = {
+            new MySqlParameter("@Username", username),
+            new MySqlParameter("@Password", password),
+            new MySqlParameter("@PhoneNum", phoneNum)
+        };
+        ExecuteNonQuery(sql, parameters);
     }
 
     /// <summary>
@@ -81,59 +108,148 @@ public class MySqlDatabaseOperations : IDatabaseOperations
 
         return projectNames;
     }
-
     /// <summary>
-    /// Insert a new project into the database.
+    /// Manage a project in the database.
     /// </summary>
-    /// <param name="projectName">The name of the project.</param>
-    /// <param name="projectDescription">The description of the project.</param>
-    public void InsertProject(string projectName, string projectDescription)
+    /// <param name="projectName"></param>
+    /// <param name="projectDescription"></param>
+    /// <param name="isInsert"></param>
+    /// <param name="isDelete"></param>
+    public void ManageProject(string projectName, string projectDescription, bool isInsert, bool isDelete = false)
     {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        string sql;
+        MySqlParameter[] parameters;
+
+        if (isInsert)
         {
-            string query = "insert into projects(project_name, project_description) values (@project_name, @project_description)";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@project_name", projectName);
-            cmd.Parameters.AddWithValue("@project_description", projectDescription);
-            connection.Open();
-            cmd.ExecuteNonQuery();
+            sql = "INSERT INTO projects (project_name, project_description) VALUES (@ProjectName, @ProjectDescription)";
+            parameters = new MySqlParameter[] {
+            new MySqlParameter("@ProjectName", projectName),
+            new MySqlParameter("@ProjectDescription", projectDescription)
+        };
+        }
+        else if (isDelete)
+        {
+            sql = "DELETE FROM projects WHERE project_name = @ProjectName";
+            parameters = new MySqlParameter[] {
+            new MySqlParameter("@ProjectName", projectName)
+        };
+        }
+        else
+        {
+            sql = "UPDATE projects SET project_description = @ProjectDescription WHERE project_name = @ProjectName";
+            parameters = new MySqlParameter[] {
+            new MySqlParameter("@ProjectName", projectName),
+            new MySqlParameter("@ProjectDescription", projectDescription)
+        };
+        }
+
+        ExecuteNonQuery(sql, parameters);
+    }
+    /// <summary>
+    /// Manage a requirement in the database.
+    /// </summary>
+    /// <param name="projectID"></param>
+    /// <param name="requirementID"></param>
+    /// <param name="requirementName"></param>
+    /// <param name="requirementDescription"></param>
+    /// <param name="requirementStatus"></param>
+    /// <param name="requirementVersion"></param>
+    /// <param name="isInsert"></param>
+    /// <param name="isDelete"></param>
+    public void ManageRequirement(string projectID, string requirementID, string requirementName, string requirementDescription, string requirementStatus, string requirementVersion, bool isInsert, bool isDelete = false)
+    {
+        try
+        {
+            string sql;
+            MySqlParameter[] parameters;
+
+            if (isInsert)
+            {
+                sql = "INSERT INTO requirements(project_id, requirement_name, requirement_description, requirement_status, requirement_version, requirement_created_at, requirement_updated_at) values (@ProjectId, @RequirementName, @RequirementDescription, @RequirementStatus, @RequirementVersion, @RequirementCreatedAt, @RequirementUpdatedAt)";
+                parameters = new MySqlParameter[]
+                {
+                new MySqlParameter("@ProjectId", projectID),
+                new MySqlParameter("@RequirementName", requirementName),
+                new MySqlParameter("@RequirementDescription", requirementDescription),
+                new MySqlParameter("@RequirementStatus", requirementStatus),
+                new MySqlParameter("@RequirementVersion", requirementVersion),
+                new MySqlParameter("@RequirementCreatedAt", DateTime.Now),
+                new MySqlParameter("@RequirementUpdatedAt", DateTime.Now)
+                };
+                ExecuteNonQuery(sql, parameters);
+            }
+            else if (isDelete)
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (MySqlTransaction transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            string insertHistoryQuery = "INSERT INTO requirements_history (requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at, project_id, requirement_description, requirement_created_at) SELECT requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at, project_id, requirement_description, requirement_created_at FROM requirements WHERE requirement_id = @RequirementID";
+                            using (MySqlCommand insertHistoryCmd = new MySqlCommand(insertHistoryQuery, connection))
+                            {
+                                insertHistoryCmd.Parameters.AddWithValue("@RequirementID", requirementID);
+                                insertHistoryCmd.ExecuteNonQuery();
+                            }
+
+                            string deleteQuery = "UPDATE requirements SET IsDeleted = true, requirement_updated_at = @RequirementUpdatedAt WHERE requirement_id = @RequirementID";
+                            MySqlParameter[] deleteParameters = new MySqlParameter[]
+                            {
+                            new MySqlParameter("@RequirementID", requirementID),
+                            new MySqlParameter("@RequirementUpdatedAt", DateTime.Now)
+                            };
+                            ExecuteNonQuery(deleteQuery, deleteParameters, connection, transaction);
+
+                            transaction.Commit();
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    string versionQuery = "select requirement_version from requirements where requirement_id = @RequirementID";
+                    MySqlCommand versionCmd = new MySqlCommand(versionQuery, connection);
+                    versionCmd.Parameters.AddWithValue("@RequirementID", requirementID);
+                    connection.Open();
+                    string currentVersion = versionCmd.ExecuteScalar().ToString();
+                    connection.Close();
+                    string newVersion = IncreaseVersionNumber(currentVersion);
+
+                    string insertHistoryQuery = "INSERT INTO requirements_history (requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at, project_id, requirement_description, requirement_created_at) SELECT requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at, project_id, requirement_description, requirement_created_at FROM requirements WHERE requirement_id = @RequirementID";
+                    MySqlCommand insertHistoryCmd = new MySqlCommand(insertHistoryQuery, connection);
+                    insertHistoryCmd.Parameters.AddWithValue("@RequirementID", requirementID);
+                    connection.Open();
+                    insertHistoryCmd.ExecuteNonQuery();
+                    connection.Close();
+
+                    sql = "UPDATE requirements SET requirement_status = @RequirementStatus, requirement_version = @RequirementVersion, requirement_updated_at = @RequirementUpdatedAt WHERE requirement_id = @RequirementID";
+                    parameters = new MySqlParameter[]
+                    {
+               // new MySqlParameter("@RequirementDescription", requirementDescription),
+                    new MySqlParameter("@RequirementStatus", requirementStatus),
+                    new MySqlParameter("@RequirementVersion", newVersion),
+                    new MySqlParameter("@RequirementUpdatedAt", DateTime.Now),
+                    new MySqlParameter("@RequirementID", requirementID)
+                    };
+                    ExecuteNonQuery(sql, parameters);
+                }
+            }
+        }
+        catch (MySqlException ex)
+        {
+            Console.WriteLine("An error occurred while managing requirement: " + ex.Message);
         }
     }
-
-    /// <summary>
-    /// Edit an existing project in the database.
-    /// </summary>
-    /// <param name="projectName">The name of the project.</param>
-    /// <param name="projectDescription">The new description of the project.</param>
-    public void EditProject(string projectName, string projectDescription)
-    {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            string query = "update projects set project_description = @project_description where project_name = @project_name";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@project_name", projectName);
-            cmd.Parameters.AddWithValue("@project_description", projectDescription);
-            connection.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    /// <summary>
-    /// Delete a project from the database.
-    /// </summary>
-    /// <param name="projectName">The name of the project to delete.</param>
-    public void DeleteProject(string projectName)
-    {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            string query = "delete from projects where project_name = @project_name";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@project_name", projectName);
-            connection.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
     /// <summary>
     /// Get the project ID from the database.
     /// </summary>
@@ -275,7 +391,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             return reader["requirement_id"].ToString();
         }
     }
-
+    /*
     /// <summary>
     /// Insert a new requirement into the database.
     /// </summary>
@@ -302,7 +418,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             cmd.ExecuteNonQuery();
         }
     }
-
+    */
     /// <summary>
     /// Increase the version number.
     /// </summary>
@@ -314,7 +430,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
         versionNumber++;
         return versionNumber.ToString();
     }
-
+    /*
     /// <summary>
     /// Update a requirement in the database.
     /// </summary>
@@ -334,7 +450,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             string currentVersion = versionCmd.ExecuteScalar().ToString();
             connection.Close();
             string newVersion = IncreaseVersionNumber(currentVersion);
-            string insertHistoryQuery = "insert into requirements_history select * from requirements where requirement_id = @requirement_id";
+            string insertHistoryQuery = "insert into requirements_history (history_id, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at) select NULL, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at from requirements where requirement_id = @requirement_id";
             MySqlCommand insertHistoryCmd = new MySqlCommand(insertHistoryQuery, connection);
             insertHistoryCmd.Parameters.AddWithValue("@requirement_id", requirementID);
             connection.Open();
@@ -351,7 +467,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             updateCmd.ExecuteNonQuery();
         }
     }
-
+    
     /// <summary>
     /// Delete a requirement from the database.
     /// </summary>
@@ -365,7 +481,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             MySqlTransaction transaction = connection.BeginTransaction();
             try
             {
-                string insertHistoryQuery = "insert into requirements_history select * from requirements where requirement_id = @requirement_id";
+                string insertHistoryQuery = "insert into requirements_history (history_id, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at) select NULL, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at from requirements where requirement_id = @requirement_id";
                 MySqlCommand insertHistoryCmd = new MySqlCommand(insertHistoryQuery, connection);
                 insertHistoryCmd.Parameters.AddWithValue("@requirement_id", requirementId);
                 insertHistoryCmd.ExecuteNonQuery();
@@ -384,7 +500,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             }
         }
     }
-
+    */
     /// <summary>
     /// Disconnect from the database.
     /// </summary>
@@ -443,32 +559,32 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <param name="dependentRequirementID">The ID of the dependent requirement.</param>
     /// <returns>The ID of the dependency.</returns>
     public int GetDependencyID(string requirementID, string dependentRequirementID)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            const string query = "select dependency_id from requirement_dependencies where requirement_id = @requirement_id and dependent_requirement_id = @dependent_requirement_id";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, connection))
             {
-                const string query = "select dependency_id from requirement_dependencies where requirement_id = @requirement_id and dependent_requirement_id = @dependent_requirement_id";
+                cmd.Parameters.AddWithValue("@requirement_id", requirementID);
+                cmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementID);
+                connection.Open();
 
-                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                using (var reader = cmd.ExecuteReader())
                 {
-                    cmd.Parameters.AddWithValue("@requirement_id", requirementID);
-                    cmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementID);
-                    connection.Open();
 
-                    using (var reader = cmd.ExecuteReader())
+                    int dependencyId = 0;
+
+                    if (reader.Read())
                     {
-
-                        int dependencyId = 0;
-
-                        if (reader.Read())
-                        {
-                            int.TryParse(reader.GetInt32(0).ToString(), out dependencyId);
-                        }
-
-                        return dependencyId;
+                        int.TryParse(reader.GetInt32(0).ToString(), out dependencyId);
                     }
+
+                    return dependencyId;
                 }
             }
         }
+    }
 
     // if you need to finish B, first you need to finish A. In this case, B is dependent on A, and B is requirementName, A is dependentRequirementName
     /// <summary>
@@ -477,255 +593,320 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <param name="requirementName">The name of the requirement.</param>
     /// <param name="dependentRequirementName">The name of the dependent requirement.</param>
     public void InsertDependency(string requirementName, string dependentRequirementName)
-        {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                string query = "select requirement_id from requirements where requirement_name = @requirement_name";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@requirement_name", requirementName);
-                connection.Open();
-                var reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    int requirementId = reader.GetInt32(0);
-                    reader.Close();
-
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@requirement_name", dependentRequirementName);
-                    reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        int dependentRequirementId = reader.GetInt32(0);
-                        reader.Close();
-
-                        query = "insert into requirement_dependencies(requirement_id, dependent_requirement_id) values (@requirement_id, @dependent_requirement_id)";
-                        cmd = new MySqlCommand(query, connection);
-                        cmd.Parameters.AddWithValue("@requirement_id", requirementId);
-                        cmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementId);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                reader.Close();
-            }
-        }
-
-    /*public void UpdateDependency(int dependencyId, string dependencyDescription)
     {
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = "update requirement_dependencies set dependency_description = @dependency_description where dependency_id = @dependency_id";
+            string query = "select requirement_id from requirements where requirement_name = @requirement_name";
             MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@dependency_id", dependencyId);
-            cmd.Parameters.AddWithValue("@dependency_description", dependencyDescription);
+            cmd.Parameters.AddWithValue("@requirement_name", requirementName);
             connection.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }*/
+            var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                int requirementId = reader.GetInt32(0);
+                reader.Close();
 
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@requirement_name", dependentRequirementName);
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    int dependentRequirementId = reader.GetInt32(0);
+                    reader.Close();
+
+                    query = "insert into requirement_dependencies(requirement_id, dependent_requirement_id) values (@requirement_id, @dependent_requirement_id)";
+                    cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@requirement_id", requirementId);
+                    cmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            reader.Close();
+        }
+    }
     /// <summary>
     /// Deletes a dependency from the database.
     /// </summary>
     /// <param name="dependencyId">The ID of the dependency.</param>
     public void DeleteDependency(int dependencyId)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            string query = "delete from requirement_dependencies where dependency_id = @dependency_id";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@dependency_id", dependencyId);
+            connection.Open();
+            cmd.ExecuteNonQuery();
+        }
+    }
+    public void ManageDependency(string requirementName, string dependentRequirementName, string dependencyDescriptionID, bool isInsert, bool isDelete = false)
+    {
+        try
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string query = "delete from requirement_dependencies where dependency_id = @dependency_id";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@dependency_id", dependencyId);
                 connection.Open();
-                cmd.ExecuteNonQuery();
+                MySqlTransaction transaction = connection.BeginTransaction();
+                try
+                {
+                    string requirementIdQuery = "select requirement_id from requirements where requirement_name = @requirement_name";
+                    MySqlCommand requirementIdCmd = new MySqlCommand(requirementIdQuery, connection);
+                    requirementIdCmd.Parameters.AddWithValue("@requirement_name", requirementName);
+                    int requirementId = Convert.ToInt32(requirementIdCmd.ExecuteScalar());
+
+                    string dependentRequirementIdQuery = "select requirement_id from requirements where requirement_name = @dependent_requirement_name";
+                    MySqlCommand dependentRequirementIdCmd = new MySqlCommand(dependentRequirementIdQuery, connection);
+                    dependentRequirementIdCmd.Parameters.AddWithValue("@dependent_requirement_name", dependentRequirementName);
+                    int dependentRequirementId = Convert.ToInt32(dependentRequirementIdCmd.ExecuteScalar());
+
+                    if (isInsert)
+                    {
+                        string insertDependencyQuery = "insert into requirement_dependencies(requirement_id, dependent_requirement_id, dependency_description_id) values (@requirement_id, @dependent_requirement_id, @dependency_description_id)";
+                        MySqlCommand insertDependencyCmd = new MySqlCommand(insertDependencyQuery, connection, transaction);
+                        insertDependencyCmd.Parameters.AddWithValue("@requirement_id", requirementId);
+                        insertDependencyCmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementId);
+                        insertDependencyCmd.Parameters.AddWithValue("@dependency_description_id", dependencyDescriptionID);
+                        insertDependencyCmd.ExecuteNonQuery();
+                    }
+                    else if (isDelete)
+                    {
+                        string deleteDependencyQuery = "delete from requirement_dependencies where requirement_id = @requirement_id and dependent_requirement_id = @dependent_requirement_id";
+                        MySqlCommand deleteDependencyCmd = new MySqlCommand(deleteDependencyQuery, connection, transaction);
+                        deleteDependencyCmd.Parameters.AddWithValue("@requirement_id", requirementId);
+                        deleteDependencyCmd.Parameters.AddWithValue("@dependent_requirement_id", dependentRequirementId);
+                        deleteDependencyCmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
         }
+        catch (MySqlException ex)
+        {
+            Console.WriteLine("An error occurred while managing dependency: " + ex.Message);
+        }
+    }
+    /// <summary>
+    /// Get the dpendency description from the database.
+    /// </summary>
+    /// <returns></returns>
+    public List<string> ListAllDependencyExplanation()
+    {
+        List<string> dependencyExplanations = new List<string>();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            string query = "select dependency_description from dependency_description";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                dependencyExplanations.Add(dr.GetString(0));
+            }
+        }
+        return dependencyExplanations;
+    }
+    /// <summary>
+    /// Get the ID of a dependency description from the database.
+    /// </summary>
+    /// <param name="dependencyDescription"></param>
+    /// <returns></returns>
+    public string GetDependencyDescriptionID(string dependencyDescription)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            string query = "select dependency_description_id from dependency_description where dependency_description = @dependency_description";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@dependency_description", dependencyDescription);
+            connection.Open();
+            return cmd.ExecuteScalar().ToString();
+        }
+    }
     /// <summary>
     /// Retrieves the ID of a user from the database.
     /// </summary>
     /// <param name="username">The username of the user.</param>
     /// <returns>The ID of the user.</returns>
     public string GetUserId(string username)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string query = "select user_id from users where user_name = @username";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@username", username);
+            connection.Open();
+            object result = cmd.ExecuteScalar();
+            if (result != null)
             {
-                string query = "select user_id from users where user_name = @username";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@username", username);
-                connection.Open();
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    return result.ToString();
-                }
-                else
-                {
-                    return null;
-                }
+                return result.ToString();
+            }
+            else
+            {
+                return null;
             }
         }
+    }
     /// <summary>
     /// Checks if a user is a super admin.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <returns>True if the user is a super admin, false otherwise.</returns>
     public bool IsSuperAdmin(string userId)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string query = "select role from user_roles where user_id = @userId";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            connection.Open();
+            object result = cmd.ExecuteScalar();
+            if (result != null)
             {
-                string query = "select role from user_roles where user_id = @userId";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@userId", userId);
-                connection.Open();
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    return result.ToString() == "SuperAdmin";
-                }
-                else
-                {
-                    return false;
-                }
-
+                return result.ToString() == "SuperAdmin";
             }
+            else
+            {
+                return false;
+            }
+
         }
+    }
     /// <summary>
     /// Loads the roles of a user from the database.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <param name="userRoles">A dictionary to store the user roles.</param>
     public void LoadUserRoles(string userId, Dictionary<string, string> userRoles)
+    {
+        // Clear the dictionary before loading new roles
+        userRoles.Clear();
+
+        try
         {
-            // Clear the dictionary before loading new roles
-            userRoles.Clear();
-
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+
+                // Use a parameterized query to prevent SQL injection
+                string sql = "SELECT * FROM user_roles WHERE user_id = @userId";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
+                    command.Parameters.AddWithValue("@userId", userId);
 
-                    // Use a parameterized query to prevent SQL injection
-                    string sql = "SELECT * FROM user_roles WHERE user_id = @userId";
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        command.Parameters.AddWithValue("@userId", userId);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                string projectId = reader["project_id"].ToString();
-                                string userRole = reader["role"].ToString();
+                            string projectId = reader["project_id"].ToString();
+                            string userRole = reader["role"].ToString();
 
-                                // Store the user's role in each project
-                                userRoles[projectId] = userRole;
-                            }
+                            // Store the user's role in each project
+                            userRoles[projectId] = userRole;
                         }
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while loading user roles: " + ex.Message);
-            }
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while loading user roles: " + ex.Message);
+        }
+    }
     /// <summary>
     /// Lists all users except the super admin.
     /// </summary>
     /// <returns>A list of user names.</returns>
     public List<string> ListAllUsersExceptSadmin()
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+
+                string sql = "SELECT user_name FROM users WHERE user_name != 'admin'";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
-
-                    string sql = "SELECT user_name FROM users WHERE user_name != 'admin'";
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        List<string> users = new List<string>();
+
+                        while (reader.Read())
                         {
-                            List<string> users = new List<string>();
-
-                            while (reader.Read())
-                            {
-                                string username = reader["user_name"].ToString();
-                                users.Add(username);
-                            }
-
-                            return users;
+                            string username = reader["user_name"].ToString();
+                            users.Add(username);
                         }
+
+                        return users;
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while listing users: " + ex.Message);
-                return new List<string>();
-            }
-
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while listing users: " + ex.Message);
+            return new List<string>();
+        }
+
+    }
     /// <summary>
     /// Sets a user as the admin of a project.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <param name="projectId">The ID of the project.</param>
     public void SetProjectAdmin(string userId, string projectId)
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+
+                // get the user ID of the original admin
+                string oldAdminUserId = AdminOfProject(projectId);
+
+                // if there is an old admin, update the role to 'User'
+                if (!string.IsNullOrEmpty(oldAdminUserId))
                 {
-                    connection.Open();
-
-                    // get the user ID of the original admin
-                    string oldAdminUserId = AdminOfProject(projectId);
-
-                    // if there is an old admin, update the role to 'User'
-                    if (!string.IsNullOrEmpty(oldAdminUserId))
-                    {
-                        string updateOldAdminSql = "UPDATE user_roles SET role = 'User' WHERE user_id = @oldAdminUserId AND project_id = @projectId";
-                        MySqlCommand updateOldAdminCommand = new MySqlCommand(updateOldAdminSql, connection);
-                        updateOldAdminCommand.Parameters.AddWithValue("@oldAdminUserId", oldAdminUserId);
-                        updateOldAdminCommand.Parameters.AddWithValue("@projectId", projectId);
-                        updateOldAdminCommand.ExecuteNonQuery();
-                    }
-                    //check if the user is already a member of the project
-                    string checkSql = "SELECT COUNT(*) FROM user_roles WHERE user_id = @userId AND project_id = @projectId";
-                    MySqlCommand checkCommand = new MySqlCommand(checkSql, connection);
-                    checkCommand.Parameters.AddWithValue("@userId", userId);
-                    checkCommand.Parameters.AddWithValue("@projectId", projectId);
-                    int count = Convert.ToInt32(checkCommand.ExecuteScalar());
-
-                    if (count > 0)
-                    {
-                        //if the user is already a member of the project, update the role
-                        string updateSql = "UPDATE user_roles SET role = 'Admin', create_time = @create_time WHERE user_id = @userId AND project_id = @projectId";
-                        MySqlCommand updateCommand = new MySqlCommand(updateSql, connection);
-                        updateCommand.Parameters.AddWithValue("@userId", userId);
-                        updateCommand.Parameters.AddWithValue("@projectId", projectId);
-                        updateCommand.Parameters.AddWithValue("@create_time", DateTime.Now);
-                        updateCommand.ExecuteNonQuery();
-                    }
-                    else
-                    {
-                        //if the user is not a member of the project, insert the user into the user_roles table
-                        string insertSql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, 'Admin', @create_time)";
-                        MySqlCommand insertCommand = new MySqlCommand(insertSql, connection);
-                        insertCommand.Parameters.AddWithValue("@userId", userId);
-                        insertCommand.Parameters.AddWithValue("@projectId", projectId);
-                        insertCommand.Parameters.AddWithValue("@create_time", DateTime.Now);
-                        insertCommand.ExecuteNonQuery();
-                    }
+                    string updateOldAdminSql = "UPDATE user_roles SET role = 'User' WHERE user_id = @oldAdminUserId AND project_id = @projectId";
+                    MySqlCommand updateOldAdminCommand = new MySqlCommand(updateOldAdminSql, connection);
+                    updateOldAdminCommand.Parameters.AddWithValue("@oldAdminUserId", oldAdminUserId);
+                    updateOldAdminCommand.Parameters.AddWithValue("@projectId", projectId);
+                    updateOldAdminCommand.ExecuteNonQuery();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while setting project admin: " + ex.Message);
+
+                //check if the user is already a member of the project
+                string checkSql = "SELECT COUNT(*) FROM user_roles WHERE user_id = @userId AND project_id = @projectId";
+                MySqlCommand checkCommand = new MySqlCommand(checkSql, connection);
+                checkCommand.Parameters.AddWithValue("@userId", userId);
+                checkCommand.Parameters.AddWithValue("@projectId", projectId);
+                int count = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+                //if the user is already a member of the project, update the role
+                //if the user is not a member of the project, insert the user into the user_roles table
+                string sql = count > 0 ?
+                    "UPDATE user_roles SET role = 'Admin', create_time = @create_time WHERE user_id = @userId AND project_id = @projectId" :
+                    "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, 'Admin', @create_time)";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@projectId", projectId);
+                command.Parameters.AddWithValue("@create_time", DateTime.Now);
+                command.ExecuteNonQuery();
             }
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while setting project admin: " + ex.Message);
+        }
+    }
 
     /// <summary>
     /// Links a user to a project.
@@ -733,53 +914,53 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <param name="userId">The ID of the user.</param>
     /// <param name="projectId">The ID of the project.</param>
     public void LinkUserToProject(string userId, string projectId)
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
+                connection.Open();
 
-                    string sql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, 'User', @create_time)";
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@userId", userId);
-                        command.Parameters.AddWithValue("@projectId", projectId);
-                        command.Parameters.AddWithValue("@create_time", DateTime.Now);
-                        command.ExecuteNonQuery();
-                    }
+                string sql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, 'User', @create_time)";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@projectId", projectId);
+                    command.Parameters.AddWithValue("@create_time", DateTime.Now);
+                    command.ExecuteNonQuery();
                 }
             }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while linking user to project: " + ex.Message);
-            }
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while linking user to project: " + ex.Message);
+        }
+    }
     /// <summary>
     /// Checks if a user is an admin of any projects.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <returns>True if the user is an admin of any projects, false otherwise.</returns>
     public bool IsAdminOfAnyProjects(string userId)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string query = "select role from user_roles where user_id = @userId";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            connection.Open();
+            object result = cmd.ExecuteScalar();
+            if (result != null)
             {
-                string query = "select role from user_roles where user_id = @userId";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@userId", userId);
-                connection.Open();
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    return result.ToString() == "Admin";
-                }
-                else
-                {
-                    return false;
-                }
+                return result.ToString() == "Admin";
+            }
+            else
+            {
+                return false;
             }
         }
+    }
     /// <summary>
     /// Checks if a user is an admin of a specific project.
     /// </summary>
@@ -787,192 +968,164 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <param name="projectId">The ID of the project.</param>
     /// <returns>True if the user is an admin of the project, false otherwise.</returns>
     public bool IsAdminOfThisProject(string userId, string projectId)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string query = "select role from user_roles where user_id = @userId and project_id = @projectId";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            cmd.Parameters.AddWithValue("@projectId", projectId);
+            connection.Open();
+            object result = cmd.ExecuteScalar();
+            if (result != null)
             {
-                string query = "select role from user_roles where user_id = @userId and project_id = @projectId";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@userId", userId);
-                cmd.Parameters.AddWithValue("@projectId", projectId);
-                connection.Open();
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    return result.ToString() == "Admin";
-                }
-                else
-                {
-                    return false;
-                }
+                return result.ToString() == "Admin";
+            }
+            else
+            {
+                return false;
             }
         }
+    }
     /// <summary>
     /// Retrieves the admin of a project from the database.
     /// </summary>
     /// <param name="projectId">The ID of the project.</param>
     /// <returns>The username of the admin.</returns>
     public string AdminOfProject(string projectId)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string query = "select user_id from user_roles where project_id = @projectId and role = 'Admin'";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@projectId", projectId);
+            connection.Open();
+            object result = cmd.ExecuteScalar();
+            if (result != null)
             {
-                string query = "select user_id from user_roles where project_id = @projectId and role = 'Admin'";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@projectId", projectId);
-                connection.Open();
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    return result.ToString();
-                }
-                else
-                {
-                    return null;
-                }
+                return result.ToString();
+            }
+            else
+            {
+                return null;
             }
         }
+    }
     /// <summary>
     /// Retrieves the projects that a user is the admin of.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <returns>A list of project names.</returns>
     public List<string> GetUserAdminProjects(string userId)
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+
+                if (IsSuperAdmin(userId))
                 {
-                    connection.Open();
-
-                    if (IsSuperAdmin(userId))
-                    {
-                        return LoadProjects();
-                    }
-
-                    string sql = "SELECT project_id FROM user_roles WHERE user_id = @userId AND role = 'Admin'";
-                    List<string> projectIds = new List<string>();
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@userId", userId);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                string projectId = reader["project_id"].ToString();
-                                projectIds.Add(projectId);
-                            }
-                        }
-                    }
-
-                    List<string> projectNames = new List<string>();
-                    foreach (string projectId in projectIds)
-                    {
-                        string sqlProject = "SELECT project_name FROM projects WHERE project_id = @projectId";
-                        using (MySqlCommand commandProject = new MySqlCommand(sqlProject, connection))
-                        {
-                            commandProject.Parameters.AddWithValue("@projectId", projectId);
-
-                            using (MySqlDataReader readerProject = commandProject.ExecuteReader())
-                            {
-                                if (readerProject.Read())
-                                {
-                                    string projectName = readerProject["project_name"].ToString();
-                                    projectNames.Add(projectName);
-                                }
-                            }
-                        }
-                    }
-                    return projectNames;
+                    return LoadProjects();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while getting user admin projects: " + ex.Message);
-                return new List<string>();
+
+                string sql = @"SELECT p.project_name 
+                               FROM user_roles ur 
+                               JOIN projects p ON ur.project_id = p.project_id 
+                               WHERE ur.user_id = @userId AND ur.role = 'Admin'";
+
+                List<string> projectNames = new List<string>();
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string projectName = reader["project_name"].ToString();
+                            projectNames.Add(projectName);
+                        }
+                    }
+                }
+
+                return projectNames;
             }
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while getting user admin projects: " + ex.Message);
+            return new List<string>();
+        }
+    }
     /// <summary>
     /// Retrieves the username of a user from the database.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
     /// <returns>The username of the user.</returns>
     public string GetUserName(string userId)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string query = "select user_name from users where user_id = @userId";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            connection.Open();
+            object result = cmd.ExecuteScalar();
+            if (result != null)
             {
-                string query = "select user_name from users where user_id = @userId";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@userId", userId);
-                connection.Open();
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    return result.ToString();
-                }
-                else
-                {
-                    return null;
-                }
+                return result.ToString();
+            }
+            else
+            {
+                return null;
             }
         }
+    }
     /// <summary>
     /// Lists all users that belong to a project.
     /// </summary>
     /// <param name="projectId">The ID of the project.</param>
     /// <returns>A list of user names.</returns>
     public List<string> ListUsersBelongToProject(string projectId)
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+
+                string sql = @"SELECT u.user_name 
+                               FROM user_roles ur 
+                               JOIN users u ON ur.user_id = u.user_id 
+                               WHERE ur.project_id = @projectId AND ur.role != 'Admin'";
+
+                List<string> userNames = new List<string>();
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
+                    command.Parameters.AddWithValue("@projectId", projectId);
 
-                    string sql = "SELECT user_id FROM user_roles WHERE project_id = @projectId AND role != 'Admin'";
-                    List<string> userIds = new List<string>();
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        command.Parameters.AddWithValue("@projectId", projectId);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                string userId = reader["user_id"].ToString();
-                                userIds.Add(userId);
-                            }
+                            string userName = reader["user_name"].ToString();
+                            userNames.Add(userName);
                         }
                     }
-
-                    List<string> userNames = new List<string>();
-                    foreach (string userId in userIds)
-                    {
-                        string sqlUser = "SELECT user_name FROM users WHERE user_id = @userId";
-                        using (MySqlCommand commandUser = new MySqlCommand(sqlUser, connection))
-                        {
-                            commandUser.Parameters.AddWithValue("@userId", userId);
-
-                            using (MySqlDataReader readerUser = commandUser.ExecuteReader())
-                            {
-                                if (readerUser.Read())
-                                {
-                                    string userName = readerUser["user_name"].ToString();
-                                    userNames.Add(userName);
-                                }
-                            }
-                        }
-                    }
-                    return userNames;
                 }
-            }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while getting users of this project: " + ex.Message);
-                return new List<string>();
+
+                return userNames;
             }
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while getting users of this project: " + ex.Message);
+            return new List<string>();
+        }
+    }
     /// <summary>
     /// Lists all users that don't belong to a project.
     /// </summary>
@@ -980,83 +1133,43 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <returns>A list of user names.</returns>
     //select user_id from user_roles with projectId, then select user_name from users where user_id in (user_id from users where user_id not in (user_id from user_roles))
     public List<string> ListUsersDontBeloneToProject(string projectId)
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+
+                string sql = @"SELECT user_name 
+                               FROM users 
+                               WHERE user_id NOT IN (SELECT user_id FROM user_roles WHERE project_id = @projectId) 
+                               AND user_name != 'admin'";
+
+                List<string> userNames = new List<string>();
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
+                    command.Parameters.AddWithValue("@projectId", projectId);
 
-                    string sql = "SELECT user_id FROM user_roles WHERE project_id = @projectId";
-                    List<string> userIds = new List<string>();
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        command.Parameters.AddWithValue("@projectId", projectId);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                string userId = reader["user_id"].ToString();
-                                userIds.Add(userId);
-                            }
+                            string userName = reader["user_name"].ToString();
+                            userNames.Add(userName);
                         }
                     }
-
-                    List<string> userNames = new List<string>();
-                    if (userIds.Count > 0)
-                    {
-                        string sqlUser = "SELECT user_name FROM users WHERE user_id not in (";
-                        for (int i = 0; i < userIds.Count; i++)
-                        {
-                            if (i == userIds.Count - 1)
-                            {
-                                sqlUser += userIds[i] + ")";
-                            }
-                            else
-                            {
-                                sqlUser += userIds[i] + ",";
-                            }
-                        }
-                        sqlUser += " and user_name != 'admin'";
-                        using (MySqlCommand commandUser = new MySqlCommand(sqlUser, connection))
-                        {
-                            using (MySqlDataReader readerUser = commandUser.ExecuteReader())
-                            {
-                                while (readerUser.Read())
-                                {
-                                    string userName = readerUser["user_name"].ToString();
-                                    userNames.Add(userName);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        string sqlUser = "SELECT user_name FROM users WHERE user_name != 'admin' AND user_id NOT IN (SELECT user_id FROM user_roles WHERE project_id = @projectId AND role = 'admin')";
-                        using (MySqlCommand commandUser = new MySqlCommand(sqlUser, connection))
-                        {
-                            commandUser.Parameters.AddWithValue("@projectId", projectId);
-                            using (MySqlDataReader readerUser = commandUser.ExecuteReader())
-                            {
-                                while (readerUser.Read())
-                                {
-                                    string userName = readerUser["user_name"].ToString();
-                                    userNames.Add(userName);
-                                }
-                            }
-                        }
-                    }
-                    return userNames;
                 }
-            }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while getting users of this project: " + ex.Message);
-                return new List<string>();
+
+                return userNames;
             }
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while getting users of this project: " + ex.Message);
+            return new List<string>();
+        }
+    }
     /// <summary>
     /// Updates the roles of a user for a project.
     /// </summary>
@@ -1066,45 +1179,45 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <param name="isAdd">True if adding the role, false if removing the role.</param>
     /// <returns>True if the update is successful, false otherwise.</returns>
     public bool UpdateUserRoles(string userId, string projectId, string role, bool isAdd)
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
+                connection.Open();
 
-                    string sql = "";
+                string sql = "";
+                if (isAdd)
+                {
+                    sql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, @role, @create_time)";
+                }
+                else
+                {
+                    sql = "DELETE FROM user_roles WHERE user_id = @userId AND project_id = @projectId AND role = @role";
+                }
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@projectId", projectId);
+                    command.Parameters.AddWithValue("@role", role);
+
                     if (isAdd)
                     {
-                        sql = "INSERT INTO user_roles (user_id, project_id, role, create_time) VALUES (@userId, @projectId, @role, @create_time)";
+                        command.Parameters.AddWithValue("@create_time", DateTime.Now);
                     }
-                    else
-                    {
-                        sql = "DELETE FROM user_roles WHERE user_id = @userId AND project_id = @projectId AND role = @role";
-                    }
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@userId", userId);
-                        command.Parameters.AddWithValue("@projectId", projectId);
-                        command.Parameters.AddWithValue("@role", role);
 
-                        if (isAdd)
-                        {
-                            command.Parameters.AddWithValue("@create_time", DateTime.Now);
-                        }
-
-                        int affectedRows = command.ExecuteNonQuery();
-                        return affectedRows > 0;
-                    }
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows > 0;
                 }
             }
-            catch (MySqlException ex)
-            {
-                // Handle any errors that occur during the database operations
-                Console.WriteLine("An error occurred while updating user roles: " + ex.Message);
-                return false;
-            }
         }
+        catch (MySqlException ex)
+        {
+            // Handle any errors that occur during the database operations
+            Console.WriteLine("An error occurred while updating user roles: " + ex.Message);
+            return false;
+        }
+    }
     /// <summary>
     /// Inserts a new comment into the database.
     /// </summary>
@@ -1141,6 +1254,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
 
                 // Link the comment to the projects
                 cmd.CommandText = "INSERT INTO comment_projects (comment_id, project_id) VALUES (@commentId, @projectId);";
+                cmd.Prepare();
                 cmd.Parameters.Add("@projectId", MySqlDbType.Int32);
                 foreach (string projectId in projectIds)
                 {
@@ -1152,6 +1266,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
                 if (requirementIds != null)
                 {
                     cmd.CommandText = "INSERT INTO comment_requirements (comment_id, requirement_id) VALUES (@commentId, @requirementId);";
+                    cmd.Prepare();
                     cmd.Parameters.Add("@requirementId", MySqlDbType.Int32);
                     foreach (string requirementId in requirementIds)
                     {
@@ -1196,7 +1311,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
                            LEFT JOIN projects p1 ON r.project_id = p1.project_id
                            LEFT JOIN comment_projects cp ON c.comment_id = cp.comment_id
                            LEFT JOIN projects p2 ON cp.project_id = p2.project_id
-                           WHERE EXISTS (SELECT 1 FROM user_roles ur WHERE ur.user_id = @userId AND (ur.role = 'SuperAdmin' OR p1.project_id = p1.project_id OR p2.project_id = p2.project_id))
+                           WHERE EXISTS (SELECT 1 FROM user_roles ur WHERE ur.user_id = @userId AND (ur.role = 'SuperAdmin' OR ur.project_id = p1.project_id OR ur.project_id = p2.project_id))
                            ORDER BY c.comment_created_at DESC;";
             using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
@@ -1261,7 +1376,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
         catch (MySqlException ex)
         {
             // Handle any errors that occur during the database operations
-            MessageBox.Show("An error occurred while listing comments by requirement ID: " + ex.Message);
+            Console.WriteLine("An error occurred while listing comments by requirement ID: " + ex.Message);
             return new List<string>();
         }
     }

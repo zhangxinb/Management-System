@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
+using System.Linq;
 
 
 namespace Management_System
@@ -18,6 +19,7 @@ namespace Management_System
         //nd = node
         //lb = label
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+        private Service Service = new Service(new MySqlDatabaseOperations());
         private Dictionary<string, string> userRoles = new Dictionary<string, string>();
 
         /// <summary>
@@ -38,6 +40,7 @@ namespace Management_System
             panel_comment_view.Visible = false;
             panel_comment_add.Visible = false;
             panel_list_comments_by_requirement.Visible = false;
+            panel_report_prrg.Visible = false;
             originalFormSize = this.Size;
             FormResizer.SetInitialSize(this);
         }
@@ -312,6 +315,18 @@ namespace Management_System
                         clbCommentAddSelectRequirement.Items.Add(requirement);
                     }
                     break;
+                case "ndPRRG":// if the node is ndReportPrrg
+                    panel_report_prrg.Visible = true;
+                    panel_report_prrg.BringToFront();
+                    cbReportPrrgSelectProject.Items.Clear();
+                    cbReportPrrgSelectProject.Text = V;
+                    List<string> projectNames6;
+                    projectNames6 = dbOperations.ListAllProjectsYouCanSee(userId);
+                    foreach (string projectName in projectNames6)
+                    {
+                        cbReportPrrgSelectProject.Items.Add(projectName);
+                    }
+                    break;
             }
         }
         private void Project_Load(object sender, EventArgs e)
@@ -331,15 +346,17 @@ namespace Management_System
         {
             try
             {
-                dbOperations.InsertProject(tbProjectAddName.Text, tbProjectAddDescription.Text);
+                string projectName = tbProjectAddName.Text;
+                string projectDescription = tbProjectAddDescription.Text;
+                Service.ManageProject(projectName, projectDescription, "Create");
                 MessageBox.Show("Add Successful");
                 cbProjectSelect.Items.Clear();
                 tbProjectAddName.Text = V;
                 tbProjectAddDescription.Text = V;
                 List<string> projectNames = dbOperations.LoadProjects();
-                foreach (string projectName in projectNames)
+                foreach (string Name in projectNames)
                 {
-                    cbProjectSelect.Items.Add(projectName);
+                    cbProjectSelect.Items.Add(Name);
                 }
             }
             catch (Exception ex)
@@ -353,13 +370,15 @@ namespace Management_System
         {
             try
             {
-                dbOperations.EditProject(cbProjectSelect.Text, tbProjectEditDescription.Text);
+                string projectName = cbProjectSelect.Text;
+                string projectDescription = tbProjectEditDescription.Text;
+                Service.ManageProject(projectName, projectDescription, "Edit");
                 MessageBox.Show("Edit Successful");
                 cbProjectSelect.Items.Clear();
                 List<string> projectNames = dbOperations.LoadProjects();
-                foreach (string projectName in projectNames)
+                foreach (string Name in projectNames)
                 {
-                    cbProjectSelect.Items.Add(projectName);
+                    cbProjectSelect.Items.Add(Name);
                 }
                 tbProjectEditDescription.Clear();
                 cbProjectSelect.Text = V;
@@ -375,14 +394,14 @@ namespace Management_System
         {
             try
             {
-
-                dbOperations.DeleteProject(cbProjectDeleteSelectProject.Text);
+                string projectName = cbProjectDeleteSelectProject.Text;
+                Service.ManageProject(projectName, "", "Delete");
                 MessageBox.Show("Delete Successful");
                 cbProjectDeleteSelectProject.Items.Clear();
                 List<string> projectNames = dbOperations.LoadProjects();
-                foreach (string projectName in projectNames)
+                foreach (string Name in projectNames)
                 {
-                    cbProjectDeleteSelectProject.Items.Add(projectName);
+                    cbProjectDeleteSelectProject.Items.Add(Name);
                 }
                 cbProjectDeleteSelectProject.Text = V;
             }
@@ -396,7 +415,12 @@ namespace Management_System
         {
             try
             {
-                dbOperations.InsertRequirement(cbRequirementAddProject.Text, tbRequirementAddName.Text, tbRequirementAddDescription.Text, cbRequirementAddStatus.Text, tbRequirementAddVersion.Text);
+                string projectID = dbOperations.GetProjectID(cbRequirementAddProject.Text);
+                string requirementName = tbRequirementAddName.Text;
+                string requirementDescription = tbRequirementAddDescription.Text;
+                string requirementStatus = cbRequirementAddStatus.Text;
+                string requirementVersion = tbRequirementAddVersion.Text;
+                Service.ManageRequirement(projectID, "", requirementName, requirementDescription, requirementStatus, requirementVersion, "Create");
                 MessageBox.Show("Add Successful");
                 cbRequirementAddProject.Text = V;
                 tbRequirementAddName.Clear();
@@ -449,14 +473,14 @@ namespace Management_System
         }
         private void FillDependenciesListBox()
         {
-            listBox1.Items.Clear();
+            listbRequirementEditDependenciesList.Items.Clear();
 
             if (!string.IsNullOrEmpty(cbRequirementEditSelectRequirement.Text))
             {
                 List<string> DependentRequirementNames = dbOperations.LoadDependencies(cbRequirementEditSelectRequirement.Text);
                 foreach (string dependencyName in DependentRequirementNames)
                 {
-                    listBox1.Items.Add(dependencyName);
+                    listbRequirementEditDependenciesList.Items.Add(dependencyName);
                 }
             }
         }
@@ -488,12 +512,12 @@ namespace Management_System
         {
             try
             {
-                string dependentRequirementName = listBox1.SelectedItem.ToString();
+                string dependentRequirementName = listbRequirementEditDependenciesList.SelectedItem.ToString();
                 string requirementName = cbRequirementEditSelectRequirement.Text;
                 string requirementId = dbOperations.GetRequirementID(requirementName);
                 string dependentRequirementId = dbOperations.GetRequirementID(dependentRequirementName);
                 int dependencyId = dbOperations.GetDependencyID(requirementId, dependentRequirementId);
-                dbOperations.DeleteDependency(dependencyId);
+                Service.ManageDependency(requirementName, dependentRequirementName, "", "Delete");
                 MessageBox.Show("Delete Successful");
                 FillDependenciesListBox();
             }
@@ -523,7 +547,8 @@ namespace Management_System
                     requirementStatus = "Deactive";
                 }
                 string requirementId = dbOperations.GetRequirementID(cbRequirementEditSelectRequirement.Text);
-                dbOperations.UpdateRequirement(cbRequirementEditSelectProject.Text, requirementId, cbRequirementEditSelectRequirement.Text, requirementStatus);
+                Service.ManageRequirement("", requirementId, "", "", requirementStatus, "",  "Edit");
+                //dbOperations.UpdateRequirement(cbRequirementEditSelectProject.Text, requirementId, cbRequirementEditSelectRequirement.Text, requirementStatus);
                 MessageBox.Show("Update Successful");
             }
             catch (Exception ex)
@@ -543,11 +568,20 @@ namespace Management_System
             panel_requirement_edit_addDependency.BringToFront();
             cbRequirementEditAddDependencySelectRequirement.Items.Clear();
             cbRequirementEditAddDependencySelectRequirement.Text = V;
+            cbRequirementEditAddDependencySelectExplanation.Items.Clear();
+            cbRequirementEditAddDependencySelectExplanation.Text = V;
             List<string> requirementNames = dbOperations.ListAllRequirements();
+            List<string> dependentRequirementNames = dbOperations.LoadDependencies(cbRequirementEditSelectRequirement.Text);
+            requirementNames = requirementNames.Except(dependentRequirementNames).ToList();
             requirementNames.Remove(cbRequirementEditSelectRequirement.Text);
             foreach (string requirementName in requirementNames)
             {
                 cbRequirementEditAddDependencySelectRequirement.Items.Add(requirementName);
+            }
+            List<string> dependencyExplanations = dbOperations.ListAllDependencyExplanation();
+            foreach (string dependencyExplanation in dependencyExplanations)
+            {
+                cbRequirementEditAddDependencySelectExplanation.Items.Add(dependencyExplanation);
             }
         }
         private void btRequirementEditAddDependencyBack_Click(object sender, EventArgs e)
@@ -558,7 +592,11 @@ namespace Management_System
         {
             try
             {
-                dbOperations.InsertDependency(cbRequirementEditSelectRequirement.Text, cbRequirementEditAddDependencySelectRequirement.Text);
+                //dbOperations.InsertDependency(cbRequirementEditSelectRequirement.Text, cbRequirementEditAddDependencySelectRequirement.Text);
+                string requirementName = cbRequirementEditSelectRequirement.Text;
+                string dependentRequirementName = cbRequirementEditAddDependencySelectRequirement.Text;
+                string dependencyDescriptionID = dbOperations.GetDependencyDescriptionID(cbRequirementEditAddDependencySelectExplanation.Text);
+                Service.ManageDependency(requirementName, dependentRequirementName, dependencyDescriptionID, "Create");
                 MessageBox.Show("Add Successful");
                 panel_requirement_edit_addDependency.Visible = false;
                 FillDependenciesListBox();
@@ -574,7 +612,9 @@ namespace Management_System
         {
             try
             {
-                dbOperations.DeleteRequirement(dbOperations.GetRequirementID(cbRequirementDeleteSelectRequirement.Text), cbRequirementDeleteSelectRequirement.Text);
+                //dbOperations.DeleteRequirement(dbOperations.GetRequirementID(cbRequirementDeleteSelectRequirement.Text), cbRequirementDeleteSelectRequirement.Text);
+                string requirementId = dbOperations.GetRequirementID(cbRequirementDeleteSelectRequirement.Text);
+                Service.ManageRequirement("", requirementId, "", "", "", "", "Delete");
                 MessageBox.Show("Delete Successful");
             }
             catch (Exception ex)
@@ -739,7 +779,7 @@ namespace Management_System
         private void btCommentAdd_Click(object sender, EventArgs e)
         {
             try
-            { 
+            {
                 string userId = dbOperations.GetUserId(Program.user_name);
                 string commentContent = tbCommentAddText.Text;
                 List<string> projectIds = new List<string>();
@@ -749,14 +789,14 @@ namespace Management_System
                 {
                     projectIds.Add(dbOperations.GetProjectID(project));
                 }
-                    foreach (string requirement in clbCommentAddSelectRequirement.CheckedItems)
+                foreach (string requirement in clbCommentAddSelectRequirement.CheckedItems)
                 {
                     requirementIds.Add(dbOperations.GetRequirementID(requirement));
                 }
 
                 dbOperations.InsertComment(userId, commentContent, projectIds, requirementIds);
                 MessageBox.Show("Add Successful");
-             }
+            }
 
             catch (Exception ex)
             {
@@ -804,6 +844,23 @@ namespace Management_System
             panel_list_comments_by_requirement.SendToBack();
             cbListCommentsByRequirement.Text = V;
             lvCommentsByRequirement.Items.Clear();
+        }
+        public void FillReportRequirementsListBox()
+        {
+            listbReportRequirementsList.Items.Clear();
+            if (!string.IsNullOrEmpty(cbReportPrrgSelectProject.Text))
+            {
+                List<string> requirementNames = dbOperations.LoadRequirements(cbReportPrrgSelectProject.Text);
+                foreach (string requirementName in requirementNames)
+                {
+                    listbReportRequirementsList.Items.Add(requirementName);
+                }
+            }
+            
+        }
+        private void cbReportPrrgSelectProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillReportRequirementsListBox();
         }
     }
 }
