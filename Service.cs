@@ -8,7 +8,13 @@ class Service
     {
         this.dbOperations = dbOperations;
     }
-
+    /// <summary>
+    /// Manage the project including create, edit and delete
+    /// </summary>
+    /// <param name="projectName"></param>
+    /// <param name="projectDescription"></param>
+    /// <param name="operation"></param>
+    /// <exception cref="System.Exception"></exception>
     public void ManageProject(string projectName, string projectDescription, string operation)
     {
         switch (operation)
@@ -35,6 +41,17 @@ class Service
                 throw new System.Exception("Invalid operation");
         }
     }
+    /// <summary>
+    /// Manage the requirement including create, edit and delete
+    /// </summary>
+    /// <param name="projectID"></param>
+    /// <param name="requirementID"></param>
+    /// <param name="requirementName"></param>
+    /// <param name="requirementDescription"></param>
+    /// <param name="requirementStatus"></param>
+    /// <param name="requirementVersion"></param>
+    /// <param name="operation"></param>
+    /// <exception cref="System.Exception"></exception>
     public void ManageRequirement(string projectID, string requirementID, string requirementName, string requirementDescription, string requirementStatus, string requirementVersion, string operation)
     {
         switch (operation)
@@ -52,6 +69,14 @@ class Service
                 throw new System.Exception("Invalid operation");
         }
     }
+    /// <summary>
+    /// Manage the dependency including create and delete
+    /// </summary>
+    /// <param name="requirementName"></param>
+    /// <param name="dependentRequirementName"></param>
+    /// <param name="dependencyDescription"></param>
+    /// <param name="operation"></param>
+    /// <exception cref="System.Exception"></exception>
     public void ManageDependency(string requirementName, string dependentRequirementName, string dependencyDescription, string operation)
     {
         switch (operation)
