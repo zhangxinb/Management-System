@@ -3,6 +3,9 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.IO;
+using Newtonsoft.Json;
+using System.Data;
 
 /// <summary>
 /// Represents the operations performed on the MySQL database.
@@ -43,6 +46,70 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             cmd.ExecuteNonQuery();
         }
     }
+
+    public void SerializeDatabaseToFile(string filePath, string version)
+    {
+        string jsonData = SerializeDatabase(version);
+        SaveToFile(jsonData, filePath);
+    }
+    public string SerializeDatabase(string version)
+    {
+        var allTables = new DataSet();
+
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+
+                // get all tables in the database
+                DataTable schema = connection.GetSchema("Tables");
+                foreach (DataRow row in schema.Rows)
+                {
+                    string tableName = (string)row[2];
+
+                    // validate tableName here
+
+                    // get all data from the table
+                    using (MySqlCommand command = new MySqlCommand($"SELECT * FROM `{tableName}`", connection))
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        var dataTable = new DataTable();
+                        dataTable.Load(reader);
+                        dataTable.TableName = tableName;
+                        allTables.Tables.Add(dataTable);
+                    }
+                }
+            }
+            catch (MySqlException)
+            {
+                // handle exception here
+            }
+        }
+
+        var snapshot = new DatabaseSnapshot
+        {
+            Version = version,
+            Data = allTables
+        };
+
+        // serialize the snapshot to JSON
+        return JsonConvert.SerializeObject(snapshot, Formatting.Indented);
+    }
+    public class DatabaseSnapshot
+    {
+        public string Version { get; set; }
+        public DataSet Data { get; set; }
+    }
+    public DatabaseSnapshot DeserializeDatabaseWithVersion(string jsonData)
+    {
+        return JsonConvert.DeserializeObject<DatabaseSnapshot>(jsonData);
+    }
+    public void SaveToFile(string data, string filePath)
+    {
+        File.WriteAllText(filePath, data);
+    }
+
     /// <summary>
     /// Insert a new user into the database.
     /// </summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static MySqlDatabaseOperations;
 
 namespace Management_System
 {
@@ -49,6 +50,10 @@ namespace Management_System
         void ManageDependency(string requirementName, string dependentRequirementName, string dependencyDescriptionID, bool isInsert, bool isDelete = false);
         List<string> ListAllDependencyExplanation();
         string GetDependencyDescriptionID(string dependencyDescription);
+        void SerializeDatabaseToFile(string filePath, string version);
+        string SerializeDatabase(string version);
+        void SaveToFile(string data, string filePath);
+        DatabaseSnapshot DeserializeDatabaseWithVersion(string jsonData);
     }
 
 }
