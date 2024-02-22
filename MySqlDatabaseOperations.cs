@@ -105,7 +105,6 @@ public class MySqlDatabaseOperations : IDatabaseOperations
                 projectNames.Add(dr.GetString(0));
             }
         }
-
         return projectNames;
     }
     /// <summary>
@@ -391,34 +390,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             return reader["requirement_id"].ToString();
         }
     }
-    /*
-    /// <summary>
-    /// Insert a new requirement into the database.
-    /// </summary>
-    /// <param name="projectName">The name of the project.</param>
-    /// <param name="requirementName">The name of the requirement.</param>
-    /// <param name="requirementDescription">The description of the requirement.</param>
-    /// <param name="requirementStatus">The status of the requirement.</param>
-    /// <param name="requirementVersion">The version of the requirement.</param>
-    public void InsertRequirement(string projectName, string requirementName, string requirementDescription, string requirementStatus, string requirementVersion)
-    {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            string projectID = GetProjectID(projectName);
-            string query = "INSERT into requirements(project_id, requirement_name, requirement_description, requirement_status, requirement_version, requirement_created_at, requirement_updated_at) values (@project_id, @requirement_name, @requirement_description, @requirement_status, @requirement_version, @requirement_created_at, @requirement_updated_at)";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@project_id", projectID);
-            cmd.Parameters.AddWithValue("@requirement_name", requirementName);
-            cmd.Parameters.AddWithValue("@requirement_description", requirementDescription);
-            cmd.Parameters.AddWithValue("@requirement_status", requirementStatus);
-            cmd.Parameters.AddWithValue("@requirement_version", requirementVersion);
-            cmd.Parameters.AddWithValue("@requirement_created_at", DateTime.Now);
-            cmd.Parameters.AddWithValue("@requirement_updated_at", DateTime.Now);
-            connection.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-    */
+
     /// <summary>
     /// Increase the version number.
     /// </summary>
@@ -430,77 +402,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
         versionNumber++;
         return versionNumber.ToString();
     }
-    /*
-    /// <summary>
-    /// Update a requirement in the database.
-    /// </summary>
-    /// <param name="projectName">The name of the project.</param>
-    /// <param name="requirementID">The ID of the requirement.</param>
-    /// <param name="requirementName">The name of the requirement.</param>
-    /// <param name="requirementStatus">The status of the requirement.</param>
-    public void UpdateRequirement(string projectName, string requirementID, string requirementName, string requirementStatus)
-    {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            string projectID = GetProjectID(projectName);
-            string versionQuery = "select requirement_version from requirements where requirement_id = @requirement_id";
-            MySqlCommand versionCmd = new MySqlCommand(versionQuery, connection);
-            versionCmd.Parameters.AddWithValue("@requirement_id", requirementID);
-            connection.Open();
-            string currentVersion = versionCmd.ExecuteScalar().ToString();
-            connection.Close();
-            string newVersion = IncreaseVersionNumber(currentVersion);
-            string insertHistoryQuery = "insert into requirements_history (history_id, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at) select NULL, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at from requirements where requirement_id = @requirement_id";
-            MySqlCommand insertHistoryCmd = new MySqlCommand(insertHistoryQuery, connection);
-            insertHistoryCmd.Parameters.AddWithValue("@requirement_id", requirementID);
-            connection.Open();
-            insertHistoryCmd.ExecuteNonQuery();
-            connection.Close();
-            string updateQuery = "update requirements set requirement_status = @requirement_status, requirement_version = @requirement_version, requirement_updated_at = @requirement_updated_at where project_id = @project_id and requirement_name = @requirement_name";
-            MySqlCommand updateCmd = new MySqlCommand(updateQuery, connection);
-            updateCmd.Parameters.AddWithValue("@project_id", projectID);
-            updateCmd.Parameters.AddWithValue("@requirement_name", requirementName);
-            updateCmd.Parameters.AddWithValue("@requirement_status", requirementStatus);
-            updateCmd.Parameters.AddWithValue("@requirement_version", newVersion);
-            updateCmd.Parameters.AddWithValue("@requirement_updated_at", DateTime.Now);
-            connection.Open();
-            updateCmd.ExecuteNonQuery();
-        }
-    }
-    
-    /// <summary>
-    /// Delete a requirement from the database.
-    /// </summary>
-    /// <param name="requirementId">The ID of the requirement.</param>
-    /// <param name="requirementName">The name of the requirement.</param>
-    public void DeleteRequirement(string requirementId, string requirementName)
-    {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            connection.Open();
-            MySqlTransaction transaction = connection.BeginTransaction();
-            try
-            {
-                string insertHistoryQuery = "insert into requirements_history (history_id, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at) select NULL, requirement_id, requirement_name, requirement_status, requirement_version, requirement_updated_at from requirements where requirement_id = @requirement_id";
-                MySqlCommand insertHistoryCmd = new MySqlCommand(insertHistoryQuery, connection);
-                insertHistoryCmd.Parameters.AddWithValue("@requirement_id", requirementId);
-                insertHistoryCmd.ExecuteNonQuery();
-                string query = "update requirements set IsDeleted = true, requirement_updated_at = @requirement_updated_at where requirement_id = @requirement_id and requirement_name = @requirement_name";
-                MySqlCommand updateCmd = new MySqlCommand(query, connection);
-                updateCmd.Parameters.AddWithValue("@requirement_id", requirementId);
-                updateCmd.Parameters.AddWithValue("@requirement_name", requirementName);
-                updateCmd.Parameters.AddWithValue("@requirement_updated_at", DateTime.Now);
-                updateCmd.ExecuteNonQuery();
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
-        }
-    }
-    */
+ 
     /// <summary>
     /// Disconnect from the database.
     /// </summary>
@@ -639,6 +541,15 @@ public class MySqlDatabaseOperations : IDatabaseOperations
             cmd.ExecuteNonQuery();
         }
     }
+
+    /// <summary>
+    /// Manage a dependency in the database.
+    /// </summary>
+    /// <param name="requirementName"></param>
+    /// <param name="dependentRequirementName"></param>
+    /// <param name="dependencyDescriptionID"></param>
+    /// <param name="isInsert"></param>
+    /// <param name="isDelete"></param>
     public void ManageDependency(string requirementName, string dependentRequirementName, string dependencyDescriptionID, bool isInsert, bool isDelete = false)
     {
         try
