@@ -17,6 +17,7 @@ namespace Management_System
             */
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Login());
             //you can change the form when you want to test the program, for example: Application.Run(new Login()); this will run the login form
 
         }
