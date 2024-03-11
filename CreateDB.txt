@@ -1,0 +1,72 @@
+-- create database
+CREATE DATABASE IF NOT EXISTS requirements_management_system;
+
+-- 使用数据库
+USE requirements_management_system;
+
+-- 创建项目表
+CREATE TABLE IF NOT EXISTS projects (
+  project_id INT PRIMARY KEY, -- 项目编号，主键
+  project_name VARCHAR(255) NOT NULL, -- 项目名称，非空
+  project_description TEXT -- 项目描述
+);
+
+-- 创建用户表
+CREATE TABLE IF NOT EXISTS users (
+  user_id INT PRIMARY KEY, -- 用户编号，主键
+  user_name VARCHAR(255) NOT NULL, -- 用户名称，非空
+  user_email VARCHAR(255) UNIQUE, -- 用户邮箱，唯一
+  user_password VARCHAR(255) NOT NULL -- 用户密码，非空
+);
+
+-- 创建用户角色表
+CREATE TABLE IF NOT EXISTS user_roles (
+  user_id INT, -- 用户编号，外键
+  project_id INT, -- 项目编号，外键
+  user_role VARCHAR(255) NOT NULL, -- 用户角色，非空
+  PRIMARY KEY (user_id, project_id), -- 主键为用户编号和项目编号的组合
+  FOREIGN KEY (user_id) REFERENCES users (user_id), -- 外键约束，参考用户表
+  FOREIGN KEY (project_id) REFERENCES projects (project_id) -- 外键约束，参考项目表
+);
+
+-- 创建需求表
+CREATE TABLE IF NOT EXISTS requirements (
+  requirement_id INT PRIMARY KEY, -- 需求编号，主键
+  project_id INT, -- 项目编号，外键
+  requirement_name VARCHAR(255) NOT NULL, -- 需求名称，非空
+  requirement_description TEXT, -- 需求描述
+  requirement_status VARCHAR(255) NOT NULL, -- 需求状态，非空
+  requirement_version INT NOT NULL, -- 需求版本，非空
+  requirement_created_at DATETIME NOT NULL, -- 需求创建时间，非空
+  requirement_updated_at DATETIME NOT NULL, -- 需求更新时间，非空
+  FOREIGN KEY (project_id) REFERENCES projects (project_id) -- 外键约束，参考项目表
+);
+
+-- 创建需求依赖表
+CREATE TABLE IF NOT EXISTS requirement_dependencies (
+  requirement_id INT, -- 需求编号，外键
+  dependency_id INT, -- 依赖需求编号，外键
+  PRIMARY KEY (requirement_id, dependency_id), -- 主键为需求编号和依赖需求编号的组合
+  FOREIGN KEY (requirement_id) REFERENCES requirements (requirement_id), -- 外键约束，参考需求表
+  FOREIGN KEY (dependency_id) REFERENCES requirements (requirement_id) -- 外键约束，参考需求表
+);
+
+-- 创建评论表
+CREATE TABLE IF NOT EXISTS comments (
+  comment_id INT PRIMARY KEY, -- 评论编号，主键
+  user_id INT, -- 用户编号，外键
+  project_id INT, -- 项目编号，外键
+  comment_content TEXT NOT NULL, -- 评论内容，非空
+  comment_created_at DATETIME NOT NULL, -- 评论创建时间，非空
+  FOREIGN KEY (user_id) REFERENCES users (user_id), -- 外键约束，参考用户表
+  FOREIGN KEY (project_id) REFERENCES projects (project_id) -- 外键约束，参考项目表
+);
+
+-- 创建评论需求关联表
+CREATE TABLE IF NOT EXISTS comment_requirements (
+  comment_id INT, -- 评论编号，外键
+  requirement_id INT, -- 需求编号，外键
+  PRIMARY KEY (comment_id, requirement_id), -- 主键为评论编号和需求编号的组合
+  FOREIGN KEY (comment_id) REFERENCES comments (comment_id), -- 外键约束，参考评论表
+  FOREIGN KEY (requirement_id) REFERENCES requirements (requirement_id) -- 外键约束，参考需求表
+);

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
+
 
 
 namespace Management_System
@@ -17,9 +11,19 @@ namespace Management_System
     public partial class Login : Form
     {
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+
+        private Size originalFormSize;
         public Login()
         {
             InitializeComponent();
+            originalFormSize = this.Size;
+            FormResizer.SetInitialSize(this);
+        }
+
+        private void Login_Resize(object sender, EventArgs e)
+        {
+            FormResizer.ResizeForm(this, originalFormSize);
+
         }
         private void Login_Load(object sender, EventArgs e)//load the form
         {
@@ -55,14 +59,18 @@ namespace Management_System
                     this.Hide();
                     Main main = new Main();
                     main.Show();
+
+                    Program.user_name = tbUserName.Text;
+                    main.UpdateUserNow();
                 }
 
                 else
-                    {
-                        MessageBox.Show("Invalid Username or Password");
-                    }
+                {
+                    MessageBox.Show("Invalid Username or Password");
                 }
-            
+            }
+
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);//show exception message
@@ -75,6 +83,16 @@ namespace Management_System
             this.Hide();
             SignUp signUp = new SignUp();
             signUp.Show();
-        }       
+
+        }
+
+        private void tbPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                btLogin_Click(sender, e);
+            }
+        }
+
     }
 }

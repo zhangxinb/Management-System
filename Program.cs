@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
+﻿using System.Windows.Forms;
+
 
 namespace Management_System
 {
     internal class Program
     {
+
+        public static string user_name;
         static void Main()
         {
+            /*
+            IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+            DatabaseSerializerClient client = new DatabaseSerializerClient(dbOperations);
+            client.SerializeDatabaseToFile("D:\\DatabaseSnapshot.json", "1.0");
+            */
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+            //you can change the form when you want to test the program, for example: Application.Run(new Login()); this will run the login form
+
         }
     }
 }
