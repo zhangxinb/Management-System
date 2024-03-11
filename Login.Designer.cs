@@ -51,7 +51,9 @@
             // 
             // username
             // 
+
             this.username.Anchor = System.Windows.Forms.AnchorStyles.None;
+
             this.username.AutoSize = true;
             this.username.Location = new System.Drawing.Point(302, 260);
             this.username.Name = "username";
@@ -61,7 +63,9 @@
             // 
             // password
             // 
+
             this.password.Anchor = System.Windows.Forms.AnchorStyles.None;
+
             this.password.AutoSize = true;
             this.password.Location = new System.Drawing.Point(304, 310);
             this.password.Name = "password";
@@ -71,7 +75,9 @@
             // 
             // tbUserName
             // 
+
             this.tbUserName.Anchor = System.Windows.Forms.AnchorStyles.None;
+
             this.tbUserName.Location = new System.Drawing.Point(426, 257);
             this.tbUserName.Name = "tbUserName";
             this.tbUserName.Size = new System.Drawing.Size(251, 21);
@@ -79,18 +85,22 @@
             // 
             // tbPassword
             // 
+
             this.tbPassword.Anchor = System.Windows.Forms.AnchorStyles.None;
+
             this.tbPassword.Location = new System.Drawing.Point(426, 310);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(251, 21);
             this.tbPassword.TabIndex = 4;
+
             this.tbPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPassword_KeyPress);
             // 
             // btLogin
             // 
             this.btLogin.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btLogin.AutoSize = true;
+
             this.btLogin.Location = new System.Drawing.Point(601, 395);
             this.btLogin.Name = "btLogin";
             this.btLogin.Size = new System.Drawing.Size(75, 23);
@@ -101,8 +111,10 @@
             // 
             // btSignUp
             // 
+
             this.btSignUp.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btSignUp.AutoSize = true;
+
             this.btSignUp.Location = new System.Drawing.Point(426, 394);
             this.btSignUp.Name = "btSignUp";
             this.btSignUp.Size = new System.Drawing.Size(75, 23);
@@ -126,7 +138,9 @@
             this.Controls.Add(this.username);
             this.Controls.Add(this.label1);
             this.Name = "Login";
+
             this.Text = "Management System";
+
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

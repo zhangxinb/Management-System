@@ -5,11 +5,13 @@ using System.Text;
 using System.Windows.Forms;
 
 
+
 namespace Management_System
 {
     public partial class Login : Form
     {
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+
         private Size originalFormSize;
         public Login()
         {
@@ -21,6 +23,7 @@ namespace Management_System
         private void Login_Resize(object sender, EventArgs e)
         {
             FormResizer.ResizeForm(this, originalFormSize);
+
         }
         private void Login_Load(object sender, EventArgs e)//load the form
         {
@@ -56,6 +59,7 @@ namespace Management_System
                     this.Hide();
                     Main main = new Main();
                     main.Show();
+
                     Program.user_name = tbUserName.Text;
                     main.UpdateUserNow();
                 }
@@ -65,6 +69,7 @@ namespace Management_System
                     MessageBox.Show("Invalid Username or Password");
                 }
             }
+
 
             catch (Exception ex)
             {
@@ -78,6 +83,7 @@ namespace Management_System
             this.Hide();
             SignUp signUp = new SignUp();
             signUp.Show();
+
         }
 
         private void tbPassword_KeyPress(object sender, KeyPressEventArgs e)
@@ -87,5 +93,6 @@ namespace Management_System
                 btLogin_Click(sender, e);
             }
         }
+
     }
 }

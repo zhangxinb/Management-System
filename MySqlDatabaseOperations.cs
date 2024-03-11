@@ -1,3 +1,4 @@
+
 ﻿using Management_System;
 using MySql.Data.MySqlClient;
 using System;
@@ -1360,6 +1361,4 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     }
 
 }
-
-
 

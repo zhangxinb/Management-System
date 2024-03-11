@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
 
 
+
 namespace Management_System
 {
     public partial class Main : Form
     {
+
         private const string V = "";
         private Size originalFormSize;
 

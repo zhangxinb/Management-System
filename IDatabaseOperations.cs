@@ -1,5 +1,8 @@
+
 ﻿using System.Collections.Generic;
 using static MySqlDatabaseOperations;
+
+
 
 namespace Management_System
 {
@@ -7,6 +10,7 @@ namespace Management_System
     {
         void InsertUser(string username, string password, string phoneNum);
         string GetUserPassword(string username);
+
         List<string> LoadProjects();
         List<string> ListAllUsersExceptSadmin();
         /*
@@ -54,6 +58,7 @@ namespace Management_System
         string SerializeDatabase(string version);
         void SaveToFile(string data, string filePath);
         DatabaseSnapshot DeserializeDatabaseWithVersion(string jsonData);
+
     }
 
 }

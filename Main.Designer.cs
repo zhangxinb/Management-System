@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+
             System.Windows.Forms.TreeNode treeNode52 = new System.Windows.Forms.TreeNode("Project Management");
             System.Windows.Forms.TreeNode treeNode53 = new System.Windows.Forms.TreeNode("Member Management");
             System.Windows.Forms.TreeNode treeNode54 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
@@ -1321,12 +1322,14 @@
             this.cbRequirementEditAddDependencySelectExplanation.Name = "cbRequirementEditAddDependencySelectExplanation";
             this.cbRequirementEditAddDependencySelectExplanation.Size = new System.Drawing.Size(270, 20);
             this.cbRequirementEditAddDependencySelectExplanation.TabIndex = 7;
+
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 473);
+
             this.Controls.Add(this.panel_requirement_edit);
             this.Controls.Add(this.panel_report_prrg);
             this.Controls.Add(this.panel_comment_view);
@@ -1374,12 +1377,14 @@
             this.panel_comment_add.PerformLayout();
             this.panel_report_prrg.ResumeLayout(false);
             this.panel_report_prrg.PerformLayout();
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
+
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
         private System.Windows.Forms.TreeView tvMenuTree;
         private System.Windows.Forms.Panel panel_project_add;
@@ -1494,5 +1499,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbRequirementEditAddDependencySelectExplanation;
         private System.Windows.Forms.Label label17;
+
     }
 }
