@@ -67,7 +67,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
                 DataTable schema = connection.GetSchema("Tables");
                 foreach (DataRow row in schema.Rows)
                 {
-                    string tableName = (string)row[2];
+                    string tableName = (string)row[2];// get the table name
 
                     // validate tableName here
 
