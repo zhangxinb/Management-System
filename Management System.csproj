@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="DatabaseSerializerClient.cs" />
     <Compile Include="FormResizer.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="MySqlDatabaseOperations.cs" />
     <Compile Include="IDatabaseOperations.cs" />
