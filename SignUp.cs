@@ -51,7 +51,8 @@ namespace Management_System
                 {
                     string inputPassword = tbPassword.Text;
                     string encryptedPassword = CreateMD5(inputPassword);
-                    dbOperations.InsertUser(tbUserName.Text, encryptedPassword, tbPhoneNum.Text);
+                    User newUser = new User(tbUserName.Text, encryptedPassword, tbPhoneNum.Text);
+                    dbOperations.InsertUser(newUser);
                     MessageBox.Show("Sign Up Successful");
                     this.Hide();
                     Login login = new Login();
