@@ -67,7 +67,7 @@ public class MySqlDatabaseOperations : IDatabaseOperations
                 DataTable schema = connection.GetSchema("Tables");
                 foreach (DataRow row in schema.Rows)
                 {
-                    string tableName = (string)row[2];// get the table name
+                    string tableName = (string)row[2];
 
                     // validate tableName here
 
@@ -117,14 +117,14 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     /// <param name="username">The username of the user.</param>
     /// <param name="password">The password of the user.</param>
     /// <param name="phoneNum">The phone number of the user.</param>
-    public void InsertUser(string username, string password, string phoneNum)
+    public void InsertUser(User user)
     {
         string sql = "INSERT INTO users (user_name, user_password, phone_num) VALUES (@Username, @Password, @PhoneNum)";
         MySqlParameter[] parameters = {
-            new MySqlParameter("@Username", username),
-            new MySqlParameter("@Password", password),
-            new MySqlParameter("@PhoneNum", phoneNum)
-        };
+        new MySqlParameter("@Username", user.Username),
+        new MySqlParameter("@Password", user.Password),
+        new MySqlParameter("@PhoneNum", user.PhoneNumber)
+    };
         ExecuteNonQuery(sql, parameters);
     }
 

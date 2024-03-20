@@ -46,8 +46,8 @@ namespace Management_System
     {
         private int userId;
         private string username;
-        //private string password;
-        //private string phoneNumber;
+        private string password;
+        private string phoneNumber;
 
         public int UserId
         {
@@ -60,7 +60,7 @@ namespace Management_System
             set { username = value; }
         }
 
-        /*
+        
         public string Password
         {
             get { return password; }
@@ -73,14 +73,15 @@ namespace Management_System
             set { phoneNumber = value; }
         }
 
-        */
+        
 
-        public User(int userId, string username)
+        public User(string username, string password, string phoneNumber)
         {
-            this.userId = userId;
             this.username = username;
-            
+            this.password = password;
+            this.phoneNumber = phoneNumber;
         }
+     
 
         public override string ToString()
         {
