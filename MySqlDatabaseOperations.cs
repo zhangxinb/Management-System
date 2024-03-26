@@ -1233,8 +1233,8 @@ public class MySqlDatabaseOperations : IDatabaseOperations
 
                 // Link the comment to the projects
                 cmd.CommandText = "INSERT INTO comment_projects (comment_id, project_id) VALUES (@commentId, @projectId);";
-                cmd.Prepare();
                 cmd.Parameters.Add("@projectId", MySqlDbType.Int32);
+                cmd.Prepare();                
                 foreach (string projectId in projectIds)
                 {
                     cmd.Parameters["@projectId"].Value = projectId;
@@ -1245,8 +1245,8 @@ public class MySqlDatabaseOperations : IDatabaseOperations
                 if (requirementIds != null)
                 {
                     cmd.CommandText = "INSERT INTO comment_requirements (comment_id, requirement_id) VALUES (@commentId, @requirementId);";
-                    cmd.Prepare();
                     cmd.Parameters.Add("@requirementId", MySqlDbType.Int32);
+                    cmd.Prepare();                    
                     foreach (string requirementId in requirementIds)
                     {
                         cmd.Parameters["@requirementId"].Value = requirementId;

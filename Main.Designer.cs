@@ -28,40 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("User Management");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Project Management");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Member Management");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6,
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Edit");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode10,
-            treeNode11});
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("View");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Add");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
-            treeNode13,
-            treeNode14});
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Project Requirement Report Generator");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Entity Discussion Timeline Viewer");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
-            treeNode16,
-            treeNode17});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("User Management");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Project Management");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Member Management");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("User", new System.Windows.Forms.TreeNode[] {
+            treeNode19,
+            treeNode20,
+            treeNode21});
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
+            treeNode23,
+            treeNode24,
+            treeNode25});
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Edit");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Requirement", new System.Windows.Forms.TreeNode[] {
+            treeNode27,
+            treeNode28,
+            treeNode29});
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("View");
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Add");
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Comment", new System.Windows.Forms.TreeNode[] {
+            treeNode31,
+            treeNode32});
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Project Requirement Report Generator");
+            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Entity Discussion Timeline Viewer");
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Report", new System.Windows.Forms.TreeNode[] {
+            treeNode34,
+            treeNode35});
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.tvMenuTree = new System.Windows.Forms.TreeView();
             this.panel_project_add = new System.Windows.Forms.Panel();
@@ -205,48 +205,48 @@
             // 
             this.tvMenuTree.Location = new System.Drawing.Point(0, 0);
             this.tvMenuTree.Name = "tvMenuTree";
-            treeNode1.Name = "ndUserUserManagement";
-            treeNode1.Text = "User Management";
-            treeNode2.Name = "ndUserProjectManagement";
-            treeNode2.Text = "Project Management";
-            treeNode3.Name = "ndUserMemberManagement";
-            treeNode3.Text = "Member Management";
-            treeNode4.Name = "ndUser";
-            treeNode4.Text = "User";
-            treeNode5.Name = "ndProjectAdd";
-            treeNode5.Text = "Add";
-            treeNode6.Name = "ndProjectEdit";
-            treeNode6.Text = "Edit";
-            treeNode7.Name = "ndProjectDelete";
-            treeNode7.Text = "Delete";
-            treeNode8.Name = "ndProject";
-            treeNode8.Text = "Project";
-            treeNode9.Name = "ndRequirementAdd";
-            treeNode9.Text = "Add";
-            treeNode10.Name = "ndRequirementEdit";
-            treeNode10.Text = "Edit";
-            treeNode11.Name = "ndRequirementDelete";
-            treeNode11.Text = "Delete";
-            treeNode12.Name = "Requirement";
-            treeNode12.Text = "Requirement";
-            treeNode13.Name = "ndCommentView";
-            treeNode13.Text = "View";
-            treeNode14.Name = "ndCommentAdd";
-            treeNode14.Text = "Add";
-            treeNode15.Name = "Comment";
-            treeNode15.Text = "Comment";
-            treeNode16.Name = "ndPRRG";
-            treeNode16.Text = "Project Requirement Report Generator";
-            treeNode17.Name = "ndEDTV";
-            treeNode17.Text = "Entity Discussion Timeline Viewer";
-            treeNode18.Name = "Report";
-            treeNode18.Text = "Report";
+            treeNode19.Name = "ndUserUserManagement";
+            treeNode19.Text = "User Management";
+            treeNode20.Name = "ndUserProjectManagement";
+            treeNode20.Text = "Project Management";
+            treeNode21.Name = "ndUserMemberManagement";
+            treeNode21.Text = "Member Management";
+            treeNode22.Name = "ndUser";
+            treeNode22.Text = "User";
+            treeNode23.Name = "ndProjectAdd";
+            treeNode23.Text = "Add";
+            treeNode24.Name = "ndProjectEdit";
+            treeNode24.Text = "Edit";
+            treeNode25.Name = "ndProjectDelete";
+            treeNode25.Text = "Delete";
+            treeNode26.Name = "ndProject";
+            treeNode26.Text = "Project";
+            treeNode27.Name = "ndRequirementAdd";
+            treeNode27.Text = "Add";
+            treeNode28.Name = "ndRequirementEdit";
+            treeNode28.Text = "Edit";
+            treeNode29.Name = "ndRequirementDelete";
+            treeNode29.Text = "Delete";
+            treeNode30.Name = "Requirement";
+            treeNode30.Text = "Requirement";
+            treeNode31.Name = "ndCommentView";
+            treeNode31.Text = "View";
+            treeNode32.Name = "ndCommentAdd";
+            treeNode32.Text = "Add";
+            treeNode33.Name = "Comment";
+            treeNode33.Text = "Comment";
+            treeNode34.Name = "ndPRRG";
+            treeNode34.Text = "Project Requirement Report Generator";
+            treeNode35.Name = "ndEDTV";
+            treeNode35.Text = "Entity Discussion Timeline Viewer";
+            treeNode36.Name = "Report";
+            treeNode36.Text = "Report";
             this.tvMenuTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode8,
-            treeNode12,
-            treeNode15,
-            treeNode18});
+            treeNode22,
+            treeNode26,
+            treeNode30,
+            treeNode33,
+            treeNode36});
             this.tvMenuTree.Size = new System.Drawing.Size(116, 372);
             this.tvMenuTree.TabIndex = 2;
             this.tvMenuTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
@@ -826,14 +826,14 @@
             // 
             this.dgvSelectProjectAdmin.AllowUserToAddRows = false;
             this.dgvSelectProjectAdmin.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSelectProjectAdmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSelectProjectAdmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvSelectProjectAdmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSelectProjectAdmin.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.user_name,
@@ -928,14 +928,14 @@
             // 
             this.dgvProjectMembers.AllowUserToAddRows = false;
             this.dgvProjectMembers.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProjectMembers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProjectMembers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvProjectMembers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProjectMembers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvcbMembers,
@@ -968,14 +968,14 @@
             // 
             this.dgvUsersDontBelone.AllowUserToAddRows = false;
             this.dgvUsersDontBelone.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvUsersDontBelone.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvUsersDontBelone.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvUsersDontBelone.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsersDontBelone.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvcbUsers_Dont_Belone,

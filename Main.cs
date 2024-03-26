@@ -307,6 +307,7 @@ namespace Management_System
                     panel_comment_add.BringToFront();
                     clbCommentAddSelectProject.Items.Clear();
                     clbCommentAddSelectRequirement.Items.Clear();
+                    tbCommentAddText.Text = V;
                     List<string> projects = dbOperations.ListAllProjectsYouCanSee(userId);
                     foreach (string project in projects)
                     {
