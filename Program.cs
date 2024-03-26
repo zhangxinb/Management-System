@@ -11,9 +11,9 @@ namespace Management_System
         static void Main()
         {
             
-            IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+            /*IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
             DatabaseSerializerClient client = new DatabaseSerializerClient(dbOperations);
-            client.SerializeDatabaseToFile("D:\\DatabaseSnapshot.json", "1.0");
+            client.SerializeDatabaseToFile("D:\\DatabaseSnapshot.json", "1.0");*/
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
