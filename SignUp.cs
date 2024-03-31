@@ -11,6 +11,7 @@ namespace Management_System
     public partial class SignUp : Form
     {
         private IDatabaseOperations dbOperations = new MySqlDatabaseOperations();
+        private Service Service = new Service(new MySqlDatabaseOperations());
 
         private Size originalFormSize;
         public SignUp()
@@ -52,11 +53,18 @@ namespace Management_System
                     string inputPassword = tbPassword.Text;
                     string encryptedPassword = CreateMD5(inputPassword);
                     User newUser = new User(tbUserName.Text, encryptedPassword, tbPhoneNum.Text);
-                    dbOperations.InsertUser(newUser);
-                    MessageBox.Show("Sign Up Successful");
-                    this.Hide();
-                    Login login = new Login();
-                    login.Show();
+                    bool result = Service.InsertUser(newUser);
+                    if (result)
+                    {
+                        MessageBox.Show("Sign Up Successful");
+                        this.Hide();
+                        Login login = new Login();
+                        login.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Username already in use");
+                    }
                 }
                 else
                 {

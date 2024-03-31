@@ -127,6 +127,31 @@ public class MySqlDatabaseOperations : IDatabaseOperations
     };
         ExecuteNonQuery(sql, parameters);
     }
+    /// <summary>
+    /// updated LoadUsernames
+    /// to check if the username is already in the database
+    /// </summary>
+    /// <returns></returns>
+    public List<string> LoadUsernames()
+    {
+        List<string> usernames = new List<string>();
+
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            String query = "SELECT user_name FROM users";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                usernames.Add(dr.GetString(0)); 
+            }
+            dr.Close();
+        }
+        return usernames;
+    }
+
+
 
     /// <summary>
     /// Get the password of a user from the database.

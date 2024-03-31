@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Management_System;
+using MySql.Data.MySqlClient;
 class Service
 {
     private IDatabaseOperations dbOperations;
@@ -91,4 +93,29 @@ class Service
                 throw new System.Exception("Invalid operation");
         }
     }
+
+    /// <summary>
+    /// Adds a new user if the username is not blank or already taken.
+    /// </summary>
+    /// <param name="user">The user to add.</param>
+    /// <returns>True if the user was added successfully, false otherwise.</returns>
+    /// <exception cref="System.ArgumentNullException">Thrown when username is null or whitespace.</exception>
+    /// <exception cref="System.Exception">Thrown when username is already in use.</exception>
+    public bool InsertUser(User user)
+    {
+        if (string.IsNullOrWhiteSpace(user.Username))
+        {
+            throw new System.Exception("Username cannot be null or whitespace");
+        }
+        List<string> existingUsernames = dbOperations.LoadUsernames();
+        if (existingUsernames.Contains(user.Username))
+        {
+            throw new System.Exception("Username already in use");
+        }
+        dbOperations.InsertUser(user);
+        return true;
+    }
+
+
+
 }
