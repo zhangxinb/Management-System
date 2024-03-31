@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +8,11 @@ namespace Management_System
 {
     public class Project
     {
-        private int projectId;
+        private string projectId;
         private string projectName;
         private string projectDescription;
 
-        public int ProjectId
+        public string ProjectId
         {
             get { return projectId; }
         }
@@ -29,7 +29,7 @@ namespace Management_System
             set { projectDescription = value; }
         }
 
-        public Project(int projectId, string projectName, string projectDescription)
+        public Project(string projectId, string projectName, string projectDescription)
         {
             this.projectId = projectId;
             this.projectName = projectName;
@@ -44,12 +44,12 @@ namespace Management_System
 
     public class User
     {
-        private int userId;
+        private string userId;
         private string username;
         private string password;
         private string phoneNumber;
 
-        public int UserId
+        public string UserId
         {
             get { return userId; }
         }
@@ -152,12 +152,13 @@ namespace Management_System
 
     public class Dependency
     {
-        private int dependencyId;
+        private string dependencyId;
         private string dependentRequirementID;
+        private string requirementName;
         private string dependentRequirementName;
         private string dependencyDescriptionID;
 
-        public int DependencyId
+        public string DependencyId
         {
             get { return dependencyId; }
         }
@@ -166,6 +167,12 @@ namespace Management_System
         {
             get { return dependentRequirementID; }
             set { dependentRequirementID = value; }
+        }
+
+        public string RequirementName
+        {
+            get { return requirementName; }
+            set { requirementName = value; }
         }
 
         public string DependentRequirementName
@@ -180,12 +187,12 @@ namespace Management_System
             set { dependencyDescriptionID = value; }
         }
 
-        public Dependency(int dependencyId, string dependentRequirementID, string dependentRequirementName, string dependencyDescriptionID)
+        public Dependency(string requirementName, string dependentRequirementName)
         {
-            this.dependencyId = dependencyId;
-            this.dependentRequirementID = dependentRequirementID;
+            
+            this.requirementName = requirementName;
             this.dependentRequirementName = dependentRequirementName;
-            this.dependencyDescriptionID = dependencyDescriptionID;
+            
         }
 
         /*
@@ -227,15 +234,15 @@ namespace Management_System
 
     public class Comment
     {
-        private int commentId;
+        private string commentId;
         private string userId;
         private string commentContent;
-        private List<int> projectIds; 
-        private List<int> requirementIds;
+        private List<string> projectIds; 
+        private List<string> requirementIds;
 
         //private DateTime commentCreatedAt;
 
-        public int CommentId
+        public string CommentId
         {
             get { return commentId; }
         }
@@ -260,13 +267,13 @@ namespace Management_System
         }
         */
 
-        public List<int> ProjectIds
+        public List<string> ProjectIds
         {
             get { return projectIds; }
             set { projectIds = value; }
         }
 
-        public List<int> RequirementIds
+        public List<string> RequirementIds
         {
             get { return requirementIds; }
             set { requirementIds = value; }
@@ -274,11 +281,11 @@ namespace Management_System
 
         public Comment()
         {
-            projectIds = new List<int>();
-            requirementIds = new List<int>();
+            projectIds = new List<string>();
+            requirementIds = new List<string>();
         }
 
-        public Comment(int commentId, string userId, string commentContent, List<int> projectIds, List<int> requirementIds)
+        public Comment(string commentId, string userId, string commentContent, List<string> projectIds, List<string> requirementIds)
         {
             this.commentId = commentId;
             this.userId = userId;
