@@ -9,6 +9,7 @@ namespace Management_System
     public interface IDatabaseOperations
     {
         void InsertUser(User user);
+        List<string> LoadUsernames();//updated
         string GetUserPassword(string username);
 
         List<string> LoadProjects();
