@@ -7,6 +7,21 @@ using AutoIt;
 using AutoItX3Lib;
 using Microsoft.SqlServer.Server;
 
+/*
+ * This is an automation test for the sign-up function. 
+ * * The test simulates: 
+ * * first, the username already exists; 
+ * * second, the password re-entry is incorrect; 
+ * * third, the user successfully signs up.
+ * * 
+ * 
+ * 1.Downlaod AutoIt from https://www.autoitscript.com/site/
+ * 2.Create a new project in Visual Studio and copypaste all the code.
+ * 3.Get nuget package AutoItX.Dotnet.
+ * 4.Add the AutoItX3.dll file to the project reference.
+ * 5.Change the file path in the code to the path of the Management System.exe file.
+ * */
+
 namespace ConsoleApp3
 {
     class Program
