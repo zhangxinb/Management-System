@@ -443,6 +443,35 @@ public class MySqlDatabaseOperations : IDatabaseOperations
         return new List<string>(requirementNames);
     }
 
+    public List<string> ListAllRequirementsHistoryYouCanSee(string userId)
+    {
+        List<string> requirementHistories = new List<string>();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string query = @"SELECT p.project_name, rh.requirement_name, rh.requirement_description, rh.requirement_status, rh.requirement_created_at, rh.requirement_updated_at 
+                         FROM requirements_history rh
+                         INNER JOIN projects p ON rh.project_id = p.project_id
+                         WHERE EXISTS (SELECT 1 FROM user_roles ur WHERE ur.user_id = @userId AND (ur.role = 'SuperAdmin' OR ur.project_id = p.project_id))
+                         ORDER BY rh.requirement_name, rh.requirement_updated_at ASC";
+            using (MySqlCommand cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@userId", userId);
+
+                using (MySqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        string requirementHistory = $"{dr["project_name"]}, {dr["requirement_name"]}, {dr["requirement_description"]}, {dr["requirement_status"]}, {dr["requirement_created_at"]}, {dr["requirement_updated_at"]}";
+                        requirementHistories.Add(requirementHistory);
+                    }
+                }
+            }
+        }
+        return requirementHistories;
+    }
+
     /// <summary>
     /// Load all projects that a user can see from the database.
     /// </summary>

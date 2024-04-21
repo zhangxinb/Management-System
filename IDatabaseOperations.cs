@@ -59,6 +59,7 @@ namespace Management_System
         string SerializeDatabase(string version);
         void SaveToFile(string data, string filePath);
         DatabaseSnapshot DeserializeDatabaseWithVersion(string jsonData);
+        List<string> ListAllRequirementsHistoryYouCanSee(string userId);
 
     }
 

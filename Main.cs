@@ -44,6 +44,7 @@ namespace Management_System
             panel_comment_add.Visible = false;
             panel_list_comments_by_requirement.Visible = false;
             panel_report_prrg.Visible = false;
+            panel_report_edtv.Visible = false;
             originalFormSize = this.Size;
             FormResizer.SetInitialSize(this);
         }
@@ -331,6 +332,24 @@ namespace Management_System
                         cbReportPrrgSelectProject.Items.Add(projectName);
                     }
                     break;
+                case "ndEDTV":// if the node is ndReportEdtv
+                    panel_report_edtv.Visible = true;
+                    panel_report_edtv.BringToFront();
+                    List<string> requirementHistories = dbOperations.ListAllRequirementsHistoryYouCanSee(userId);
+                    lvEdtvByRequirement.Items.Clear();
+                    foreach (string requirementHistory in requirementHistories)
+                    {
+                        string[] parts = requirementHistory.Split(',');
+                        ListViewItem item = new ListViewItem(parts[0]);
+                        item.SubItems.Add(parts[1]);
+                        item.SubItems.Add(parts[2]);
+                        item.SubItems.Add(parts[3]);
+                        item.SubItems.Add(parts[4]);
+                        item.SubItems.Add(parts[5]);
+                        lvEdtvByRequirement.Items.Add(item);
+                    }
+                    break;
+
             }
         }
         private void Project_Load(object sender, EventArgs e)
